@@ -11,7 +11,9 @@ import {
     HelpCircle,
     LogOut,
     ChevronRight,
-    Briefcase
+    Briefcase,
+    Calendar,
+    Bot
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
@@ -24,6 +26,8 @@ const Sidebar = () => {
         { name: 'Home', icon: Home, path: '/dashboard' },
         { name: 'Get Started', icon: Target, path: '/investor-onboarding', highlight: true },
         { name: 'My Account', icon: User, path: '/account' },
+        { name: 'Calendar', icon: Calendar, path: '/calendar' },
+        { name: 'Agents', icon: Bot, path: '/agents' },
     ];
 
     const advisorItems = [
