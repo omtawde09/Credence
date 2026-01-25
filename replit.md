@@ -1,52 +1,55 @@
-# Credence Wealth Management
+# Credence - Intelligent Advisor-Investor Journey Management
 
 ## Overview
-A React-based wealth management application built with Vite. It includes features for financial dashboards, credit management, policy agents, and taxation tools. The application uses Firebase for authentication and backend services, and Gemini AI for intelligent features.
+A minimal, Zerodha-inspired investment platform that facilitates intelligent advisor-investor journey management with transparent, explainable investment recommendations.
 
 ## Tech Stack
 - **Frontend**: React 18 with Vite
-- **Styling**: Tailwind CSS with shadcn/ui components
-- **State Management**: Zustand
-- **3D Rendering**: Three.js with React Three Fiber
-- **Backend Services**: Firebase (Auth, Firestore)
-- **AI Integration**: Google Gemini AI
+- **Styling**: Tailwind CSS
+- **Routing**: React Router v6
+- **Icons**: Lucide React
+
+## Design Philosophy
+- Light, minimal, content-first UI
+- White/off-white backgrounds
+- Typography-led hierarchy
+- Clean sans-serif fonts (Inter)
+- Subtle animations (fade-in, slide-up)
+- No heavy gradients or decorative elements
 
 ## Project Structure
 ```
 src/
-├── App.jsx              # Main app with routing
-├── Layout.tsx           # Layout wrapper with NavBar and AuthModal
-├── main.jsx             # Entry point
-├── index.css            # Global styles with Tailwind
-├── firebase.js          # Firebase configuration
-├── components/          # React components
-│   ├── ui/              # shadcn/ui components (card, chart)
-│   ├── dashbord/        # Dashboard-specific components
-│   ├── Dashboard.jsx    # Main dashboard
-│   ├── CreditPage.jsx   # Credit management
-│   ├── PolicyPage.jsx   # Policy agent
-│   ├── TaxationPage.jsx # Taxation tools
-│   ├── Agents.jsx       # AI agents interface
-│   └── ...
-├── store/               # Zustand stores
-│   ├── useAuthStore.js  # Authentication state
-│   └── useSidebarStore.js
+├── App.jsx                    # Main app with 4-route structure
+├── main.jsx                   # Entry point
+├── index.css                  # Global styles with Tailwind
+├── components/
+│   └── pages/
+│       ├── LandingPage.jsx       # Homepage (/)
+│       ├── OnboardingPage.jsx    # Investor onboarding (/onboarding)
+│       ├── RecommendationPage.jsx # Investment recommendations (/recommendation)
+│       └── AdvisorDashboard.jsx   # Advisor dashboard (/advisor)
 └── lib/
-    └── utils.ts         # Utility functions (cn helper)
+    └── utils.ts               # Utility functions
 ```
+
+## Routes
+| Path | Component | Description |
+|------|-----------|-------------|
+| `/` | LandingPage | Platform introduction with trust signals |
+| `/onboarding` | OnboardingPage | 4-step investor profiling flow |
+| `/recommendation` | RecommendationPage | Personalized investment recommendations with explainability |
+| `/advisor` | AdvisorDashboard | Advisor client management dashboard |
 
 ## Development
 - **Dev Server**: `npm run dev` - Runs on port 5000
 - **Build**: `npm run build` - Creates production build
-- **Preview**: `npm run preview` - Preview production build
-
-## Environment Variables
-The application uses the following environment variables (configured in `.env`):
-- `VITE_FIREBASE_*` - Firebase configuration
-- `VITE_GEMINI_API_KEY` - Google Gemini AI API key
 
 ## Recent Changes
-- 2026-01-25: Initial Replit environment setup
-  - Fixed case sensitivity issue with Components folder (renamed to lowercase)
-  - Configured Vite to use port 5000 and allow all hosts for Replit proxy
-  - Updated tsconfig.json with proper JSX and module settings
+- 2026-01-25: Complete redesign to Zerodha-inspired minimal UI
+  - Removed sidebar-based navigation
+  - Implemented 4-route structure
+  - Created clean landing page with trust signals
+  - Added step-by-step investor onboarding flow
+  - Built recommendation page with explainability sections
+  - Designed advisor dashboard with client table and alerts
