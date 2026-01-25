@@ -111,8 +111,8 @@ const CreditPage = () => {
 
     const getCreditScoreBg = (score) => {
         // Keeping simple solid backgrounds
-        if (score >= 750) return "bg-green-800";
-        return "bg-green-800"; // Consistently usage of primary brand color for main card
+        if (score >= 750) return "bg-gradient-to-r from-blue-600 to-indigo-600";
+        return "bg-gradient-to-r from-blue-600 to-indigo-600"; // Consistently usage of primary brand color for main card
     };
 
     const getTotalCreditUtilization = () => {
@@ -251,7 +251,7 @@ const CreditPage = () => {
     const Dashboard = () => (
         <div className="space-y-6">
             {/* Credit Score Overview */}
-            <div className="bg-green-800 rounded-[32px] shadow-lg border border-orange-200 overflow-hidden text-white transition-all duration-300">
+            <div className="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-[32px] shadow-lg border border-slate-200 overflow-hidden text-white transition-all duration-300">
                 <div className="p-8">
                     <div className="flex items-center justify-between">
                         <div>
@@ -259,7 +259,7 @@ const CreditPage = () => {
                             <div className="flex items-center space-x-4">
                                 <div className="text-6xl font-bold text-white">{creditScore}</div>
                                 <div>
-                                    <div className="text-xl font-semibold text-orange-200">
+                                    <div className="text-xl font-semibold text-teal-200">
                                         {getCreditScoreLabel(creditScore)}
                                     </div>
                                     <div className="flex items-center space-x-2 text-sm opacity-80 text-white">
@@ -277,30 +277,30 @@ const CreditPage = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="text-right bg-orange-200/10 p-4 rounded-full">
-                            <Award className="w-12 h-12 text-orange-200" />
+                        <div className="text-right bg-slate-200/10 p-4 rounded-full">
+                            <Award className="w-12 h-12 text-teal-200" />
                         </div>
                     </div>
                 </div>
 
                 {/* Score Range Indicator */}
-                <div className="p-6 bg-green-900">
+                <div className="p-6 bg-slate-800">
                     <div className="relative">
-                        <div className="flex justify-between text-xs text-orange-200/70 mb-2 uppercase tracking-wider font-semibold">
+                        <div className="flex justify-between text-xs text-teal-200/70 mb-2 uppercase tracking-wider font-semibold">
                             <span>Too Poor</span>
                             <span>Poor</span>
                             <span>Fair</span>
                             <span>Good</span>
                             <span>Excellent</span>
                         </div>
-                        <div className="w-full bg-orange-200/20 rounded-full h-2 overflow-hidden">
+                        <div className="w-full bg-slate-200/20 rounded-full h-2 overflow-hidden">
                             <div className="flex h-full w-full">
                                 {/* Using opacity to distinguish ranges instead of rainbow colors */}
                                 <div className="bg-white/20 flex-1"></div>
                                 <div className="bg-white/40 flex-1"></div>
                                 <div className="bg-white/60 flex-1"></div>
                                 <div className="bg-white/80 flex-1"></div>
-                                <div className="bg-orange-200 flex-1"></div>
+                                <div className="bg-slate-200 flex-1"></div>
                             </div>
                         </div>
                         <div
@@ -313,78 +313,78 @@ const CreditPage = () => {
 
             {/* Key Metrics */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div className="bg-white p-6 rounded-[24px] shadow-sm border border-orange-200">
+                <div className="bg-white p-6 rounded-[24px] shadow-sm border border-slate-200">
                     <div className="flex items-center justify-between">
                         <div>
-                            <p className="text-xs font-bold uppercase tracking-wider text-green-800/60">
+                            <p className="text-xs font-bold uppercase tracking-wider text-slate-800/60">
                                 Utilization
                             </p>
-                            <p className="text-2xl font-bold text-green-800 mt-1">
+                            <p className="text-2xl font-bold text-slate-800 mt-1">
                                 {getTotalCreditUtilization()}%
                             </p>
-                            <p className="text-xs text-green-800/50 mt-1">
+                            <p className="text-xs text-slate-800/50 mt-1">
                                 Keep below 30%
                             </p>
                         </div>
-                        <div className="bg-orange-100 p-3 rounded-full">
-                            <CreditCard className="w-5 h-5 text-green-800" />
+                        <div className="bg-blue-100 p-3 rounded-full">
+                            <CreditCard className="w-5 h-5 text-slate-800" />
                         </div>
                     </div>
                 </div>
 
-                <div className="bg-white p-6 rounded-[24px] shadow-sm border border-orange-200">
+                <div className="bg-white p-6 rounded-[24px] shadow-sm border border-slate-200">
                     <div className="flex items-center justify-between">
                         <div>
-                            <p className="text-xs font-bold uppercase tracking-wider text-green-800/60">
+                            <p className="text-xs font-bold uppercase tracking-wider text-slate-800/60">
                                 Active Accounts
                             </p>
-                            <p className="text-2xl font-bold text-green-800 mt-1">
+                            <p className="text-2xl font-bold text-slate-800 mt-1">
                                 {accounts.length}
                             </p>
-                            <p className="text-xs text-green-800/50 mt-1">
+                            <p className="text-xs text-slate-800/50 mt-1">
                                 Total accounts
                             </p>
                         </div>
-                        <div className="bg-orange-100 p-3 rounded-full">
-                            <Building2 className="w-5 h-5 text-green-800" />
+                        <div className="bg-blue-100 p-3 rounded-full">
+                            <Building2 className="w-5 h-5 text-slate-800" />
                         </div>
                     </div>
                 </div>
 
-                <div className="bg-orange-100 p-6 rounded-[24px] shadow-sm border border-orange-200">
+                <div className="bg-blue-100 p-6 rounded-[24px] shadow-sm border border-slate-200">
                     <div className="flex items-center justify-between">
                         <div>
-                            <p className="text-xs font-bold uppercase tracking-wider text-green-800/60">
+                            <p className="text-xs font-bold uppercase tracking-wider text-slate-800/60">
                                 Payment History
                             </p>
-                            <p className="text-2xl font-bold text-green-800 mt-1">
+                            <p className="text-2xl font-bold text-slate-800 mt-1">
                                 94%
                             </p>
-                            <p className="text-xs text-green-800/50 mt-1">
+                            <p className="text-xs text-slate-800/50 mt-1">
                                 On-time payments
                             </p>
                         </div>
                         <div className="bg-white p-3 rounded-full">
-                            <CheckCircle className="w-5 h-5 text-green-800" />
+                            <CheckCircle className="w-5 h-5 text-slate-800" />
                         </div>
                     </div>
                 </div>
 
-                <div className="bg-white p-6 rounded-[24px] shadow-sm border border-orange-200">
+                <div className="bg-white p-6 rounded-[24px] shadow-sm border border-slate-200">
                     <div className="flex items-center justify-between">
                         <div>
-                            <p className="text-xs font-bold uppercase tracking-wider text-green-800/60">
+                            <p className="text-xs font-bold uppercase tracking-wider text-slate-800/60">
                                 Hard Inquiries
                             </p>
-                            <p className="text-2xl font-bold text-green-800 mt-1">
+                            <p className="text-2xl font-bold text-slate-800 mt-1">
                                 {inquiries.filter((inq) => inq.type === "Hard Inquiry").length}
                             </p>
-                            <p className="text-xs text-green-800/50 mt-1">
+                            <p className="text-xs text-slate-800/50 mt-1">
                                 Last 12 months
                             </p>
                         </div>
-                        <div className="bg-orange-100 p-3 rounded-full">
-                            <Target className="w-5 h-5 text-green-800" />
+                        <div className="bg-blue-100 p-3 rounded-full">
+                            <Target className="w-5 h-5 text-slate-800" />
                         </div>
                     </div>
                 </div>
@@ -731,24 +731,24 @@ const CreditPage = () => {
     );
 
     return (
-        <div className="min-h-screen bg-orange-50/30 text-green-800">
+        <div className="min-h-screen bg-slate-50 text-slate-800">
             <Sidebar />
             {/* Main Content Wrapper - Offset by Sidebar width */}
             <div className="md:ml-64 p-8 pt-6 transition-all duration-300">
                 <header className="mb-8 flex justify-between items-center">
                     <div>
-                        <h2 className="text-2xl font-bold text-green-800">Credit Dashboard</h2>
-                        <p className="text-green-800/60 text-xs font-bold uppercase tracking-widest mt-1">Monitor and improve your credit health</p>
+                        <h2 className="text-2xl font-bold text-slate-800">Credit Dashboard</h2>
+                        <p className="text-slate-800/60 text-xs font-bold uppercase tracking-widest mt-1">Monitor and improve your credit health</p>
                     </div>
                 </header>
 
                 {/* Tabs to switch */}
-                <div className="flex space-x-2 mb-8 bg-white p-1 rounded-2xl w-fit border border-orange-200">
+                <div className="flex space-x-2 mb-8 bg-white p-1 rounded-2xl w-fit border border-slate-200">
                     <button
                         onClick={() => setActiveTab("dashboard")}
                         className={`px-6 py-2 rounded-xl text-sm font-bold transition-all duration-300 ${activeTab === "dashboard"
-                            ? "bg-green-800 text-green-50 shadow-md"
-                            : "text-green-800/60 hover:text-green-800"
+                            ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md"
+                            : "text-slate-800/60 hover:text-slate-800"
                             }`}
                     >
                         Dashboard
@@ -756,8 +756,8 @@ const CreditPage = () => {
                     <button
                         onClick={() => setActiveTab("accounts")}
                         className={`px-6 py-2 rounded-xl text-sm font-bold transition-all duration-300 ${activeTab === "accounts"
-                            ? "bg-green-800 text-green-50 shadow-md"
-                            : "text-green-800/60 hover:text-green-800"
+                            ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md"
+                            : "text-slate-800/60 hover:text-slate-800"
                             }`}
                     >
                         Accounts

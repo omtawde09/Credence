@@ -17,7 +17,7 @@ const HelpCenterPage = () => {
     ];
 
     return (
-        <div className="min-h-screen bg-orange-50/30 text-green-800">
+        <div className="min-h-screen bg-slate-50 text-slate-800">
             <Sidebar />
             <div className="md:ml-64 p-8 pt-6 transition-all duration-300">
                 <header className="flex justify-between items-center mb-8">
@@ -25,9 +25,9 @@ const HelpCenterPage = () => {
                     <div className="flex items-center gap-4">
                         <div className="relative hidden md:block">
                             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
-                            <input type="text" placeholder="Search help articles" className="pl-10 pr-4 py-2 rounded-xl border border-orange-200 bg-white text-sm focus:outline-none focus:ring-1 focus:ring-green-800 w-64" />
+                            <input type="text" placeholder="Search help articles" className="pl-10 pr-4 py-2 rounded-xl border border-slate-200 bg-white text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 w-64" />
                         </div>
-                        <button className="p-2 rounded-xl border border-orange-200 bg-white text-slate-500 hover:text-green-800">
+                        <button className="p-2 rounded-xl border border-slate-200 bg-white text-slate-500 hover:text-slate-800">
                             <Bell size={18} />
                         </button>
                     </div>
@@ -35,8 +35,8 @@ const HelpCenterPage = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
                     {resources.map((res, i) => (
-                        <div key={i} className="bg-white border border-orange-200 rounded-2xl p-6 hover:shadow-lg transition-shadow cursor-pointer">
-                            <res.icon size={32} className="text-green-800 mb-4" />
+                        <div key={i} className="bg-white border border-slate-200 rounded-2xl p-6 hover:shadow-lg transition-shadow cursor-pointer">
+                            <res.icon size={32} className="text-slate-800 mb-4" />
                             <h3 className="font-bold mb-1">{res.title}</h3>
                             <p className="text-sm text-slate-500">{res.desc}</p>
                         </div>
@@ -44,15 +44,15 @@ const HelpCenterPage = () => {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="bg-white border border-orange-200 rounded-[32px] p-6 shadow-lg">
+                    <div className="bg-white border border-slate-200 rounded-[32px] p-6 shadow-lg">
                         <div className="flex items-center gap-3 mb-6">
-                            <HelpCircle size={24} className="text-green-800" />
+                            <HelpCircle size={24} className="text-slate-800" />
                             <h3 className="font-bold">Frequently Asked Questions</h3>
                         </div>
                         <div className="space-y-4">
                             {faqs.map((faq, i) => (
                                 <details key={i} className="group">
-                                    <summary className="flex justify-between items-center cursor-pointer p-4 bg-orange-50/50 rounded-xl hover:bg-orange-50 font-medium text-sm">
+                                    <summary className="flex justify-between items-center cursor-pointer p-4 bg-slate-100/50 rounded-xl hover:bg-slate-100 font-medium text-sm">
                                         {faq.q}
                                         <span className="text-slate-400 group-open:rotate-180 transition-transform">▼</span>
                                     </summary>
@@ -62,11 +62,11 @@ const HelpCenterPage = () => {
                         </div>
                     </div>
 
-                    <div className="bg-green-800 text-white rounded-[32px] p-8 shadow-lg flex flex-col justify-center">
+                    <div className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-[32px] p-8 shadow-lg flex flex-col justify-center">
                         <MessageCircle size={48} className="mb-4" />
                         <h3 className="text-xl font-bold mb-2">Need more help?</h3>
-                        <p className="text-green-100 text-sm mb-6">Our support team is available 24/7 to assist you with any questions.</p>
-                        <button className="px-6 py-3 bg-white text-green-800 rounded-xl font-bold text-sm hover:bg-orange-50 transition-colors w-fit">
+                        <p className="text-slate-300 text-sm mb-6">Our support team is available 24/7 to assist you with any questions.</p>
+                        <button className="px-6 py-3 bg-white text-slate-800 rounded-xl font-bold text-sm hover:bg-slate-100 transition-colors w-fit">
                             Start Live Chat
                         </button>
                     </div>

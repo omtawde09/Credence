@@ -45,7 +45,7 @@ const ClientSummary = ({ investor, advisor }) => {
                         className="p-2 rounded-lg border border-[#CFE3D8] hover:bg-[#E6EFEA] transition-colors"
                         title="Copy to clipboard"
                     >
-                        {copied ? <Check size={14} className="text-green-600" /> : <Copy size={14} className="text-[#1E3A2F]" />}
+                        {copied ? <Check size={14} className="text-teal-600" /> : <Copy size={14} className="text-[#1E3A2F]" />}
                     </button>
                 </div>
             </div>

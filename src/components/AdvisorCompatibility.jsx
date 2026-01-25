@@ -8,7 +8,7 @@ const AdvisorCompatibility = ({ investor, advisor }) => {
     const { score, factors } = calculateCompatibilityScore(inv, adv);
 
     const getScoreColor = (s) => {
-        if (s >= 80) return 'text-green-600 bg-green-50 border-green-200';
+        if (s >= 80) return 'text-teal-600 bg-teal-50 border-slate-200';
         if (s >= 60) return 'text-amber-600 bg-amber-50 border-amber-200';
         return 'text-red-600 bg-red-50 border-red-200';
     };

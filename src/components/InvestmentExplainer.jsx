@@ -87,12 +87,12 @@ const InvestmentExplainer = ({ recommendation, investorProfile }) => {
                         </div>
                     </div>
 
-                    <div className="p-4 bg-green-50 rounded-xl border border-green-100">
+                    <div className="p-4 bg-teal-50 rounded-xl border border-slate-100">
                         <div className="flex items-start gap-3">
-                            <TrendingUp size={16} className="text-green-600 mt-0.5 shrink-0" />
+                            <TrendingUp size={16} className="text-teal-600 mt-0.5 shrink-0" />
                             <div>
-                                <span className="font-bold text-green-700 block mb-1">Best-Case Scenario</span>
-                                <p className="text-sm text-green-700/80">Under favorable market conditions with sustained economic growth, this portfolio could generate 12-15% annualized returns over the investment horizon. This would result in achieving goals ahead of schedule and potentially allow for lifestyle upgrades or early retirement considerations.</p>
+                                <span className="font-bold text-slate-700 block mb-1">Best-Case Scenario</span>
+                                <p className="text-sm text-slate-700/80">Under favorable market conditions with sustained economic growth, this portfolio could generate 12-15% annualized returns over the investment horizon. This would result in achieving goals ahead of schedule and potentially allow for lifestyle upgrades or early retirement considerations.</p>
                             </div>
                         </div>
                     </div>

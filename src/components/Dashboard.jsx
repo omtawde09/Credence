@@ -10,7 +10,7 @@ const Dashboard = () => {
     const { user } = useAuthStore();
 
     return (
-        <div className="min-h-screen bg-orange-50/30 text-green-800">
+        <div className="min-h-screen bg-slate-50 text-slate-800">
             <Sidebar />
 
             {/* Main Content Wrapper - Offset by Sidebar width */}
@@ -26,15 +26,15 @@ const Dashboard = () => {
                             <input
                                 type="text"
                                 placeholder="Search"
-                                className="pl-10 pr-4 py-2 rounded-xl border border-orange-200 bg-white text-sm focus:outline-none focus:ring-1 focus:ring-green-800 w-64"
+                                className="pl-10 pr-4 py-2 rounded-xl border border-slate-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 w-64"
                             />
                         </div>
 
-                        <button className="p-2 rounded-xl border border-orange-200 bg-white text-slate-500 hover:text-green-800">
+                        <button className="p-2 rounded-xl border border-slate-200 bg-white text-slate-500 hover:text-blue-600">
                             <Bell size={18} />
                         </button>
 
-                        <div className="w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center text-green-800 text-xs font-bold ring-2 ring-white">
+                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-indigo-500 flex items-center justify-center text-white text-xs font-bold ring-2 ring-white">
                             {user?.email?.[0].toUpperCase() || 'U'}
                         </div>
                     </div>
@@ -44,28 +44,28 @@ const Dashboard = () => {
                 <main className="grid grid-cols-1 md:grid-cols-3 gap-6">
 
                     {/* ROW 1: LIVE STATUS CARD */}
-                    <div className="md:col-span-3 bg-green-800 text-green-50 rounded-[32px] p-10 flex flex-col md:flex-row justify-between items-center min-h-[220px] shadow-2xl shadow-green-900/20">
+                    <div className="md:col-span-3 bg-gradient-to-br from-slate-800 via-slate-900 to-indigo-900 text-white rounded-[32px] p-10 flex flex-col md:flex-row justify-between items-center min-h-[220px] shadow-2xl shadow-slate-900/30">
                         <div className="flex-1 w-full md:w-auto mb-6 md:mb-0">
-                            <div className="inline-block px-3 py-1 bg-orange-600/20 text-orange-300 text-[10px] font-bold uppercase tracking-widest rounded-lg mb-4 animate-pulse">
+                            <div className="inline-block px-3 py-1 bg-teal-500/20 text-teal-300 text-[10px] font-bold uppercase tracking-widest rounded-lg mb-4 animate-pulse">
                                 Live Status
                             </div>
                             <h1 className="text-4xl font-bold mb-2">
-                                Welcome back, <span className="text-orange-300">{user?.displayName || user?.email?.split('@')[0] || "Trader"}</span>
+                                Welcome back, <span className="text-teal-300">{user?.displayName || user?.email?.split('@')[0] || "Trader"}</span>
                             </h1>
-                            <p className="text-green-50/80 text-sm max-w-lg">
+                            <p className="text-white/70 text-sm max-w-lg">
                                 Your autonomous financial agent is monitoring 12 liquidity streams. No immediate risks detected in your cashflow.
                             </p>
                         </div>
 
-                        <div className="flex gap-8 border-t md:border-t-0 md:border-l border-green-50/20 pt-6 md:pt-0 md:pl-10 w-full md:w-auto justify-between md:justify-start">
+                        <div className="flex gap-8 border-t md:border-t-0 md:border-l border-white/10 pt-6 md:pt-0 md:pl-10 w-full md:w-auto justify-between md:justify-start">
                             <div className="flex flex-col">
                                 <span className="text-[10px] uppercase tracking-widest opacity-70 mb-1">Cashflow</span>
                                 <span className="text-3xl font-mono font-light">₹1,24,000</span>
                             </div>
-                            <div className="w-[1px] h-12 bg-green-50/20 hidden md:block" />
+                            <div className="w-[1px] h-12 bg-white/10 hidden md:block" />
                             <div className="flex flex-col">
                                 <span className="text-[10px] uppercase tracking-widest opacity-70 mb-1">Savings</span>
-                                <span className="text-3xl font-mono font-light text-orange-300">₹12,400</span>
+                                <span className="text-3xl font-mono font-light text-teal-300">₹12,400</span>
                             </div>
                         </div>
                     </div>
@@ -90,8 +90,8 @@ const Dashboard = () => {
                         </Link>
 
                         {/* Placeholder: Savings Plan */}
-                        <div className="bg-white border border-orange-200 rounded-[32px] p-4 h-[180px] flex flex-col justify-center items-center text-center shadow-lg hover:shadow-xl transition-all">
-                            <div className="w-10 h-10 bg-orange-50 rounded-full flex items-center justify-center text-xl mb-2">
+                        <div className="bg-white border border-slate-200 rounded-[32px] p-4 h-[180px] flex flex-col justify-center items-center text-center shadow-lg hover:shadow-xl transition-all">
+                            <div className="w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center text-xl mb-2">
                                 🌱
                             </div>
                             <span className="text-[10px] font-bold uppercase tracking-widest text-slate-500">Savings Plan Placeholder</span>
@@ -99,22 +99,22 @@ const Dashboard = () => {
                     </div>
 
                     {/* ROW 3: RECENT TRANSACTION PLACEHOLDER */}
-                    <div className="md:col-span-3 bg-white border border-orange-200 rounded-[32px] p-8 min-h-[300px] shadow-lg">
+                    <div className="md:col-span-3 bg-white border border-slate-200 rounded-[32px] p-8 min-h-[300px] shadow-lg">
                         <div className="flex justify-between items-center mb-8">
-                            <h3 className="text-xl font-bold text-green-800">Recent Transactions</h3>
-                            <button className="text-[10px] font-bold uppercase tracking-widest text-slate-500 hover:text-green-800 transition-colors">Filter</button>
+                            <h3 className="text-xl font-bold text-slate-800">Recent Transactions</h3>
+                            <button className="text-[10px] font-bold uppercase tracking-widest text-slate-500 hover:text-slate-800 transition-colors">Filter</button>
                         </div>
 
                         {/* Table Placeholder */}
                         <div className="space-y-4">
                             {[1, 2, 3].map((i) => (
-                                <div key={i} className="flex items-center justify-between p-4 bg-orange-50/30 rounded-2xl border border-dashed border-orange-200">
+                                <div key={i} className="flex items-center justify-between p-4 bg-slate-100/30 rounded-2xl border border-dashed border-slate-200">
                                     <div className="flex items-center gap-4">
                                         <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-slate-400">#</div>
-                                        <div className="w-32 h-4 bg-orange-200/50 rounded-full animate-pulse" />
+                                        <div className="w-32 h-4 bg-slate-200/50 rounded-full animate-pulse" />
                                     </div>
-                                    <div className="w-24 h-4 bg-orange-200/50 rounded-full animate-pulse hidden md:block" />
-                                    <div className="w-16 h-4 bg-orange-200/50 rounded-full animate-pulse" />
+                                    <div className="w-24 h-4 bg-slate-200/50 rounded-full animate-pulse hidden md:block" />
+                                    <div className="w-16 h-4 bg-slate-200/50 rounded-full animate-pulse" />
                                 </div>
                             ))}
                         </div>

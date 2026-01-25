@@ -45,7 +45,7 @@ const data90D = [
 const chartConfig = {
   amount: {
     label: "Forecasted Cash",
-    color: "#A16207", // Orange-700
+    color: "#0d9488", // Teal-600
   },
 }
 
@@ -59,22 +59,22 @@ export function ForecastChart() {
   }
 
   return (
-    <Card className="w-full bg-white border-orange-200 rounded-[32px] overflow-hidden shadow-xl shadow-green-900/5 h-full flex flex-col">
+    <Card className="w-full bg-white border-slate-200 rounded-[32px] overflow-hidden shadow-xl shadow-slate-900/5 h-full flex flex-col">
       <CardHeader className="flex flex-row items-center justify-between pb-2 pt-6 px-6">
         <div className="space-y-1">
-          <CardTitle className="text-xl font-bold text-green-800">Liquidity Forecast</CardTitle>
+          <CardTitle className="text-xl font-bold text-slate-800">Liquidity Forecast</CardTitle>
           <CardDescription className="text-slate-500 text-xs">Probabilistic cashflow projection</CardDescription>
         </div>
 
         {/* TOP RIGHT TABS */}
-        <div className="flex bg-orange-50/30 p-1 rounded-xl border border-orange-200">
+        <div className="flex bg-slate-50 p-1 rounded-xl border border-slate-200">
           {["7D", "30D", "90D"].map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
               className={`px-3 py-1 text-[9px] font-bold rounded-lg transition-all ${activeTab === tab
-                ? "bg-green-800 text-green-50 shadow-md"
-                : "text-slate-500 hover:text-green-800"
+                ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md"
+                : "text-slate-500 hover:text-slate-800"
                 }`}
             >
               {tab}
@@ -90,7 +90,7 @@ export function ForecastChart() {
             data={getData()}
             margin={{ left: 0, right: 10, top: 10, bottom: 0 }}
           >
-            <CartesianGrid vertical={false} strokeDasharray="3 3" stroke="#FED7AA" />
+            <CartesianGrid vertical={false} strokeDasharray="3 3" stroke="#e2e8f0" />
             <XAxis
               dataKey="day"
               tickLine={false}
@@ -105,27 +105,27 @@ export function ForecastChart() {
               className="text-[10px] font-medium text-slate-500"
             />
             <ChartTooltip
-              cursor={{ stroke: '#A16207', strokeWidth: 1 }}
+              cursor={{ stroke: '#0d9488', strokeWidth: 1 }}
               content={<ChartTooltipContent
-                className="bg-green-800 text-green-50 border-none rounded-xl"
+                className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white border-none rounded-xl"
                 formatter={(value) => `₹${value.toLocaleString('en-IN')}`}
               />}
             />
             <Line
               dataKey="amount"
               type="monotone"
-              stroke="#A16207"
+              stroke="#0d9488"
               strokeWidth={3}
-              dot={{ fill: '#A16207', strokeWidth: 2, r: 4, stroke: '#fff' }}
+              dot={{ fill: '#0d9488', strokeWidth: 2, r: 4, stroke: '#fff' }}
               activeDot={{ r: 6, strokeWidth: 0 }}
             />
           </LineChart>
         </ChartContainer>
       </CardContent>
 
-      <CardFooter className="flex-col items-start gap-1 pb-6 px-6 pt-2 text-sm border-t border-orange-200/30">
-        <div className="flex gap-2 leading-none font-bold text-green-800">
-          Solvency increased by 12% <TrendingUp className="h-4 w-4 text-orange-600" />
+      <CardFooter className="flex-col items-start gap-1 pb-6 px-6 pt-2 text-sm border-t border-slate-200/30">
+        <div className="flex gap-2 leading-none font-bold text-slate-800">
+          Solvency increased by 12% <TrendingUp className="h-4 w-4 text-teal-600" />
         </div>
         <div className="text-slate-500 text-[10px] leading-none">
           ML engine simulating 10k scenarios for {activeTab} period.

@@ -8,13 +8,13 @@ const RiskMismatchAlert = ({ investor }) => {
 
     if (!mismatch) {
         return (
-            <div className="bg-green-50 rounded-[24px] p-4 border border-green-200 flex items-center gap-3">
-                <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
-                    <TrendingUp size={16} className="text-green-600" />
+            <div className="bg-teal-50 rounded-[24px] p-4 border border-slate-200 flex items-center gap-3">
+                <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                    <TrendingUp size={16} className="text-teal-600" />
                 </div>
                 <div>
-                    <p className="text-sm font-bold text-green-700">Portfolio Risk Aligned</p>
-                    <p className="text-xs text-green-600">Current risk level matches stated tolerance</p>
+                    <p className="text-sm font-bold text-slate-700">Portfolio Risk Aligned</p>
+                    <p className="text-xs text-teal-600">Current risk level matches stated tolerance</p>
                 </div>
             </div>
         );
@@ -78,7 +78,7 @@ const RiskMismatchAlert = ({ investor }) => {
                         className={`absolute h-full w-1 ${mismatch.direction === 'Higher' ? 'bg-red-500' : 'bg-blue-500'}`} 
                         style={{ left: `${(parseFloat(mismatch.actualRisk) / 10) * 100}%` }} 
                     />
-                    <div className="w-full h-full bg-gradient-to-r from-green-200 via-amber-200 to-red-200 opacity-50" />
+                    <div className="w-full h-full bg-gradient-to-r from-blue-200 via-amber-200 to-red-200 opacity-50" />
                 </div>
                 <div className="flex justify-between text-[10px] text-gray-400 mt-1">
                     <span>Conservative</span>

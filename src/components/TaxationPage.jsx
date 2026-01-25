@@ -39,7 +39,7 @@ const TaxationPage = () => {
     const [isGeneratingSummary, setIsGeneratingSummary] = useState(false);
 
     const taxUpdates = [
-        { id: 1, title: 'New Tax Regime Default', desc: 'The new tax regime is now projected as the default for FY 2024-25.', color: 'bg-orange-50 text-orange-700 border-orange-200' },
+        { id: 1, title: 'New Tax Regime Default', desc: 'The new tax regime is now projected as the default for FY 2024-25.', color: 'bg-slate-100 text-teal-700 border-slate-200' },
         { id: 2, title: 'LTCG Tax Rate Change', desc: 'Long Term Capital Gains tax has been revised for certain asset classes.', color: 'bg-blue-50 text-blue-700 border-blue-200' },
         { id: 3, title: 'Standard Deduction Hike', desc: 'Standard deduction for salaried employees increased to ₹75,000.', color: 'bg-emerald-50 text-emerald-700 border-emerald-200' },
     ];

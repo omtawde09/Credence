@@ -272,7 +272,7 @@ const PolicyPage = () => {
                                 components={{
                                     event: ({ event }) => (
                                         <div className={`text-[10px] font-bold px-2 py-1 rounded-md shadow-sm border ${event.resource === 'payment'
-                                            ? 'bg-orange-50 text-orange-600 border-orange-200'
+                                            ? 'bg-slate-100 text-teal-600 border-slate-200'
                                             : 'bg-emerald-50 text-[#1E3A2F] border-emerald-200'
                                             }`}>
                                             {event.title}

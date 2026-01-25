@@ -21,9 +21,9 @@ const LifeEventAlert = ({ investor, onAcknowledge }) => {
 
     if (activeEvents.length === 0) {
         return (
-            <div className="bg-green-50 rounded-[24px] p-4 border border-green-200 flex items-center gap-3">
-                <CheckCircle size={20} className="text-green-600" />
-                <p className="text-sm text-green-700 font-medium">All life events have been reviewed. Your plan is up to date.</p>
+            <div className="bg-teal-50 rounded-[24px] p-4 border border-slate-200 flex items-center gap-3">
+                <CheckCircle size={20} className="text-teal-600" />
+                <p className="text-sm text-slate-700 font-medium">All life events have been reviewed. Your plan is up to date.</p>
             </div>
         );
     }
@@ -78,7 +78,7 @@ const LifeEventAlert = ({ investor, onAcknowledge }) => {
                                     <ul className="space-y-1">
                                         {impact.impacts.map((imp, i) => (
                                             <li key={i} className="text-sm text-gray-600 flex items-start gap-2">
-                                                <span className="text-orange-500">•</span> {imp}
+                                                <span className="text-teal-500">•</span> {imp}
                                             </li>
                                         ))}
                                     </ul>
