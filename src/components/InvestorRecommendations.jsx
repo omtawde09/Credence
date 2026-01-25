@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import { ArrowLeft, Check, ChevronDown, ChevronUp, AlertTriangle, Shield, TrendingUp, Users, Info } from 'lucide-react';
@@ -10,6 +10,36 @@ const InvestorRecommendations = () => {
     const profile = location.state?.profile;
     const [expandedRec, setExpandedRec] = useState(null);
     const [showAssumptions, setShowAssumptions] = useState(false);
+    const [validatedRecommendations, setValidatedRecommendations] = useState([]);
+    const [aiEnhancementStatus, setAiEnhancementStatus] = useState({ enabled: false });
+
+    // Initialize AI assistance and validate recommendations
+    useEffect(() => {
+        const initializeRecommendations = async () => {
+            // Check AI assistance status
+            try {
+                const { getAIAssistStatus } = await import('../utils/aiAssistLayer.js');
+                setAiEnhancementStatus(getAIAssistStatus());
+            } catch (error) {
+                console.warn('AI assistance layer not available:', error);
+            }
+
+            // Apply .kiro validation to all recommendations
+            const validatedRecs = await Promise.all(
+                recommendations.map(async (rec) => {
+                    const kiroValidation = await validateRecommendationWithKiroConstraints(rec, profile);
+                    return {
+                        ...rec,
+                        kiroValidation
+                    };
+                })
+            );
+            
+            setValidatedRecommendations(validatedRecs);
+        };
+
+        initializeRecommendations();
+    }, [profile]);
 
     const goalLabels = {
         retirement: 'Retirement Planning',
@@ -34,6 +64,7 @@ const InvestorRecommendations = () => {
         verylong: '15+ Years'
     };
 
+    // Apply .kiro validation to all recommendations
     const recommendations = [
         {
             id: 1,
@@ -200,6 +231,9 @@ const InvestorRecommendations = () => {
                                     <li>• Time horizon determines equity allocation range</li>
                                     <li>• Goals matched to appropriate product categories</li>
                                     <li>• Recommendations filtered by stated exclusions</li>
+                                    {aiEnhancementStatus.enabled && (
+                                        <li>• AI assistance enabled for enhanced explanations</li>
+                                    )}
                                 </ul>
                             </div>
                         )}
@@ -221,7 +255,9 @@ const InvestorRecommendations = () => {
                                                 </span>
                                             </div>
                                             {rec.kiroValidation.warnings.map((warning, idx) => (
-                                                <p key={idx} className="text-xs text-amber-700 mb-1">• {warning}</p>
+                                                <p key={idx} className="text-xs text-amber-700 mb-1">
+                                                    • {rec.kiroValidation.enhancedWarnings || warning}
+                                                </p>
                                             ))}
                                             {rec.kiroValidation.requiresProfessionalConsultation && (
                                                 <p className="text-xs text-blue-700 mt-2 font-medium">

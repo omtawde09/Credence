@@ -1,4 +1,15 @@
 {
   "mcpServers": {
+    "ai-assist-layer": {
+      "command": "node",
+      "args": ["src/utils/aiAssistLayer.js"],
+      "env": {
+        "AI_API_KEY": "${VITE_AI_API_KEY}",
+        "NODE_ENV": "production"
+      },
+      "disabled": true,
+      "autoApprove": ["enhanceExplanation", "summarizeClientContext"],
+      "description": "Optional AI assistance for explanation enhancement - validates all outputs against .kiro constraints"
+    }
   }
 }

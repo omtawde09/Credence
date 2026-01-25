@@ -189,11 +189,33 @@ export const detectRiskMismatch = (investor) => {
     };
 };
 
-export const generateClientSummary = (investor, advisor) => {
+export const generateClientSummary = async (investor, advisor) => {
     const mismatch = detectRiskMismatch(investor);
     const pendingEvents = investor.lifeEvents.filter(e => e.pending);
     
-    return `${investor.name} is a ${investor.age}-year-old ${investor.occupation} with ${investor.riskProfile.investmentExperience} of investment experience. Primary financial goals include ${investor.goals.slice(0, 2).map(g => g.name).join(' and ')} with time horizons of ${investor.goals[0].horizon} and ${investor.goals[1].horizon} respectively. Stated risk tolerance is ${investor.riskProfile.stated} (${investor.riskProfile.score}/10) with a maximum drawdown tolerance of ${investor.riskProfile.maxDrawdownTolerance}%. ${mismatch ? `ALERT: Portfolio risk currently ${mismatch.direction.toLowerCase()} than profile suggests. ` : ''}${pendingEvents.length > 0 ? `Recent life event (${pendingEvents[0].event}) requires plan review. ` : ''}Current AUM: ₹${(investor.currentPortfolio.totalValue / 100000).toFixed(1)}L. Next scheduled review: ${investor.nextReviewDate}.`;
+    // Generate deterministic summary first (always available)
+    const deterministicSummary = `${investor.name} is a ${investor.age}-year-old ${investor.occupation} with ${investor.riskProfile.investmentExperience} of investment experience. Primary financial goals include ${investor.goals.slice(0, 2).map(g => g.name).join(' and ')} with time horizons of ${investor.goals[0].horizon} and ${investor.goals[1].horizon} respectively. Stated risk tolerance is ${investor.riskProfile.stated} (${investor.riskProfile.score}/10) with a maximum drawdown tolerance of ${investor.riskProfile.maxDrawdownTolerance}%. ${mismatch ? `ALERT: Portfolio risk currently ${mismatch.direction.toLowerCase()} than profile suggests. ` : ''}${pendingEvents.length > 0 ? `Recent life event (${pendingEvents[0].event}) requires plan review. ` : ''}Current AUM: ₹${(investor.currentPortfolio.totalValue / 100000).toFixed(1)}L. Next scheduled review: ${investor.nextReviewDate}.`;
+    
+    // Try AI enhancement if available (optional)
+    try {
+        const { summarizeClientContext } = await import('../utils/aiAssistLayer.js');
+        const enhanced = await summarizeClientContext({
+            name: investor.name,
+            age: investor.age,
+            occupation: investor.occupation,
+            riskProfile: investor.riskProfile,
+            goals: investor.goals,
+            mismatch: mismatch,
+            pendingEvents: pendingEvents,
+            aum: investor.currentPortfolio.totalValue
+        });
+        
+        return enhanced.enhanced ? enhanced.content : deterministicSummary;
+    } catch (error) {
+        // Fallback to deterministic summary if AI fails
+        console.warn('AI enhancement failed for client summary:', error);
+        return deterministicSummary;
+    }
 };
 
 export const lifeEventImpacts = {
@@ -220,7 +242,7 @@ export const lifeEventImpacts = {
 };
 
 // .kiro Integration: Apply agent brain constraints to all recommendations
-export const validateRecommendationWithKiroConstraints = (recommendation, userProfile) => {
+export const validateRecommendationWithKiroConstraints = async (recommendation, userProfile) => {
     const validation = {
         isValid: true,
         warnings: [],
@@ -258,6 +280,26 @@ export const validateRecommendationWithKiroConstraints = (recommendation, userPr
     if (recommendation.urgency === 'high' && !recommendation.reasoning?.length) {
         validation.warnings.push('High-urgency recommendations require detailed reasoning');
         validation.confidenceLevel = 'Low';
+    }
+    
+    // Enhance warnings with AI assistance if available (optional)
+    try {
+        const { enhanceExplanation } = await import('../utils/aiAssistLayer.js');
+        
+        if (validation.warnings.length > 0) {
+            const warningText = validation.warnings.join('. ');
+            const enhanced = await enhanceExplanation(warningText, {
+                confidence: validation.confidenceLevel === 'High' ? 0.8 : 0.6,
+                userProfile: userProfile
+            });
+            
+            if (enhanced.enhanced) {
+                validation.enhancedWarnings = enhanced.content;
+            }
+        }
+    } catch (error) {
+        // Silently continue without AI enhancement
+        console.warn('AI enhancement failed for validation warnings:', error);
     }
     
     return validation;

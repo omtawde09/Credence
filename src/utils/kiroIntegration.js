@@ -180,7 +180,9 @@ export const logForAccountability = (decision, userContext, impact) => {
         impactLevel: impact,
         userContextHash: hashUserContext(userContext), // Hash for privacy
         decisionHash: hashDecision(decision),
-        confidenceLevel: decision.confidence || 'unknown'
+        confidenceLevel: decision.confidence || 'unknown',
+        aiAssistanceUsed: decision.aiEnhanced || false,
+        source: decision.source || 'deterministic'
     };
 
     // In a real implementation, this would create blockchain anchor
