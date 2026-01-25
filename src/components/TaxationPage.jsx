@@ -122,7 +122,7 @@ const TaxationPage = () => {
         setItrData(prev => ({ ...prev, [name]: value }));
     };
 
-    // 3. Tax Chatbot (Mock responses for Demo)
+    // 3. Tax Chatbot (Enhanced with AI for Demo)
     const handleChatSubmit = async (e) => {
         e.preventDefault();
         if (!chatInput.trim()) return;
@@ -133,23 +133,39 @@ const TaxationPage = () => {
         setIsChatThinking(true);
 
         try {
-            // Simulate API delay
-            await new Promise(resolve => setTimeout(resolve, 1000));
-            
-            // Generate contextual responses based on keywords
-            let aiMsg = "I understand your tax question. ";
-            
-            if (userMsg.toLowerCase().includes('deduction')) {
-                aiMsg += "For tax deductions, you can claim up to ₹1.5 lakh under Section 80C for investments like PPF, ELSS, and life insurance premiums. Section 80D allows deductions for health insurance premiums up to ₹25,000 for self and family, and additional ₹25,000 for parents.";
-            } else if (userMsg.toLowerCase().includes('itr') || userMsg.toLowerCase().includes('filing')) {
-                aiMsg += "ITR filing is mandatory if your income exceeds ₹2.5 lakh. You should file ITR-1 (Sahaj) if you're a salaried individual with income from salary and other sources up to ₹50 lakh. The due date for FY 2024-25 is July 31, 2025.";
-            } else if (userMsg.toLowerCase().includes('tax') && userMsg.toLowerCase().includes('save')) {
-                aiMsg += "To save taxes legally, consider investing in ELSS mutual funds, PPF, NSC, or tax-saving FDs under Section 80C. Also, claim HRA if you're paying rent, and ensure you have adequate health insurance for Section 80D benefits.";
-            } else {
-                aiMsg += "Based on current tax laws, I recommend consulting the latest Income Tax Act provisions. For specific situations, it's always best to consult with a qualified chartered accountant who can provide personalized advice based on your complete financial picture.";
-            }
+            // Try AI response first, fallback to mock if needed
+            try {
+                const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+                const prompt = `You are an AI Chartered Accountant specializing in Indian tax law. Answer this tax question professionally and accurately:
 
-            setChatHistory(prev => [...prev, { role: 'model', text: aiMsg }]);
+Question: ${userMsg}
+
+Context: Current assessment year is 2025-26, financial year 2024-25. Focus on practical, actionable advice for Indian taxpayers.
+
+Provide a clear, concise answer (2-3 sentences max). Include specific sections, limits, or deadlines where relevant. If the question is complex, recommend consulting a CA.`;
+
+                const result = await model.generateContent(prompt);
+                const response = await result.response;
+                const aiMsg = response.text().trim();
+                
+                setChatHistory(prev => [...prev, { role: 'model', text: aiMsg }]);
+            } catch (aiError) {
+                console.warn("AI response failed, using fallback:", aiError);
+                // Fallback to contextual mock responses
+                let aiMsg = "I understand your tax question. ";
+                
+                if (userMsg.toLowerCase().includes('deduction')) {
+                    aiMsg += "For tax deductions, you can claim up to ₹1.5 lakh under Section 80C for investments like PPF, ELSS, and life insurance premiums. Section 80D allows deductions for health insurance premiums up to ₹25,000 for self and family, and additional ₹25,000 for parents.";
+                } else if (userMsg.toLowerCase().includes('itr') || userMsg.toLowerCase().includes('filing')) {
+                    aiMsg += "ITR filing is mandatory if your income exceeds ₹2.5 lakh. You should file ITR-1 (Sahaj) if you're a salaried individual with income from salary and other sources up to ₹50 lakh. The due date for FY 2024-25 is July 31, 2025.";
+                } else if (userMsg.toLowerCase().includes('tax') && userMsg.toLowerCase().includes('save')) {
+                    aiMsg += "To save taxes legally, consider investing in ELSS mutual funds, PPF, NSC, or tax-saving FDs under Section 80C. Also, claim HRA if you're paying rent, and ensure you have adequate health insurance for Section 80D benefits.";
+                } else {
+                    aiMsg += "Based on current tax laws, I recommend consulting the latest Income Tax Act provisions. For specific situations, it's always best to consult with a qualified chartered accountant who can provide personalized advice based on your complete financial picture.";
+                }
+
+                setChatHistory(prev => [...prev, { role: 'model', text: aiMsg }]);
+            }
         } catch (error) {
             setChatHistory(prev => [...prev, { role: 'model', text: "Sorry, I'm having trouble connecting to the tax database right now." }]);
         } finally {
@@ -161,30 +177,51 @@ const TaxationPage = () => {
         chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }, [chatHistory]);
 
-    // 4. Tax Update Summary (Mock for Demo)
+    // 4. Tax Update Summary (Enhanced with AI for Demo)
     const handleUpdateClick = async (update) => {
         setSelectedUpdate(update);
         setUpdateSummary('');
         setIsGeneratingSummary(true);
 
         try {
-            // Simulate API delay
-            await new Promise(resolve => setTimeout(resolve, 800));
-            
-            // Generate contextual summaries based on update type
-            let summary = "";
-            
-            if (update.title.includes('New Tax Regime')) {
-                summary = "The new tax regime offers lower tax rates but removes most deductions and exemptions. For FY 2024-25, it becomes the default option, meaning taxpayers need to actively choose the old regime if they want to claim deductions like 80C, HRA, etc. This change primarily benefits those with fewer deductions.";
-            } else if (update.title.includes('LTCG')) {
-                summary = "Long Term Capital Gains tax rates have been revised for equity investments. The new rates apply to gains exceeding ₹1 lakh in a financial year. This affects investors in stocks and equity mutual funds held for more than one year. Consider reviewing your investment strategy and timing of exits.";
-            } else if (update.title.includes('Standard Deduction')) {
-                summary = "The standard deduction for salaried employees has been increased to ₹75,000 from ₹50,000. This reduces your taxable income automatically without requiring any investment or documentation. All salaried individuals benefit from this change, resulting in tax savings of approximately ₹6,000-7,500 depending on your tax bracket.";
-            } else {
-                summary = "This tax update affects various aspects of income tax calculation and compliance. It's recommended to review how this change impacts your specific tax situation and consult with a tax advisor for personalized guidance.";
+            // Try AI response first, fallback to mock if needed
+            try {
+                const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+                const prompt = `Explain this Indian tax policy update in simple terms for taxpayers:
+
+Update: ${update.title}
+Description: ${update.desc}
+
+Provide a clear explanation covering:
+1. What changed
+2. Who is affected
+3. Practical impact on taxpayers
+4. Any action needed
+
+Keep it under 100 words, use simple language, focus on practical implications for Indian taxpayers.`;
+
+                const result = await model.generateContent(prompt);
+                const response = await result.response;
+                const aiSummary = response.text().trim();
+                
+                setUpdateSummary(aiSummary);
+            } catch (aiError) {
+                console.warn("AI summary failed, using fallback:", aiError);
+                // Fallback to contextual summaries based on update type
+                let summary = "";
+                
+                if (update.title.includes('New Tax Regime')) {
+                    summary = "The new tax regime offers lower tax rates but removes most deductions and exemptions. For FY 2024-25, it becomes the default option, meaning taxpayers need to actively choose the old regime if they want to claim deductions like 80C, HRA, etc. This change primarily benefits those with fewer deductions.";
+                } else if (update.title.includes('LTCG')) {
+                    summary = "Long Term Capital Gains tax rates have been revised for equity investments. The new rates apply to gains exceeding ₹1 lakh in a financial year. This affects investors in stocks and equity mutual funds held for more than one year. Consider reviewing your investment strategy and timing of exits.";
+                } else if (update.title.includes('Standard Deduction')) {
+                    summary = "The standard deduction for salaried employees has been increased to ₹75,000 from ₹50,000. This reduces your taxable income automatically without requiring any investment or documentation. All salaried individuals benefit from this change, resulting in tax savings of approximately ₹6,000-7,500 depending on your tax bracket.";
+                } else {
+                    summary = "This tax update affects various aspects of income tax calculation and compliance. It's recommended to review how this change impacts your specific tax situation and consult with a tax advisor for personalized guidance.";
+                }
+                
+                setUpdateSummary(summary);
             }
-            
-            setUpdateSummary(summary);
         } catch (error) {
             setUpdateSummary("Could not fetch details at this moment.");
         } finally {

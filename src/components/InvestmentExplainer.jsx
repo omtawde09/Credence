@@ -1,9 +1,16 @@
 import React, { useState } from 'react';
-import { ChevronDown, ChevronUp, AlertTriangle, TrendingUp, TrendingDown, Target, Clock, Shield } from 'lucide-react';
+import { ChevronDown, ChevronUp, AlertTriangle, TrendingUp, TrendingDown, Target, Clock, Shield, Sparkles } from 'lucide-react';
 import { applyAgentConstraints, assessRiskThreshold, representUncertainty, shouldAgentAct } from '../utils/kiroIntegration';
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const InvestmentExplainer = ({ recommendation, investorProfile }) => {
     const [showRisks, setShowRisks] = useState(false);
+    const [aiExplanation, setAiExplanation] = useState('');
+    const [loadingAI, setLoadingAI] = useState(false);
+    const [useAI, setUseAI] = useState(false);
+
+    // Initialize Gemini AI
+    const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
 
     const profile = investorProfile || {
         goals: [{ name: 'Retirement Corpus', horizon: '25 years' }, { name: 'Child Education', horizon: '15 years' }],
@@ -42,6 +49,47 @@ const InvestmentExplainer = ({ recommendation, investorProfile }) => {
         0.75 // Information quality
     );
 
+    // Generate AI-powered explanation
+    const generateAIExplanation = async () => {
+        setLoadingAI(true);
+        try {
+            const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+            const prompt = `Generate a clear, professional explanation for why this investment recommendation is suitable:
+
+Investor Profile:
+- Age: ${profile.age}, Goals: ${profile.goals.map(g => g.name).join(', ')}
+- Risk Tolerance: ${profile.riskProfile.stated} (${profile.riskProfile.score}/10)
+- Max Drawdown Tolerance: ${profile.riskProfile.maxDrawdownTolerance}%
+- Investment Experience: ${profile.riskProfile.investmentExperience}
+- Preferences: ${profile.preferences.assetClasses.join(', ')}
+
+Recommendation:
+- Portfolio: ${rec.name}
+- Allocation: ${rec.allocation.equity}% equity, ${rec.allocation.debt}% debt, ${rec.allocation.gold}% gold, ${rec.allocation.cash}% cash
+- Expected Return: ${rec.expectedReturn}
+- Risk Level: ${rec.riskLevel}
+
+Generate a suitability explanation covering:
+1. How this aligns with investor goals and timeline
+2. Why the risk level matches their tolerance
+3. How the allocation supports their objectives
+
+Keep it professional, clear, and under 150 words. Use Indian financial terminology.`;
+
+            const result = await model.generateContent(prompt);
+            const response = await result.response;
+            const text = response.text();
+            
+            setAiExplanation(text.trim());
+            setUseAI(true);
+        } catch (error) {
+            console.error("AI Explanation generation error:", error);
+            setUseAI(false);
+        } finally {
+            setLoadingAI(false);
+        }
+    };
+
     return (
         <div className="bg-white rounded-[24px] p-6 border border-[#CFE3D8] shadow-sm">
             <div className="flex items-center gap-3 mb-4">
@@ -49,8 +97,20 @@ const InvestmentExplainer = ({ recommendation, investorProfile }) => {
                     <Target size={16} className="text-[#1E3A2F]" />
                 </div>
                 <h3 className="text-sm font-bold uppercase tracking-widest text-gray-500">Recommendation Rationale</h3>
+                <button
+                    onClick={generateAIExplanation}
+                    disabled={loadingAI}
+                    className="ml-auto flex items-center gap-1 px-2 py-1 bg-emerald-100 hover:bg-emerald-200 text-emerald-700 text-xs font-bold rounded-full transition-colors"
+                >
+                    {loadingAI ? (
+                        <Sparkles size={12} className="animate-spin" />
+                    ) : (
+                        <Sparkles size={12} />
+                    )}
+                    {useAI ? 'AI' : 'AI+'}
+                </button>
                 {!agentDecision.shouldAct && (
-                    <div className="ml-auto px-2 py-1 bg-amber-100 text-amber-800 text-xs rounded-full">
+                    <div className="px-2 py-1 bg-amber-100 text-amber-800 text-xs rounded-full">
                         Limited Confidence
                     </div>
                 )}
@@ -122,7 +182,19 @@ const InvestmentExplainer = ({ recommendation, investorProfile }) => {
 
                 <div className="p-4 bg-[#E6EFEA] rounded-xl border border-[#CFE3D8]">
                     <span className="font-bold text-[#1E3A2F] block mb-2">Suitability Statement</span>
-                    <p>Based on the stated financial goals, risk tolerance, investment horizon, and preference for {profile.preferences.prefersSRI ? 'socially responsible investing' : 'diversified portfolios'}, this allocation is considered suitable. The {rec.allocation.equity}% equity exposure provides growth potential while {rec.allocation.debt}% debt allocation offers stability and regular income.</p>
+                    {useAI && aiExplanation ? (
+                        <div className="relative">
+                            <div className="absolute top-0 right-0">
+                                <span className="inline-flex items-center gap-1 px-2 py-1 bg-emerald-100 text-emerald-700 text-xs font-bold rounded-full">
+                                    <Sparkles size={10} />
+                                    AI
+                                </span>
+                            </div>
+                            <p className="pr-12">{aiExplanation}</p>
+                        </div>
+                    ) : (
+                        <p>Based on the stated financial goals, risk tolerance, investment horizon, and preference for {profile.preferences.prefersSRI ? 'socially responsible investing' : 'diversified portfolios'}, this allocation is considered suitable. The {rec.allocation.equity}% equity exposure provides growth potential while {rec.allocation.debt}% debt allocation offers stability and regular income.</p>
+                    )}
                     
                     {!agentDecision.shouldAct && (
                         <div className="mt-3 p-2 bg-amber-50 border border-amber-200 rounded-lg">
