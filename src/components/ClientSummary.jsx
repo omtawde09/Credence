@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { User, RefreshCw, Copy, Check, FileText, AlertCircle, Sparkles } from 'lucide-react';
 import { mockInvestorProfile, mockAdvisorProfile, generateClientSummary, detectRiskMismatch } from '../data/investorProfile';
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { advisorDashboardAssistant } from '../utils/aiAgentManager.js';
 
 const ClientSummary = ({ investor, advisor }) => {
     const inv = investor || mockInvestorProfile;
@@ -10,64 +10,71 @@ const ClientSummary = ({ investor, advisor }) => {
     const [regenerating, setRegenerating] = useState(false);
     const [aiSummary, setAiSummary] = useState('');
     const [useAI, setUseAI] = useState(false);
+    const [agentStatus, setAgentStatus] = useState({ enabled: false });
 
-    // Initialize Gemini AI
-    const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
-
-    const [summaryContent, setSummaryContent] = useState('Loading summary...');
-
-    useEffect(() => {
-        const loadSummary = async () => {
-            const summary = await generateClientSummary(inv, adv);
-            setSummaryContent(summary);
-        };
-        loadSummary();
-    }, [inv, adv]);
+    // STEP 1: Generate deterministic summary (ALWAYS FIRST)
+    const deterministicSummary = generateClientSummary(inv, adv);
     const mismatch = detectRiskMismatch(inv);
     const pendingEvents = inv.lifeEvents.filter(e => e.pending);
 
-    // Generate AI-powered summary
+    useEffect(() => {
+        const checkAgentStatus = async () => {
+            try {
+                const { getAIAgentSystemStatus } = await import('../utils/aiAgentManager.js');
+                const status = getAIAgentSystemStatus();
+                setAgentStatus(status);
+            } catch (error) {
+                console.warn('AI Agent Manager not available:', error);
+            }
+        };
+        
+        checkAgentStatus();
+    }, []);
+
+    // STEP 2: Generate AI-enhanced summary (ONLY after deterministic analysis)
     const generateAISummary = async () => {
         setRegenerating(true);
         try {
-            const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-            const prompt = `Generate a concise advisor briefing summary for the following client profile:
+            // Prepare client data for AI agent
+            const clientData = {
+                name: inv.name,
+                age: inv.age,
+                occupation: inv.occupation,
+                riskProfile: inv.riskProfile.stated,
+                goals: inv.goals,
+                currentPortfolio: inv.currentPortfolio,
+                alerts: mismatch ? [{ type: 'Risk Mismatch', description: mismatch.explanation }] : [],
+                pendingEvents: pendingEvents,
+                lastReview: inv.lastReviewDate
+            };
 
-Client: ${inv.name}, Age: ${inv.age}, Occupation: ${inv.occupation}
-Annual Income: ₹${inv.annualIncome.toLocaleString()}
-Investment Experience: ${inv.riskProfile.investmentExperience}
-Risk Tolerance: ${inv.riskProfile.stated} (${inv.riskProfile.score}/10)
-
-Goals:
-${inv.goals.map(g => `- ${g.name}: ₹${g.target.toLocaleString()} in ${g.horizon} (${g.priority} priority)`).join('\n')}
-
-Current Portfolio: ₹${inv.currentPortfolio.totalValue.toLocaleString()}
-- Equity: ${inv.currentPortfolio.allocation.equity}%
-- Debt: ${inv.currentPortfolio.allocation.debt}%
-- Gold: ${inv.currentPortfolio.allocation.gold}%
-- Cash: ${inv.currentPortfolio.allocation.cash}%
-
-${mismatch ? `ALERT: Portfolio risk (${mismatch.actualRisk}) ${mismatch.direction.toLowerCase()} than stated tolerance (${mismatch.statedRisk}).` : ''}
-${pendingEvents.length > 0 ? `Recent life event: ${pendingEvents[0].event} (${pendingEvents[0].date}) - requires review.` : ''}
-
-Generate a professional, concise summary (2-3 sentences) for advisor preparation. Focus on key insights, alerts, and next steps. Use Indian financial terminology.`;
-
-            const result = await model.generateContent(prompt);
-            const response = await result.response;
-            const text = response.text();
-
-            setAiSummary(text.trim());
-            setUseAI(true);
+            // CRITICAL: Pass deterministic summary first (execution order enforcement)
+            const result = await advisorDashboardAssistant.summarizeClient(
+                { summary: deterministicSummary }, // Deterministic result REQUIRED first
+                clientData,
+                { confidence: 0.8 }
+            );
+            
+            if (result.enhanced && result.content) {
+                setAiSummary(result.content);
+                setUseAI(true);
+            } else {
+                // Fall back to deterministic summary
+                setAiSummary(deterministicSummary);
+                setUseAI(false);
+                console.log('AI enhancement not available:', result.reason);
+            }
         } catch (error) {
             console.error("AI Summary generation error:", error);
-            // Fallback to static summary
+            // Fallback to deterministic summary
+            setAiSummary(deterministicSummary);
             setUseAI(false);
         } finally {
             setRegenerating(false);
         }
     };
 
-    const currentSummary = useAI && aiSummary ? aiSummary : summaryContent;
+    const currentSummary = useAI && aiSummary ? aiSummary : deterministicSummary;
 
     const handleCopy = () => {
         navigator.clipboard.writeText(currentSummary);
@@ -98,13 +105,14 @@ Generate a professional, concise summary (2-3 sentences) for advisor preparation
                         onClick={handleRegenerate}
                         className="flex items-center gap-1 px-3 py-2 rounded-lg border border-[#CFE3D8] hover:bg-[#E6EFEA] transition-colors text-xs font-bold"
                         title={useAI ? "Regenerate AI Summary" : "Generate AI Summary"}
+                        disabled={!agentStatus.systemEnabled && !useAI}
                     >
                         {regenerating ? (
                             <Sparkles size={14} className="text-emerald-500 animate-spin" />
                         ) : (
                             <RefreshCw size={14} className="text-[#1E3A2F]" />
                         )}
-                        {useAI ? 'AI' : 'AI+'}
+                        {agentStatus.systemEnabled ? (useAI ? 'AI' : 'AI+') : 'Rule'}
                     </button>
                     <button
                         onClick={handleCopy}
@@ -144,11 +152,18 @@ Generate a professional, concise summary (2-3 sentences) for advisor preparation
             )}
 
             <div className="p-4 bg-[#FAFAF7] rounded-xl border border-[#CFE3D8]/50 relative">
-                {useAI && (
+                {useAI && agentStatus.systemEnabled && (
                     <div className="absolute top-2 right-2">
                         <span className="inline-flex items-center gap-1 px-2 py-1 bg-emerald-100 text-emerald-700 text-xs font-bold rounded-full">
                             <Sparkles size={10} />
-                            AI
+                            AI Enhanced
+                        </span>
+                    </div>
+                )}
+                {!agentStatus.systemEnabled && (
+                    <div className="absolute top-2 right-2">
+                        <span className="inline-flex items-center gap-1 px-2 py-1 bg-slate-100 text-slate-600 text-xs font-bold rounded-full">
+                            Rule-Based
                         </span>
                     </div>
                 )}
@@ -172,7 +187,9 @@ Generate a professional, concise summary (2-3 sentences) for advisor preparation
 
             <div className="mt-4 pt-4 border-t border-[#CFE3D8]">
                 <p className="text-xs text-gray-400">
-                    {useAI ? 'AI-generated' : 'Auto-generated'} summary for advisor briefing. Last updated: {new Date().toLocaleDateString('en-IN')}
+                    {useAI && agentStatus.systemEnabled ? 'AI-enhanced' : 'Rule-based'} summary for advisor briefing. 
+                    {agentStatus.systemEnabled ? ' AI agents available.' : ' AI agents not configured.'} 
+                    Last updated: {new Date().toLocaleDateString('en-IN')}
                 </p>
             </div>
         </div>

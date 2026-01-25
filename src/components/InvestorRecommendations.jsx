@@ -18,8 +18,13 @@ const InvestorRecommendations = () => {
         const initializeRecommendations = async () => {
             // Check AI assistance status
             try {
-                const { getAIAssistStatus } = await import('../utils/aiAssistLayer.js');
-                setAiEnhancementStatus(getAIAssistStatus());
+                const { getAllProviderStatus } = await import('../utils/aiAssistanceSelector.js');
+                const providerStatus = await getAllProviderStatus();
+                setAiEnhancementStatus({
+                    enabled: providerStatus.selected !== 'deterministic',
+                    selectedProvider: providerStatus.selected,
+                    availableProviders: providerStatus.available
+                });
             } catch (error) {
                 console.warn('AI assistance layer not available:', error);
             }
@@ -34,7 +39,7 @@ const InvestorRecommendations = () => {
                     };
                 })
             );
-
+            
             setValidatedRecommendations(validatedRecs);
         };
 
@@ -133,8 +138,6 @@ const InvestorRecommendations = () => {
         }
     ];
 
-
-
     const compatibleAdvisors = [
         {
             name: 'Priya Mehta, CFA',
@@ -174,11 +177,11 @@ const InvestorRecommendations = () => {
     return (
         <div className="min-h-screen bg-slate-50">
             <Sidebar />
-
+            
             <div className="md:ml-64 p-6">
                 <div className="max-w-5xl mx-auto">
                     <div className="flex items-center gap-4 mb-8">
-                        <button
+                        <button 
                             onClick={() => navigate('/investor-onboarding')}
                             className="w-10 h-10 rounded-full bg-white border border-slate-200 flex items-center justify-center hover:bg-slate-50 transition-colors"
                         >
@@ -228,7 +231,10 @@ const InvestorRecommendations = () => {
                                     <li>• Goals matched to appropriate product categories</li>
                                     <li>• Recommendations filtered by stated exclusions</li>
                                     {aiEnhancementStatus.enabled && (
-                                        <li>• AI assistance enabled for enhanced explanations</li>
+                                        <li>• AI assistance enabled ({aiEnhancementStatus.selectedProvider} provider) for enhanced explanations</li>
+                                    )}
+                                    {!aiEnhancementStatus.enabled && (
+                                        <li>• Deterministic mode - no AI assistance configured</li>
                                     )}
                                 </ul>
                             </div>
@@ -237,7 +243,7 @@ const InvestorRecommendations = () => {
 
                     <div className="space-y-6 mb-8">
                         <h2 className="text-lg font-bold text-slate-800">Investment Plans for You</h2>
-
+                        
                         {validatedRecommendations.map((rec) => (
                             <div key={rec.id} className="bg-white rounded-3xl border border-slate-200 overflow-hidden">
                                 <div className="p-6">
@@ -322,7 +328,7 @@ const InvestorRecommendations = () => {
                                                     <p className="font-semibold text-slate-800">{rec.risk}</p>
                                                 </div>
                                             </div>
-
+                                            
                                             <div>
                                                 <p className="text-sm font-semibold text-slate-700 mb-2">Why this suits you:</p>
                                                 <ul className="space-y-1">
@@ -371,8 +377,8 @@ const InvestorRecommendations = () => {
                                         </div>
                                         <div className="mt-4 p-3 bg-slate-200/50 rounded-xl">
                                             <p className="text-xs text-slate-600">
-                                                <strong>Disclaimer:</strong> Past performance is not indicative of future results.
-                                                Investments are subject to market risks. Please read all scheme-related documents carefully before investing.
+                                                <strong>Disclaimer:</strong> Past performance is not indicative of future results. 
+                                                Investments are subject to market risks. Please read all scheme-related documents carefully before investing. 
                                                 This recommendation is based on information provided and should not be considered as financial advice.
                                             </p>
                                         </div>
@@ -388,7 +394,7 @@ const InvestorRecommendations = () => {
                             <h2 className="text-lg font-bold text-slate-800">Advisors Who Match Your Profile</h2>
                         </div>
                         <p className="text-sm text-slate-500 mb-6">Based on your goals and risk tolerance, these advisors are best suited to guide you.</p>
-
+                        
                         <div className="grid md:grid-cols-2 gap-4">
                             {compatibleAdvisors.map((advisor, idx) => (
                                 <div key={idx} className="p-4 border border-slate-200 rounded-xl">
@@ -417,8 +423,8 @@ const InvestorRecommendations = () => {
 
                     <div className="bg-slate-100 border border-slate-200 rounded-2xl p-4 mb-8">
                         <p className="text-xs text-slate-600">
-                            <strong>Important:</strong> These recommendations are generated based on the information you provided and are for educational purposes.
-                            Before making any investment decisions, please consult with a SEBI-registered financial advisor.
+                            <strong>Important:</strong> These recommendations are generated based on the information you provided and are for educational purposes. 
+                            Before making any investment decisions, please consult with a SEBI-registered financial advisor. 
                             All investments carry risk and you may lose some or all of your principal.
                         </p>
                     </div>
@@ -429,7 +435,7 @@ const InvestorRecommendations = () => {
                             <div>
                                 <h3 className="font-semibold text-amber-800 mb-2">Approval Required Before Investment</h3>
                                 <p className="text-sm text-amber-700 mb-3">
-                                    These are recommendations only. No investments will be made without your explicit approval.
+                                    These are recommendations only. No investments will be made without your explicit approval. 
                                     You maintain full control over all investment decisions.
                                 </p>
                                 <p className="text-xs text-amber-600">

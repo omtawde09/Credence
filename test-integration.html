@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeepSeek Local Integration Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .success { background-color: #d4edda; border-color: #c3e6cb; }
+        .error { background-color: #f8d7da; border-color: #f5c6cb; }
+        .info { background-color: #d1ecf1; border-color: #bee5eb; }
+        pre { background: #f8f9fa; padding: 10px; border-radius: 3px; overflow-x: auto; }
+        button { padding: 10px 20px; margin: 5px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>🧪 DeepSeek Local Integration Test</h1>
+    
+    <div class="test-section info">
+        <h3>Configuration Status</h3>
+        <div id="config-status">Loading...</div>
+    </div>
+    
+    <div class="test-section">
+        <h3>Test Local Enhancement</h3>
+        <button onclick="testEnhancement()">Test Explanation Enhancement</button>
+        <div id="enhancement-result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h3>Test Direct Ollama Call</h3>
+        <button onclick="testDirectOllama()">Test Direct Ollama API</button>
+        <div id="ollama-result"></div>
+    </div>
+
+    <script type="module">
+        // Test configuration
+        const testConfig = () => {
+            const config = {
+                mode: 'local',
+                ollamaEndpoint: 'http://localhost:11434/api/generate',
+                ollamaModel: 'deepseek-r1:8b',
+                enabled: true
+            };
+            
+            document.getElementById('config-status').innerHTML = `
+                <strong>Local Mode Configuration:</strong><br>
+                Mode: ${config.mode}<br>
+                Endpoint: ${config.ollamaEndpoint}<br>
+                Model: ${config.ollamaModel}<br>
+                Status: ${config.enabled ? '✅ Enabled' : '❌ Disabled'}
+            `;
+        };
+        
+        // Test direct Ollama API call
+        window.testDirectOllama = async () => {
+            const resultDiv = document.getElementById('ollama-result');
+            resultDiv.innerHTML = '<p>Testing direct Ollama API call...</p>';
+            
+            try {
+                const response = await fetch('http://localhost:11434/api/generate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        model: 'deepseek-r1:8b',
+                        prompt: 'Rewrite this financial explanation for clarity: "Risk assessment indicates medium probability threshold breach based on portfolio analysis."',
+                        stream: false,
+                        options: {
+                            temperature: 0.1,
+                            num_predict: 200
+                        }
+                    })
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    resultDiv.innerHTML = `
+                        <div class="success">
+                            <h4>✅ Direct Ollama API Success</h4>
+                            <p><strong>Original:</strong> "Risk assessment indicates medium probability threshold breach based on portfolio analysis."</p>
+                            <p><strong>Enhanced:</strong> "${data.response}"</p>
+                            <pre>${JSON.stringify(data, null, 2)}</pre>
+                        </div>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `
+                        <div class="error">
+                            <h4>❌ Ollama API Failed</h4>
+                            <p>Status: ${response.status} ${response.statusText}</p>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="error">
+                        <h4>❌ Connection Error</h4>
+                        <p>${error.message}</p>
+                        <p>Make sure Ollama is running: <code>ollama serve</code></p>
+                        <p>And the model is available: <code>ollama pull deepseek-r1:8b</code></p>
+                    </div>
+                `;
+            }
+        };
+        
+        // Test enhancement through AI assist layer (simulated)
+        window.testEnhancement = async () => {
+            const resultDiv = document.getElementById('enhancement-result');
+            resultDiv.innerHTML = '<p>Testing enhancement layer...</p>';
+            
+            // Simulate the AI assist layer call
+            const originalText = "Portfolio risk analysis indicates elevated volatility metrics exceeding threshold parameters.";
+            
+            try {
+                // This simulates what the AI assist layer would do
+                const systemPrompt = `You are a financial explanation enhancer. Your ONLY role is to rewrite existing explanations for clarity.
+
+ABSOLUTE CONSTRAINTS:
+- Never give advice or recommendations
+- Never use guarantees or certainties
+- Never add new facts or risks
+- Never use metaphors or analogies
+- Use neutral, regulated tone only
+- Preserve all numerical values exactly
+- Preserve all uncertainty acknowledgments
+
+Your task: Rewrite the given explanation for better clarity while preserving exact meaning and all constraints.`;
+
+                const fullPrompt = `${systemPrompt}\n\nRewrite this financial explanation for clarity: "${originalText}"`;
+
+                const response = await fetch('http://localhost:11434/api/generate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        model: 'deepseek-r1:8b',
+                        prompt: fullPrompt,
+                        stream: false,
+                        options: {
+                            temperature: 0.1,
+                            num_predict: 300
+                        }
+                    })
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    
+                    // Simulate validation (basic check)
+                    const enhanced = data.response.trim();
+                    const hasValidation = !enhanced.toLowerCase().includes('guaranteed') && 
+                                        !enhanced.toLowerCase().includes('you should') &&
+                                        enhanced.length > 0;
+                    
+                    if (hasValidation) {
+                        resultDiv.innerHTML = `
+                            <div class="success">
+                                <h4>✅ Enhancement Layer Success</h4>
+                                <p><strong>Original:</strong> "${originalText}"</p>
+                                <p><strong>Enhanced:</strong> "${enhanced}"</p>
+                                <p><strong>Validation:</strong> ✅ Passed safety checks</p>
+                                <p><strong>Source:</strong> deepseek_local</p>
+                            </div>
+                        `;
+                    } else {
+                        resultDiv.innerHTML = `
+                            <div class="error">
+                                <h4>❌ Validation Failed</h4>
+                                <p>Enhanced text failed safety validation</p>
+                                <p>Would fallback to deterministic content</p>
+                            </div>
+                        `;
+                    }
+                } else {
+                    resultDiv.innerHTML = `
+                        <div class="error">
+                            <h4>❌ Enhancement Failed</h4>
+                            <p>Would fallback to deterministic content</p>
+                            <p>Status: ${response.status}</p>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="error">
+                        <h4>❌ Enhancement Error</h4>
+                        <p>Would fallback to deterministic content</p>
+                        <p>Error: ${error.message}</p>
+                    </div>
+                `;
+            }
+        };
+        
+        // Initialize
+        testConfig();
+    </script>
+</body>
+</html>

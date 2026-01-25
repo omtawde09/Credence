@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hugging Face Integration Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .success { background-color: #d4edda; border-color: #c3e6cb; }
+        .error { background-color: #f8d7da; border-color: #f5c6cb; }
+        .info { background-color: #d1ecf1; border-color: #bee5eb; }
+        pre { background: #f8f9fa; padding: 10px; border-radius: 3px; overflow-x: auto; }
+        button { padding: 10px 20px; margin: 5px; cursor: pointer; }
+        .loading { color: #666; font-style: italic; }
+    </style>
+</head>
+<body>
+    <h1>🤗 Hugging Face Integration Test</h1>
+    
+    <div class="test-section info">
+        <h3>Configuration Status</h3>
+        <div id="config-status">Loading...</div>
+    </div>
+    
+    <div class="test-section">
+        <h3>Test Financial Explanation Enhancement</h3>
+        <button onclick="testFinancialEnhancement()">Test Enhancement</button>
+        <div id="enhancement-result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h3>Test Risk Narrative Expansion</h3>
+        <button onclick="testRiskNarrative()">Test Risk Expansion</button>
+        <div id="risk-result"></div>
+    </div>
+
+    <script type="module">
+        // Test configuration
+        const testConfig = () => {
+            const hasToken = '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'.startsWith('hf_');
+            
+            document.getElementById('config-status').innerHTML = `
+                <strong>Hugging Face Configuration:</strong><br>
+                API Token: ${hasToken ? '✅ Configured' : '❌ Missing'}<br>
+                Endpoint: https://api-inference.huggingface.co/models/facebook/bart-large-cnn<br>
+                Status: ${hasToken ? '✅ Ready for testing' : '❌ Needs configuration'}
+            `;
+        };
+        
+        // Test financial explanation enhancement
+        window.testFinancialEnhancement = async () => {
+            const resultDiv = document.getElementById('enhancement-result');
+            resultDiv.innerHTML = '<p class="loading">Testing Hugging Face enhancement...</p>';
+            
+            const originalText = "Portfolio risk analysis indicates elevated volatility metrics exceeding threshold parameters with medium probability assessment.";
+            
+            try {
+                const enhancedPrompt = `Financial Analysis: ${originalText}. This analysis discusses investment risks and portfolio considerations for financial planning purposes.`;
+                
+                const response = await fetch('https://api-inference.huggingface.co/models/facebook/bart-large-cnn', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': 'Bearer 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',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        inputs: enhancedPrompt,
+                        parameters: {
+                            max_length: 150,
+                            min_length: 50,
+                            do_sample: false
+                        },
+                        options: {
+                            wait_for_model: true,
+                            use_cache: false
+                        }
+                    })
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    
+                    if (data && Array.isArray(data) && data[0] && data[0].summary_text) {
+                        const enhanced = data[0].summary_text.trim();
+                        
+                        // Basic validation
+                        const isValid = !enhanced.toLowerCase().includes('guaranteed') && 
+                                       !enhanced.toLowerCase().includes('you should') &&
+                                       enhanced.length > 0;
+                        
+                        resultDiv.innerHTML = `
+                            <div class="${isValid ? 'success' : 'error'}">
+                                <h4>${isValid ? '✅' : '❌'} Enhancement Test</h4>
+                                <p><strong>Original:</strong> "${originalText}"</p>
+                                <p><strong>Enhanced:</strong> "${enhanced}"</p>
+                                <p><strong>Validation:</strong> ${isValid ? '✅ Passed safety checks' : '❌ Failed validation'}</p>
+                                <p><strong>Provider:</strong> Hugging Face (BART-large-CNN)</p>
+                                <pre>${JSON.stringify(data, null, 2)}</pre>
+                            </div>
+                        `;
+                    } else {
+                        resultDiv.innerHTML = `
+                            <div class="error">
+                                <h4>❌ Unexpected Response Format</h4>
+                                <pre>${JSON.stringify(data, null, 2)}</pre>
+                            </div>
+                        `;
+                    }
+                } else {
+                    const errorText = await response.text();
+                    resultDiv.innerHTML = `
+                        <div class="error">
+                            <h4>❌ API Error</h4>
+                            <p>Status: ${response.status} ${response.statusText}</p>
+                            <p>Response: ${errorText}</p>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="error">
+                        <h4>❌ Connection Error</h4>
+                        <p>${error.message}</p>
+                        <p>Check your internet connection and API token.</p>
+                    </div>
+                `;
+            }
+        };
+        
+        // Test risk narrative expansion
+        window.testRiskNarrative = async () => {
+            const resultDiv = document.getElementById('risk-result');
+            resultDiv.innerHTML = '<p class="loading">Testing risk narrative expansion...</p>';
+            
+            const riskText = "Market volatility may cause short-term losses. International exposure carries currency risk.";
+            
+            try {
+                const enhancedPrompt = `Financial Risk Analysis: ${riskText}. This discusses potential investment risks and market considerations.`;
+                
+                const response = await fetch('https://api-inference.huggingface.co/models/facebook/bart-large-cnn', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': 'Bearer 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',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        inputs: enhancedPrompt,
+                        parameters: {
+                            max_length: 200,
+                            min_length: 60,
+                            do_sample: false
+                        },
+                        options: {
+                            wait_for_model: true,
+                            use_cache: false
+                        }
+                    })
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    
+                    if (data && Array.isArray(data) && data[0] && data[0].summary_text) {
+                        const expanded = data[0].summary_text.trim();
+                        
+                        resultDiv.innerHTML = `
+                            <div class="success">
+                                <h4>✅ Risk Narrative Expansion</h4>
+                                <p><strong>Original:</strong> "${riskText}"</p>
+                                <p><strong>Enhanced:</strong> "${expanded}"</p>
+                                <p><strong>Provider:</strong> Hugging Face (BART-large-CNN)</p>
+                            </div>
+                        `;
+                    } else {
+                        resultDiv.innerHTML = `
+                            <div class="error">
+                                <h4>❌ Unexpected Response</h4>
+                                <pre>${JSON.stringify(data, null, 2)}</pre>
+                            </div>
+                        `;
+                    }
+                } else {
+                    const errorText = await response.text();
+                    resultDiv.innerHTML = `
+                        <div class="error">
+                            <h4>❌ API Error</h4>
+                            <p>Status: ${response.status}</p>
+                            <p>Response: ${errorText}</p>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="error">
+                        <h4>❌ Error</h4>
+                        <p>${error.message}</p>
+                    </div>
+                `;
+            }
+        };
+        
+        // Initialize
+        testConfig();
+    </script>
+</body>
+</html>

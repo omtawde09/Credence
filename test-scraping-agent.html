@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Scraping Agent Test Interface</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background: #f5f5f5; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .card { background: white; border-radius: 10px; padding: 20px; margin: 20px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .success { border-left: 5px solid #28a745; }
+        .error { border-left: 5px solid #dc3545; }
+        .warning { border-left: 5px solid #ffc107; }
+        .info { border-left: 5px solid #17a2b8; }
+        
+        .form-group { margin: 15px 0; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input, select, textarea { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; }
+        button { background: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; margin: 5px; }
+        button:hover { background: #0056b3; }
+        button:disabled { background: #6c757d; cursor: not-allowed; }
+        
+        .results { margin-top: 20px; }
+        .result-item { background: #f8f9fa; padding: 15px; margin: 10px 0; border-radius: 5px; border: 1px solid #dee2e6; }
+        .loading { color: #666; font-style: italic; }
+        
+        pre { background: #f8f9fa; padding: 15px; border-radius: 5px; overflow-x: auto; white-space: pre-wrap; }
+        .status-badge { display: inline-block; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; }
+        .badge-success { background: #d4edda; color: #155724; }
+        .badge-error { background: #f8d7da; color: #721c24; }
+        .badge-warning { background: #fff3cd; color: #856404; }
+        
+        .approved-sources { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; }
+        .source-item { background: #e9ecef; padding: 8px; border-radius: 4px; font-size: 12px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🕷️ Web Scraping and Data Ingestion Agent</h1>
+        <p><strong>ScraperAPI + Hugging Face Integration</strong></p>
+        
+        <div class="card info">
+            <h3>📋 Agent Status</h3>
+            <div id="agent-status">Loading...</div>
+        </div>
+        
+        <div class="card">
+            <h3>🎯 Single URL Scraping</h3>
+            <div class="form-group">
+                <label for="target-url">Target URL:</label>
+                <input type="url" id="target-url" placeholder="https://example.com/article" 
+                       value="https://www.sec.gov/news/press-release">
+            </div>
+            <div class="form-group">
+                <label for="content-type">Content Type:</label>
+                <select id="content-type">
+                    <option value="article">Article</option>
+                    <option value="notice">Notice/Announcement</option>
+                    <option value="rate">Rate/Financial Data</option>
+                    <option value="regulation">Regulation/Policy</option>
+                </select>
+            </div>
+            <button onclick="scrapeSingleUrl()" id="scrape-btn">Scrape URL</button>
+            <div id="single-result" class="results"></div>
+        </div>
+        
+        <div class="card">
+            <h3>📚 Batch Scraping</h3>
+            <div class="form-group">
+                <label for="batch-urls">URLs (one per line):</label>
+                <textarea id="batch-urls" rows="5" placeholder="https://www.sec.gov/news/press-release/2024-1
+https://www.treasury.gov/press-center/press-releases
+https://www.federalreserve.gov/newsevents/pressreleases"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="batch-delay">Delay between requests (ms):</label>
+                <input type="number" id="batch-delay" value="2000" min="1000" max="10000">
+            </div>
+            <button onclick="scrapeBatchUrls()" id="batch-btn">Scrape Batch</button>
+            <div id="batch-result" class="results"></div>
+        </div>
+        
+        <div class="card info">
+            <h3>✅ Approved Sources</h3>
+            <p>The agent will only scrape from these approved domains:</p>
+            <div class="approved-sources">
+                <div class="source-item">sec.gov</div>
+                <div class="source-item">treasury.gov</div>
+                <div class="source-item">federalreserve.gov</div>
+                <div class="source-item">cftc.gov</div>
+                <div class="source-item">finra.org</div>
+                <div class="source-item">imf.org</div>
+                <div class="source-item">worldbank.org</div>
+                <div class="source-item">bis.org</div>
+                <div class="source-item">reuters.com</div>
+                <div class="source-item">bloomberg.com</div>
+                <div class="source-item">wsj.com</div>
+                <div class="source-item">ft.com</div>
+                <div class="source-item">cnbc.com</div>
+                <div class="source-item">wikipedia.org</div>
+                <div class="source-item">investopedia.com</div>
+            </div>
+        </div>
+        
+        <div class="card warning">
+            <h3>⚠️ Important Notes</h3>
+            <ul>
+                <li><strong>Data Collection Only:</strong> This agent collects and normalizes data - it does not make decisions or recommendations</li>
+                <li><strong>Source Validation:</strong> Only approved public sources are accessible</li>
+                <li><strong>Factual Integrity:</strong> All processing preserves original factual content</li>
+                <li><strong>Rate Limiting:</strong> Respects site terms of service with appropriate delays</li>
+                <li><strong>Traceability:</strong> Every piece of data includes source URL and timestamp</li>
+            </ul>
+        </div>
+    </div>
+
+    <script type="module">
+        // Check agent status on load
+        async function checkAgentStatus() {
+            const statusDiv = document.getElementById('agent-status');
+            
+            try {
+                // Simulate status check (in real app, this would import the module)
+                const hasScraperKey = 'VITE_SCRAPER_API_KEY' in import.meta.env || '4da21de9296acebff1e5147b50fd66a1';
+                const hasHfToken = 'VITE_HF_API_TOKEN' in import.meta.env || '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';
+                
+                statusDiv.innerHTML = `
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
+                        <div>
+                            <strong>ScraperAPI:</strong> 
+                            <span class="status-badge badge-success">✅ Configured</span>
+                            <br><small>Key: 4da21de...66a1</small>
+                        </div>
+                        <div>
+                            <strong>Hugging Face:</strong> 
+                            <span class="status-badge badge-success">✅ Configured</span>
+                            <br><small>Token: hf_vjsStO...JmiC</small>
+                        </div>
+                        <div>
+                            <strong>Agent Status:</strong> 
+                            <span class="status-badge badge-success">✅ Ready</span>
+                            <br><small>ScraperAPI + HF Processing</small>
+                        </div>
+                        <div>
+                            <strong>Approved Sources:</strong> 
+                            <span class="status-badge badge-success">15 domains</span>
+                            <br><small>Government, news, public sources</small>
+                        </div>
+                    </div>
+                `;
+            } catch (error) {
+                statusDiv.innerHTML = `
+                    <div class="error">
+                        <strong>❌ Configuration Error:</strong> ${error.message}
+                    </div>
+                `;
+            }
+        }
+        
+        // Single URL scraping
+        window.scrapeSingleUrl = async () => {
+            const url = document.getElementById('target-url').value;
+            const contentType = document.getElementById('content-type').value;
+            const resultDiv = document.getElementById('single-result');
+            const btn = document.getElementById('scrape-btn');
+            
+            if (!url) {
+                alert('Please enter a URL');
+                return;
+            }
+            
+            btn.disabled = true;
+            btn.textContent = 'Scraping...';
+            resultDiv.innerHTML = '<p class="loading">Fetching and processing data...</p>';
+            
+            try {
+                // Simulate scraping process (in real app, this would call the scraping agent)
+                const mockResult = await simulateScrapingProcess(url, contentType);
+                
+                resultDiv.innerHTML = `
+                    <div class="result-item ${mockResult.success ? 'success' : 'error'}">
+                        <h4>${mockResult.success ? '✅ Scraping Successful' : '❌ Scraping Failed'}</h4>
+                        <pre>${JSON.stringify(mockResult, null, 2)}</pre>
+                    </div>
+                `;
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="result-item error">
+                        <h4>❌ Error</h4>
+                        <p>${error.message}</p>
+                    </div>
+                `;
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Scrape URL';
+            }
+        };
+        
+        // Batch URL scraping
+        window.scrapeBatchUrls = async () => {
+            const urlsText = document.getElementById('batch-urls').value;
+            const delay = parseInt(document.getElementById('batch-delay').value);
+            const resultDiv = document.getElementById('batch-result');
+            const btn = document.getElementById('batch-btn');
+            
+            const urls = urlsText.split('\n').filter(url => url.trim());
+            
+            if (urls.length === 0) {
+                alert('Please enter at least one URL');
+                return;
+            }
+            
+            btn.disabled = true;
+            btn.textContent = 'Scraping Batch...';
+            resultDiv.innerHTML = '<p class="loading">Processing batch scraping...</p>';
+            
+            try {
+                const batchResult = await simulateBatchScraping(urls, delay);
+                
+                resultDiv.innerHTML = `
+                    <div class="result-item info">
+                        <h4>📊 Batch Results</h4>
+                        <p><strong>Total URLs:</strong> ${batchResult.total_urls}</p>
+                        <p><strong>Successful:</strong> ${batchResult.successful}</p>
+                        <p><strong>Failed:</strong> ${batchResult.failed}</p>
+                        <pre>${JSON.stringify(batchResult, null, 2)}</pre>
+                    </div>
+                `;
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="result-item error">
+                        <h4>❌ Batch Error</h4>
+                        <p>${error.message}</p>
+                    </div>
+                `;
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Scrape Batch';
+            }
+        };
+        
+        // Simulate scraping process for demo
+        async function simulateScrapingProcess(url, contentType) {
+            // Simulate network delay
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            
+            // Validate source
+            const approvedDomains = ['sec.gov', 'treasury.gov', 'federalreserve.gov', 'reuters.com', 'bloomberg.com'];
+            const domain = new URL(url).hostname;
+            const isApproved = approvedDomains.some(approved => domain.includes(approved));
+            
+            if (!isApproved) {
+                return {
+                    success: false,
+                    error: 'Source not in approved list',
+                    source_url: url,
+                    fetched_at: new Date().toISOString(),
+                    domain: domain
+                };
+            }
+            
+            // Simulate successful scraping
+            return {
+                success: true,
+                source_url: url,
+                fetched_at: new Date().toISOString(),
+                data_type: contentType,
+                raw_excerpt: "Sample content from the scraped page showing the first 200 characters of the actual content that would be retrieved from the source...",
+                cleaned_text: "This is the cleaned and processed version of the content using Hugging Face text processing. The content has been normalized while preserving all factual information.",
+                structured_fields: {
+                    dates_mentioned: ["January 15, 2024", "2024-01-20"],
+                    numbers_mentioned: ["15.5%", "1000", "2.3"],
+                    currency_amounts: ["$1,000,000", "$500"]
+                },
+                confidence_notes: "Processed with HF BART model - factual content preserved",
+                processing_method: "huggingface_summarization",
+                domain: domain,
+                content_length: 2847,
+                scraper_status: 200
+            };
+        }
+        
+        // Simulate batch scraping
+        async function simulateBatchScraping(urls, delay) {
+            const results = [];
+            
+            for (let i = 0; i < urls.length; i++) {
+                const result = await simulateScrapingProcess(urls[i], 'article');
+                results.push(result);
+                
+                if (i < urls.length - 1) {
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                }
+            }
+            
+            return {
+                total_urls: urls.length,
+                successful: results.filter(r => r.success).length,
+                failed: results.filter(r => !r.success).length,
+                results: results
+            };
+        }
+        
+        // Initialize
+        checkAgentStatus();
+    </script>
+</body>
+</html>

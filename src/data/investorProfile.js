@@ -198,7 +198,7 @@ export const generateClientSummary = async (investor, advisor) => {
     
     // Try AI enhancement if available (optional)
     try {
-        const { summarizeClientContext } = await import('../utils/aiAssistLayer.js');
+        const { summarizeClientContext } = await import('../utils/aiAssistanceSelector.js');
         const enhanced = await summarizeClientContext({
             name: investor.name,
             age: investor.age,
@@ -284,7 +284,7 @@ export const validateRecommendationWithKiroConstraints = async (recommendation, 
     
     // Enhance warnings with AI assistance if available (optional)
     try {
-        const { enhanceExplanation } = await import('../utils/aiAssistLayer.js');
+        const { enhanceExplanation } = await import('../utils/aiAssistanceSelector.js');
         
         if (validation.warnings.length > 0) {
             const warningText = validation.warnings.join('. ');

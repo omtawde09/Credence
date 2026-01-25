@@ -1,15 +1,27 @@
 {
   "mcpServers": {
-    "ai-assist-layer": {
+    "deepseek-v3.1-assist": {
       "command": "node",
       "args": ["src/utils/aiAssistLayer.js"],
       "env": {
-        "AI_API_KEY": "${VITE_AI_API_KEY}",
+        "DEEPSEEK_API_KEY": "${VITE_DEEPSEEK_API_KEY}",
+        "DEEPSEEK_ENDPOINT": "${VITE_DEEPSEEK_ENDPOINT}",
         "NODE_ENV": "production"
       },
       "disabled": true,
       "autoApprove": ["enhanceExplanation", "summarizeClientContext"],
-      "description": "Optional AI assistance for explanation enhancement - validates all outputs against .kiro constraints"
+      "description": "DeepSeek v3.1 assistance for explanation enhancement - validates all outputs against .kiro constraints"
+    },
+    "huggingface-inference-assist": {
+      "command": "node",
+      "args": ["src/utils/hfAssist.js"],
+      "env": {
+        "HF_API_TOKEN": "${VITE_HF_API_TOKEN}",
+        "NODE_ENV": "production"
+      },
+      "disabled": true,
+      "autoApprove": ["enhanceExplanation", "summarizeClientContext", "expandRiskNarrative"],
+      "description": "Hugging Face Inference API assistance for explanation enhancement - validates all outputs against .kiro constraints"
     }
   }
 }
