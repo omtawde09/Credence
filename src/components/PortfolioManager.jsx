@@ -5,12 +5,20 @@ import { Target, AlertTriangle, CheckCircle, ArrowRight, Shield } from 'lucide-r
 
 import PortfolioHealthScore from './PortfolioHealthScore';
 import WhatIfSimulator from './WhatIfSimulator';
+import SIPManager from './SIPManager';
+import RiskRadar from './RiskRadar';
 import usePortfolioStore from '../store/usePortfolioStore';
 
 const PortfolioManager = () => {
     const { user } = useAuthStore();
 
     const { portfolioData, isLoading } = usePortfolioStore();
+
+    // Quick Seed Tool
+    const handleSeed = async () => {
+        const { seedDatabase } = await import('../utils/SeedDatabase');
+        if (user?.id) seedDatabase(user.id);
+    };
 
     if (isLoading) return <div className="text-center p-10 text-slate-500">Loading portfolio data...</div>;
 
@@ -23,7 +31,14 @@ const PortfolioManager = () => {
                 <header className="flex justify-between items-center mb-8">
                     <div>
                         <h2 className="text-2xl font-bold dark:text-white">Portfolio Manager</h2>
-                        <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">Holistic view of your financial health</p>
+                        <div className="flex gap-4 items-center mt-1">
+                            <p className="text-sm text-slate-500 dark:text-slate-400">Holistic view of your financial health</p>
+                            {portfolioData.rawValue === 0 && (
+                                <button onClick={handleSeed} className="text-[10px] bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-500">
+                                    Load Demo Data
+                                </button>
+                            )}
+                        </div>
                     </div>
                     <div className="flex items-center gap-3">
                         <div className="text-right hidden sm:block">
@@ -71,24 +86,14 @@ const PortfolioManager = () => {
                             </div>
                         </div>
 
-                        {/* Risk Profile */}
-                        <div className="glass-panel p-6 rounded-[24px]">
-                            <h3 className="text-sm font-bold uppercase tracking-widest text-slate-500 mb-2">Risk Level</h3>
-                            <div className="flex items-center justify-between mb-2">
-                                <span className="text-xl font-bold text-slate-800">{portfolioData.riskLevel}</span>
-                                <Shield size={24} className={portfolioData.riskMismatch.detected ? "text-amber-500" : "text-green-500"} />
-                            </div>
-                            {portfolioData.riskMismatch.detected && (
-                                <p className="text-xs text-amber-600 font-medium bg-amber-50 px-3 py-2 rounded-xl border border-amber-100 leading-relaxed">
-                                    ⚠️ Higher than profile ({portfolioData.riskMismatch.investorProfile})
-                                </p>
-                            )}
-                        </div>
+                        {/* Risk Radar (Replaces static card) */}
+                        <RiskRadar />
                     </div>
 
-                    {/* NEW ROW: Health & Simulator (Interactive Tools) */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {/* NEW ROW: Health, Simulator & SIPs (Interactive Tools) */}
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                         {portfolioData.rawValue > 0 && <PortfolioHealthScore />}
+                        {portfolioData.rawValue > 0 && <SIPManager />}
                         {portfolioData.rawValue > 0 && <WhatIfSimulator />}
                     </div>
 
