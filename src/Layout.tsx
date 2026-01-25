@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Outlet } from "react-router-dom";
-import NavBar from "./Components/NavBar";
-import AuthModal from "./Components/AuthModal";
+import NavBar from "./components/NavBar";
+import AuthModal from "./components/AuthModal";
 import useAuthStore from "./store/useAuthStore";
 
 export default function Layout() {

@@ -1,10 +1,10 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import CredenceLandingPage from "./Components/FincogniaLandingPage";
-import Dashboard from "./Components/Dashboard";
-import CreditPage from "./Components/CreditPage";
-import Agents from "./Components/Agents";
-import PolicyPage from "./Components/PolicyPage";
-import TaxationPage from "./Components/TaxationPage";
+import CredenceLandingPage from "./components/FincogniaLandingPage";
+import Dashboard from "./components/Dashboard";
+import CreditPage from "./components/CreditPage";
+import Agents from "./components/Agents";
+import PolicyPage from "./components/PolicyPage";
+import TaxationPage from "./components/TaxationPage";
 import Layout from "./Layout";
 
 function App() {
