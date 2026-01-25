@@ -1,0 +1,227 @@
+ROLE:
+You are a senior staff-level frontend engineer, product designer, and UX architect
+who has designed financial products similar to Zerodha, Stripe, and institutional
+wealth management platforms.
+
+CONTEXT:
+This is a hackathon demo web application for the problem statement:
+"Intelligent Platform for Advisor & Investor Journey Management".
+
+The application demonstrates a complete, end-to-end journey for:
+- Retail investors seeking personalized investment guidance
+- Financial advisors managing multiple client relationships
+
+This app must feel like real financial infrastructure used by a regulated institution,
+not a flashy startup or crypto dashboard.
+
+OVERALL GOAL:
+Generate a complete, production-quality web application that:
+- Manages the full advisor–investor journey
+- Provides transparent and explainable investment recommendations
+- Scales to hundreds of advisors and thousands of investors
+- Feels calm, trustworthy, and professional
+
+PRIORITY:
+Product clarity, trust, and UX polish matter more than technical complexity.
+Mock data is acceptable everywhere.
+
+--------------------------------------------------
+DESIGN PHILOSOPHY (CRITICAL – DO NOT VIOLATE)
+--------------------------------------------------
+Design inspiration: Zerodha.com
+
+- Light, minimal, content-first UI
+- White or very light gray backgrounds
+- Typography-led hierarchy
+- Confidence through restraint
+- Remove anything decorative or unnecessary
+- No heavy gradients
+- No neon or glowing effects
+- No excessive cards or boxed layouts
+- Very subtle shadows only when absolutely necessary
+
+If a design element feels "cool" but not essential, remove it.
+
+--------------------------------------------------
+COLOR, TYPOGRAPHY & STYLE
+--------------------------------------------------
+- Background: white / off-white
+- Primary text: dark gray or near-black
+- Secondary text: muted gray
+- One subtle accent color (soft blue or green), used sparingly
+- Flat design, almost no depth
+
+Typography:
+- Clean sans-serif (Inter / system font)
+- Headings: medium weight (500–600), not bold
+- Large line height and generous spacing
+- Text should feel calm, readable, and confident
+
+--------------------------------------------------
+ANIMATION GUIDELINES
+--------------------------------------------------
+- Extremely subtle animations only
+- Fade-in and slight vertical motion (4–8px)
+- Used only on initial load or scroll
+- No dramatic easing or attention-grabbing motion
+- If animation is noticeable, it is too much
+
+--------------------------------------------------
+TECHNICAL CONSTRAINTS
+--------------------------------------------------
+- Frontend-focused application
+- Mock data only
+- No real trading, payments, or market integrations
+- Mobile responsive
+- Fast, smooth UX
+- Clean routing and structure
+
+--------------------------------------------------
+ROUTING STRUCTURE (LOCKED)
+--------------------------------------------------
+Create exactly four routes:
+
+1. "/" – Landing Page
+2. "/onboarding" – Investor Onboarding Journey
+3. "/recommendation" – Investment Recommendation & Explainability
+4. "/advisor" – Advisor Dashboard
+
+--------------------------------------------------
+PAGE 1: LANDING PAGE ("/")
+--------------------------------------------------
+PURPOSE:
+Introduce the platform calmly and confidently, establish trust immediately.
+
+LAYOUT:
+- Left-aligned content
+- Max-width container
+- No center-aligned hero blocks
+- Clean visual rhythm, not symmetry
+
+CONTENT:
+- Headline:
+  "Intelligent Advisor–Investor Journey Management"
+- Subheadline explaining personalized, transparent, regulated investment guidance
+- One primary CTA: "Start your journey"
+- Secondary CTA (less prominent): "For advisors"
+
+SECTIONS:
+- Simple explanation of how the platform works (3 steps)
+- Trust signals:
+  - Transparent advice
+  - Explainable recommendations
+  - Regulated advisor ecosystem
+- Light, text-first sections with minimal visuals or stats
+
+ANIMATIONS:
+- Gentle fade-in of content
+- Subtle section reveal on scroll
+- Minimal button hover feedback
+
+--------------------------------------------------
+PAGE 2: INVESTOR ONBOARDING ("/onboarding")
+--------------------------------------------------
+PURPOSE:
+Demonstrate intelligent, human-friendly investor profiling.
+
+FLOW:
+Create a clean, step-by-step onboarding experience.
+
+STEPS:
+1. Goal selection (retirement, wealth, home, education)
+2. Time horizon (simple slider with context)
+3. Risk appetite (scenario-based questions)
+4. Investment preferences (low cost, ethical, active/passive)
+
+UX REQUIREMENTS:
+- Progress indicator
+- Clear step titles
+- Minimal UI elements
+- No long forms or clutter
+- Conversational, respectful tone
+
+DESIGN:
+- Mostly text and simple controls
+- Avoid boxed cards unless necessary
+- Focus on clarity and ease
+
+ANIMATIONS:
+- Smooth step transitions
+- Very subtle progress indicator animation
+
+--------------------------------------------------
+PAGE 3: RECOMMENDATION & EXPLAINABILITY ("/recommendation")
+--------------------------------------------------
+PURPOSE:
+Show intelligent investment recommendations with full transparency.
+
+CONTENT:
+- Recommended investment plan
+- Risk level description (clear, plain language)
+- Expected return range (best-case and worst-case)
+- Simple asset allocation visualization (mock data)
+
+EXPLAINABILITY (CRITICAL):
+Clearly explain WHY this recommendation was made:
+- Investor goals
+- Time horizon
+- Risk tolerance
+- Preferences
+- Suitability considerations
+
+TRUST ELEMENTS:
+- Advisor compatibility score (shown calmly, not gamified)
+- Fee transparency explanation
+- Disclaimer
+- Expandable "What could go wrong?" section
+
+DESIGN:
+- Text-first, report-like layout
+- Feels like reading a financial recommendation note
+- No flashy visuals
+
+ANIMATIONS:
+- Subtle chart load
+- Gentle expand/collapse transitions
+
+--------------------------------------------------
+PAGE 4: ADVISOR DASHBOARD ("/advisor")
+--------------------------------------------------
+PURPOSE:
+Demonstrate advisor-side scalability and operational clarity.
+
+CONTENT:
+- Advisor profile summary
+- Active clients count
+- Assets under management (mock)
+- Performance vs benchmark (simple chart)
+- Client alerts:
+  - Risk mismatch
+  - Review required due to life events
+
+DESIGN:
+- Very clean, internal-tool style
+- Tables over cards where appropriate
+- Functional, boring, trustworthy
+
+ANIMATIONS:
+- Minimal data loading transitions
+- Subtle status changes
+
+--------------------------------------------------
+GLOBAL COMPONENTS
+--------------------------------------------------
+- Simple top navigation
+- Consistent spacing and typography
+- Reusable buttons and text styles
+- Professional empty states
+- Fully responsive layouts
+
+--------------------------------------------------
+FINAL INSTRUCTION (VERY IMPORTANT)
+--------------------------------------------------
+If something can be simpler, simplify it.
+If something looks decorative, remove it.
+The app should feel calm, confident, and serious.
+
+The end result should feel closer to Zerodha than to a typical SaaS dashboard.
