@@ -26,7 +26,7 @@ const ApplicationFormModal = ({ isOpen, onClose, policy, user }) => {
     const handleAutoFill = async () => {
         setIsAutoFilling(true);
         try {
-            const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+            const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
             const prompt = `Generate realistic synthetic data for an Indian citizen applying for a insurance policy.
             
             Context:
