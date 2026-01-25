@@ -1,11 +1,12 @@
 import React from 'react';
-import { Users, Check, Info } from 'lucide-react';
+import { Users, Check, Info, AlertTriangle } from 'lucide-react';
 import { mockInvestorProfile, mockAdvisorProfile, calculateCompatibilityScore } from '../data/investorProfile';
 
 const AdvisorCompatibility = ({ investor, advisor }) => {
     const inv = investor || mockInvestorProfile;
     const adv = advisor || mockAdvisorProfile;
-    const { score, factors } = calculateCompatibilityScore(inv, adv);
+    const compatibility = calculateCompatibilityScore(inv, adv);
+    const { score, factors, confidenceLevel, uncertaintyFactors, requiresProfessionalConsultation } = compatibility;
 
     const getScoreColor = (s) => {
         if (s >= 80) return 'text-teal-600 bg-teal-50 border-slate-200';
@@ -58,9 +59,30 @@ const AdvisorCompatibility = ({ investor, advisor }) => {
                 </div>
             </div>
 
-            <div className={`text-center py-2 px-4 rounded-xl mb-6 ${getScoreColor(score)}`}>
+            <div className={`text-center py-2 px-4 rounded-xl mb-4 ${getScoreColor(score)}`}>
                 <span className="text-sm font-bold">{getScoreLabel(score)}</span>
+                <span className="ml-2 text-xs opacity-75">
+                    (Confidence: {confidenceLevel})
+                </span>
             </div>
+
+            {/* .kiro Integration: Show uncertainty factors and professional consultation needs */}
+            {(uncertaintyFactors?.length > 0 || requiresProfessionalConsultation) && (
+                <div className="mb-4 p-3 bg-amber-50 border border-amber-200 rounded-xl">
+                    <div className="flex items-center gap-2 mb-2">
+                        <AlertTriangle size={14} className="text-amber-600" />
+                        <span className="text-xs font-semibold text-amber-800">Kiro Assessment Notes</span>
+                    </div>
+                    {uncertaintyFactors?.map((factor, idx) => (
+                        <p key={idx} className="text-xs text-amber-700 mb-1">• {factor}</p>
+                    ))}
+                    {requiresProfessionalConsultation && (
+                        <p className="text-xs text-blue-700 mt-2 font-medium">
+                            ⚠️ Consider professional consultation for advisor selection
+                        </p>
+                    )}
+                </div>
+            )}
 
             <div className="space-y-3">
                 <p className="text-xs font-bold uppercase tracking-widest text-gray-500 mb-2">Contributing Factors</p>

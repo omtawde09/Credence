@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import { ArrowLeft, Check, ChevronDown, ChevronUp, AlertTriangle, Shield, TrendingUp, Users, Info } from 'lucide-react';
+import { validateRecommendationWithKiroConstraints } from '../data/investorProfile';
 
 const InvestorRecommendations = () => {
     const navigate = useNavigate();
@@ -100,6 +101,12 @@ const InvestorRecommendations = () => {
             ]
         }
     ];
+
+    // Apply .kiro validation to all recommendations
+    const validatedRecommendations = recommendations.map(rec => ({
+        ...rec,
+        kiroValidation: validateRecommendationWithKiroConstraints(rec, profile)
+    }));
 
     const compatibleAdvisors = [
         {
@@ -201,9 +208,29 @@ const InvestorRecommendations = () => {
                     <div className="space-y-6 mb-8">
                         <h2 className="text-lg font-bold text-slate-800">Investment Plans for You</h2>
                         
-                        {recommendations.map((rec) => (
+                        {validatedRecommendations.map((rec) => (
                             <div key={rec.id} className="bg-white rounded-3xl border border-slate-200 overflow-hidden">
                                 <div className="p-6">
+                                    {/* .kiro Validation Warnings */}
+                                    {rec.kiroValidation && rec.kiroValidation.warnings.length > 0 && (
+                                        <div className="mb-4 p-3 bg-amber-50 border border-amber-200 rounded-xl">
+                                            <div className="flex items-center gap-2 mb-2">
+                                                <AlertTriangle size={16} className="text-amber-600" />
+                                                <span className="text-sm font-semibold text-amber-800">
+                                                    Kiro Safety Check (Confidence: {rec.kiroValidation.confidenceLevel})
+                                                </span>
+                                            </div>
+                                            {rec.kiroValidation.warnings.map((warning, idx) => (
+                                                <p key={idx} className="text-xs text-amber-700 mb-1">• {warning}</p>
+                                            ))}
+                                            {rec.kiroValidation.requiresProfessionalConsultation && (
+                                                <p className="text-xs text-blue-700 mt-2 font-medium">
+                                                    ⚠️ Professional consultation recommended before proceeding
+                                                </p>
+                                            )}
+                                        </div>
+                                    )}
+
                                     <div className="flex flex-wrap items-start justify-between gap-4 mb-4">
                                         <div>
                                             <div className="flex items-center gap-2 mb-1">
@@ -362,6 +389,22 @@ const InvestorRecommendations = () => {
                             Before making any investment decisions, please consult with a SEBI-registered financial advisor. 
                             All investments carry risk and you may lose some or all of your principal.
                         </p>
+                    </div>
+
+                    <div className="bg-amber-50 border border-amber-200 rounded-2xl p-6 mb-6">
+                        <div className="flex items-start gap-3">
+                            <AlertTriangle className="w-6 h-6 text-amber-600 flex-shrink-0 mt-1" />
+                            <div>
+                                <h3 className="font-semibold text-amber-800 mb-2">Approval Required Before Investment</h3>
+                                <p className="text-sm text-amber-700 mb-3">
+                                    These are recommendations only. No investments will be made without your explicit approval. 
+                                    You maintain full control over all investment decisions.
+                                </p>
+                                <p className="text-xs text-amber-600">
+                                    Next steps: Review → Discuss with advisor → Approve → Execute
+                                </p>
+                            </div>
+                        </div>
                     </div>
 
                     <div className="flex justify-center gap-4">

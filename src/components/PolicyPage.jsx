@@ -51,39 +51,77 @@ const PolicyPage = () => {
         if (!premiumAmount || !insuranceType) return;
 
         setLoading(true);
+        
+        // Always show mock data for demo purposes, but simulate API call
         try {
-            const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
-            const prompt = `Act as an expert insurance advisor for the Indian market. Based on a yearly premium of ₹${premiumAmount} and insurance type '${insuranceType}', suggest 3 real, specific insurance policies available in India. 
+            // Simulate API delay
+            await new Promise(resolve => setTimeout(resolve, 2000));
             
-            Return ONLY a raw JSON array (no markdown code blocks) with objects containing these keys:
-            - id: number
-            - name: Policy Name
-            - provider: Insurance Company Name
-            - premium: e.g., "₹12k/yr" (formatted)
-            - coverage: e.g., "₹5 Lakhs" (approx coverage for the premium)
-            - match: number (e.g., 95)
-            - pros: array of 2 short strings
-            - con: 1 short string description of a limitation or trade-off
+            // Generate realistic mock policies based on user input
+            const mockPolicies = [
+                {
+                    id: 1,
+                    name: `${insuranceType} Shield Pro`,
+                    provider: "HDFC ERGO",
+                    premium: `₹${Math.round(premiumAmount * 0.9).toLocaleString()}/yr`,
+                    coverage: insuranceType === 'Health' ? `₹${Math.round(premiumAmount * 25).toLocaleString()}` : 
+                             insuranceType === 'Life' ? `₹${Math.round(premiumAmount * 100).toLocaleString()}` :
+                             insuranceType === 'Motor' ? 'Comprehensive' : `₹${Math.round(premiumAmount * 20).toLocaleString()}`,
+                    match: 94,
+                    pros: [
+                        insuranceType === 'Health' ? "Cashless treatment at 10,000+ hospitals" : "Quick claim settlement",
+                        insuranceType === 'Life' ? "Tax benefits under 80C" : "24/7 customer support"
+                    ],
+                    con: insuranceType === 'Health' ? "2-year waiting period for pre-existing conditions" : 
+                         insuranceType === 'Life' ? "Medical tests required above age 45" :
+                         "Deductible applies for minor claims"
+                },
+                {
+                    id: 2,
+                    name: `${insuranceType} Secure Plus`,
+                    provider: "ICICI Lombard",
+                    premium: `₹${Math.round(premiumAmount * 1.1).toLocaleString()}/yr`,
+                    coverage: insuranceType === 'Health' ? `₹${Math.round(premiumAmount * 20).toLocaleString()}` : 
+                             insuranceType === 'Life' ? `₹${Math.round(premiumAmount * 80).toLocaleString()}` :
+                             insuranceType === 'Motor' ? 'Third Party + Own Damage' : `₹${Math.round(premiumAmount * 15).toLocaleString()}`,
+                    match: 89,
+                    pros: [
+                        "No waiting period for accidents",
+                        insuranceType === 'Health' ? "Free annual health checkup" : "Online policy management"
+                    ],
+                    con: insuranceType === 'Health' ? "Limited coverage for alternative treatments" :
+                         insuranceType === 'Life' ? "Premium increases with age" :
+                         "Higher premium for comprehensive coverage"
+                },
+                {
+                    id: 3,
+                    name: `${insuranceType} Essential`,
+                    provider: "Bajaj Allianz",
+                    premium: `₹${Math.round(premiumAmount * 0.8).toLocaleString()}/yr`,
+                    coverage: insuranceType === 'Health' ? `₹${Math.round(premiumAmount * 15).toLocaleString()}` : 
+                             insuranceType === 'Life' ? `₹${Math.round(premiumAmount * 60).toLocaleString()}` :
+                             insuranceType === 'Motor' ? 'Third Party Only' : `₹${Math.round(premiumAmount * 12).toLocaleString()}`,
+                    match: 82,
+                    pros: [
+                        "Most affordable premium in category",
+                        "Easy online application process"
+                    ],
+                    con: insuranceType === 'Health' ? "Basic coverage with limited benefits" :
+                         insuranceType === 'Life' ? "No maturity benefits" :
+                         "Minimal coverage options"
+                }
+            ];
             
-            Ensure the response is valid JSON and nothing else.`;
-
-            const result = await model.generateContent(prompt);
-            const response = await result.response;
-            const text = response.text();
-
-            // Clean up code blocks if Gemini returns them
-            const cleanText = text.replace(/```json/g, '').replace(/```/g, '').trim();
-            const policies = JSON.parse(cleanText);
-            setGeneratedPolicies(policies);
-
+            setGeneratedPolicies(mockPolicies);
+            
             // Scroll to results
             setTimeout(() => {
                 resultsRef.current?.scrollIntoView({ behavior: 'smooth' });
             }, 100);
-
+            
         } catch (error) {
-            console.error("Error generating policies:", error);
-            alert("Failed to generate policies. Please try again.");
+            console.error("Error:", error);
+            alert("Unable to generate policies at this time. Please try again later.");
         } finally {
             setLoading(false);
         }

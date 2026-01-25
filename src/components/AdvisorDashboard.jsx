@@ -128,20 +128,20 @@ const AdvisorDashboard = () => {
                                 <AdvisorCompatibility investor={selectedClient} advisor={mockAdvisorProfile} />
 
                                 <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
-                                    <h3 className="text-sm font-bold uppercase tracking-widest text-slate-500 mb-4">Quick Actions</h3>
-                                    <div className="space-y-3">
-                                        <button className="w-full p-4 bg-slate-50 rounded-xl flex items-center justify-between hover:bg-slate-100 transition-colors border border-slate-100">
-                                            <span className="text-sm font-medium text-slate-700">Schedule Review Meeting</span>
-                                            <ChevronRight size={16} className="text-slate-400" />
-                                        </button>
-                                        <button className="w-full p-4 bg-slate-50 rounded-xl flex items-center justify-between hover:bg-slate-100 transition-colors border border-slate-100">
-                                            <span className="text-sm font-medium text-slate-700">Generate Portfolio Report</span>
-                                            <ChevronRight size={16} className="text-slate-400" />
-                                        </button>
-                                        <button className="w-full p-4 bg-slate-50 rounded-xl flex items-center justify-between hover:bg-slate-100 transition-colors border border-slate-100">
-                                            <span className="text-sm font-medium text-slate-700">Initiate Rebalancing</span>
-                                            <ChevronRight size={16} className="text-slate-400" />
-                                        </button>
+                                    <h3 className="text-sm font-bold uppercase tracking-widest text-slate-500 mb-4">Platform Scale</h3>
+                                    <div className="grid grid-cols-2 gap-4 mb-4">
+                                        <div className="text-center p-3 bg-slate-50 rounded-xl">
+                                            <div className="text-2xl font-bold text-slate-800">247</div>
+                                            <div className="text-xs text-slate-500">Active Advisors</div>
+                                        </div>
+                                        <div className="text-center p-3 bg-slate-50 rounded-xl">
+                                            <div className="text-2xl font-bold text-slate-800">1,834</div>
+                                            <div className="text-xs text-slate-500">Retail Investors</div>
+                                        </div>
+                                    </div>
+                                    <div className="text-center p-3 bg-blue-50 rounded-xl">
+                                        <div className="text-2xl font-bold text-blue-600">₹2.4B</div>
+                                        <div className="text-xs text-slate-500">Assets Under Management</div>
                                     </div>
                                 </div>
                             </div>
