@@ -233,54 +233,10 @@ const CredenceLandingPage = () => {
           </div>
         </div>
 
-        {/* 3D MODEL CONTAINER */}
+        {/* 3D MODEL CONTAINER - Disabled due to WebGL compatibility */}
         <div className="absolute inset-0 z-10 w-full h-full flex items-center justify-center pointer-events-none">
-          <div className="w-full h-[90vh] pointer-events-auto">
-            <WebGLErrorBoundary fallback={
-              <div className="w-full h-full flex items-center justify-center">
-                <div className="text-6xl">₿</div>
-              </div>
-            }>
-              {isWebGLAvailable() ? (
-                <Canvas
-                  eventSource={container}
-                  camera={{ position: [0, 0, 15], fov: 35, near: 0.1, far: 1000 }}
-                  dpr={[1, 2]}
-                  gl={{ antialias: true, alpha: true }}
-                >
-                  <ambientLight intensity={0.8} />
-                  <pointLight position={[10, 10, 10]} intensity={1.5} />
-
-                  <Suspense fallback={null}>
-                    <PresentationControls
-                      enabled={true}
-                      global={false}
-                      cursor={true}
-                      snap={true}
-                      speed={2}
-                      zoom={1}
-                      rotation={[0, 0, 0]}
-                      polar={[-Math.PI / 4, Math.PI / 4]}
-                      azimuth={[-Math.PI / 3, Math.PI / 3]}
-                    >
-                      <Scene />
-                    </PresentationControls>
-                    <ContactShadows
-                      position={[0, -5, 0]}
-                      opacity={0.2}
-                      scale={20}
-                      blur={3}
-                      far={10}
-                    />
-                    <Environment preset="city" />
-                  </Suspense>
-                </Canvas>
-              ) : (
-                <div className="w-full h-full flex items-center justify-center">
-                  <div className="text-8xl text-amber-600">₿</div>
-                </div>
-              )}
-            </WebGLErrorBoundary>
+          <div className="w-full h-[90vh] pointer-events-auto flex items-center justify-center">
+            <div className="text-9xl text-amber-500 animate-pulse">₿</div>
           </div>
         </div>
       </div>
