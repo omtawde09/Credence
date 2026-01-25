@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import AuthModal from "./components/AuthModal";
+import RoleSelectionModal from "./components/RoleSelectionModal";
 import useAuthStore from "./store/useAuthStore";
 
 export default function Layout() {
@@ -13,10 +14,11 @@ export default function Layout() {
   }, [initializeAuth]);
 
   return (
-    <div className="min-h-screen bg-[#0E0B08] text-[#F5F1ED] font-sans selection:bg-[#3D2419] overflow-hidden">
+    <div className="min-h-screen bg-slate-50 text-slate-800 font-sans">
 
       <NavBar />
       <AuthModal />
+      <RoleSelectionModal />
       <Outlet />
     </div>
   );

@@ -5,7 +5,9 @@ const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 const useAuthStore = create((set, get) => ({
   isLoginOpen: false,
   isSignUpOpen: false,
+  isRoleSelectionOpen: false,
   user: null,
+  userRole: null, // 'investor' | 'advisor' | null
   loading: false,
   error: null,
   googleLoaded: false,
@@ -13,12 +15,24 @@ const useAuthStore = create((set, get) => ({
   openLogin: () => set({ isLoginOpen: true, isSignUpOpen: false, error: null }),
   openSignUp: () => set({ isSignUpOpen: true, isLoginOpen: false, error: null }),
   closeModals: () => set({ isLoginOpen: false, isSignUpOpen: false, error: null }),
+  openRoleSelection: () => set({ isRoleSelectionOpen: true }),
+  closeRoleSelection: () => set({ isRoleSelectionOpen: false }),
+
+  setUserRole: (role) => {
+    const user = get().user;
+    if (user) {
+      const updatedUser = { ...user, role };
+      localStorage.setItem('credence_user', JSON.stringify(updatedUser));
+      set({ userRole: role, user: updatedUser, isRoleSelectionOpen: false });
+    }
+  },
 
   initializeAuth: () => {
     const savedUser = localStorage.getItem('credence_user');
     if (savedUser) {
       try {
-        set({ user: JSON.parse(savedUser), loading: false });
+        const user = JSON.parse(savedUser);
+        set({ user, userRole: user.role || null, loading: false });
       } catch (e) {
         localStorage.removeItem('credence_user');
         set({ loading: false });
@@ -38,7 +52,7 @@ const useAuthStore = create((set, get) => ({
       document.head.appendChild(script);
     }
 
-    return () => {};
+    return () => { };
   },
 
   signup: async (email, password) => {
@@ -48,10 +62,11 @@ const useAuthStore = create((set, get) => ({
         email,
         name: email.split('@')[0],
         picture: null,
-        provider: 'email'
+        provider: 'email',
+        role: null
       };
       localStorage.setItem('credence_user', JSON.stringify(user));
-      set({ user, isSignUpOpen: false, loading: false });
+      set({ user, isSignUpOpen: false, isLoginOpen: false, loading: false, isRoleSelectionOpen: true });
     } catch (error) {
       set({ error: error.message, loading: false });
       throw error;
@@ -65,10 +80,11 @@ const useAuthStore = create((set, get) => ({
         email,
         name: email.split('@')[0],
         picture: null,
-        provider: 'email'
+        provider: 'email',
+        role: null
       };
       localStorage.setItem('credence_user', JSON.stringify(user));
-      set({ user, isLoginOpen: false, loading: false });
+      set({ user, isLoginOpen: false, isSignUpOpen: false, loading: false, isRoleSelectionOpen: true });
     } catch (error) {
       set({ error: error.message, loading: false });
       throw error;
@@ -77,7 +93,7 @@ const useAuthStore = create((set, get) => ({
 
   loginWithGoogle: async () => {
     set({ loading: true, error: null });
-    
+
     return new Promise((resolve, reject) => {
       if (!window.google) {
         set({ error: 'Google authentication not loaded yet. Please try again.', loading: false });
@@ -95,10 +111,11 @@ const useAuthStore = create((set, get) => ({
                 email: payload.email,
                 name: payload.name,
                 picture: payload.picture,
-                provider: 'google'
+                provider: 'google',
+                role: null
               };
               localStorage.setItem('credence_user', JSON.stringify(user));
-              set({ user, isLoginOpen: false, isSignUpOpen: false, loading: false });
+              set({ user, isLoginOpen: false, isSignUpOpen: false, loading: false, isRoleSelectionOpen: true });
               resolve(user);
             } else {
               set({ error: 'Google login failed', loading: false });
@@ -122,10 +139,11 @@ const useAuthStore = create((set, get) => ({
                     email: payload.email,
                     name: payload.name,
                     picture: payload.picture,
-                    provider: 'google'
+                    provider: 'google',
+                    role: null
                   };
                   localStorage.setItem('credence_user', JSON.stringify(user));
-                  set({ user, isLoginOpen: false, isSignUpOpen: false, loading: false });
+                  set({ user, isLoginOpen: false, isSignUpOpen: false, loading: false, isRoleSelectionOpen: true });
                   resolve(user);
                 }
               },
@@ -142,7 +160,7 @@ const useAuthStore = create((set, get) => ({
   logout: async () => {
     try {
       localStorage.removeItem('credence_user');
-      set({ user: null });
+      set({ user: null, userRole: null });
       if (window.google) {
         window.google.accounts.id.disableAutoSelect();
       }

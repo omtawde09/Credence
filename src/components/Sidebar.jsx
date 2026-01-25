@@ -19,7 +19,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Sidebar = () => {
     const { activeTab, setActiveTab } = useSidebarStore();
-    const { user, logout } = useAuthStore();
+    const { user, userRole, logout } = useAuthStore();
     const navigate = useNavigate();
 
     const menuItems = [
@@ -63,57 +63,68 @@ const Sidebar = () => {
                 <span className="text-xl font-black tracking-tighter text-slate-800">CREDENCE</span>
             </div>
 
-            <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-3 px-2">Investor</p>
-            <div className="space-y-1 mb-6">
-                {menuItems.map((item) => {
-                    const Icon = item.icon;
-                    const isActive = activeTab === item.name;
-                    return (
-                        <button
-                            key={item.name}
-                            onClick={() => handleNav(item)}
-                            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${isActive
-                                ? 'bg-slate-800 text-white shadow-lg shadow-blue-500/20'
-                                : item.highlight 
-                                    ? 'text-blue-600 bg-blue-50 hover:bg-blue-100 border border-blue-200'
-                                    : 'text-slate-500 hover:bg-slate-100 hover:text-slate-800'
-                                }`}
-                        >
-                            <Icon size={18} strokeWidth={isActive ? 2.5 : 2} />
-                            <span className={`text-[13px] font-bold ${isActive ? 'tracking-wide' : ''}`}>
-                                {item.name}
-                            </span>
-                            {item.highlight && !isActive && (
-                                <span className="ml-auto text-[9px] bg-blue-600 text-white px-1.5 py-0.5 rounded-full font-bold">NEW</span>
-                            )}
-                        </button>
-                    );
-                })}
-            </div>
+            {/* Show Investor Section only for investors */}
+            {userRole === 'investor' && (
+                <>
+                    <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-3 px-2">Investor</p>
+                    <div className="space-y-1 mb-6">
+                        {menuItems.map((item) => {
+                            const Icon = item.icon;
+                            const isActive = activeTab === item.name;
+                            return (
+                                <button
+                                    key={item.name}
+                                    onClick={() => handleNav(item)}
+                                    className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${isActive
+                                        ? 'bg-slate-800 text-white shadow-lg shadow-blue-500/20'
+                                        : item.highlight
+                                            ? 'text-blue-600 bg-blue-50 hover:bg-blue-100 border border-blue-200'
+                                            : 'text-slate-500 hover:bg-slate-100 hover:text-slate-800'
+                                        }`}
+                                >
+                                    <Icon size={18} strokeWidth={isActive ? 2.5 : 2} />
+                                    <span className={`text-[13px] font-bold ${isActive ? 'tracking-wide' : ''}`}>
+                                        {item.name}
+                                    </span>
+                                    {item.highlight && !isActive && (
+                                        <span className="ml-auto text-[9px] bg-blue-600 text-white px-1.5 py-0.5 rounded-full font-bold">NEW</span>
+                                    )}
+                                </button>
+                            );
+                        })}
+                    </div>
+                </>
+            )}
 
-            <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-3 px-2">Advisor</p>
-            <div className="space-y-1 mb-8">
-                {advisorItems.map((item) => {
-                    const Icon = item.icon;
-                    const isActive = activeTab === item.name;
-                    return (
-                        <button
-                            key={item.name}
-                            onClick={() => handleNav(item)}
-                            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${isActive
-                                ? 'bg-slate-800 text-white shadow-lg shadow-blue-500/20'
-                                : 'text-slate-500 hover:bg-slate-100 hover:text-slate-800'
-                                }`}
-                        >
-                            <Icon size={18} strokeWidth={isActive ? 2.5 : 2} />
-                            <span className={`text-[13px] font-bold ${isActive ? 'tracking-wide' : ''}`}>
-                                {item.name}
-                            </span>
-                        </button>
-                    );
-                })}
-            </div>
+            {/* Show Advisor Section only for advisors */}
+            {userRole === 'advisor' && (
+                <>
+                    <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-3 px-2">Advisor</p>
+                    <div className="space-y-1 mb-8">
+                        {advisorItems.map((item) => {
+                            const Icon = item.icon;
+                            const isActive = activeTab === item.name;
+                            return (
+                                <button
+                                    key={item.name}
+                                    onClick={() => handleNav(item)}
+                                    className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${isActive
+                                        ? 'bg-slate-800 text-white shadow-lg shadow-blue-500/20'
+                                        : 'text-slate-500 hover:bg-slate-100 hover:text-slate-800'
+                                        }`}
+                                >
+                                    <Icon size={18} strokeWidth={isActive ? 2.5 : 2} />
+                                    <span className={`text-[13px] font-bold ${isActive ? 'tracking-wide' : ''}`}>
+                                        {item.name}
+                                    </span>
+                                </button>
+                            );
+                        })}
+                    </div>
+                </>
+            )}
 
+            {/* Bottom items shown for all roles */}
             <div className="space-y-1 mb-auto">
                 {bottomItems.map((item) => {
                     const Icon = item.icon;

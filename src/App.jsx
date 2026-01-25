@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import CredenceLandingPage from "./components/FincogniaLandingPage";
+import CredenceLandingPage from "./components/CredenceLandingPage";
 import Dashboard from "./components/Dashboard";
 import CreditPage from "./components/CreditPage";
 import Agents from "./components/Agents";
@@ -15,6 +15,7 @@ import SettingsPage from "./components/SettingsPage";
 import InvestorOnboarding from "./components/InvestorOnboarding";
 import InvestorRecommendations from "./components/InvestorRecommendations";
 import Layout from "./Layout";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
@@ -22,20 +23,25 @@ function App() {
       <Routes>
         <Route path="/" element={<CredenceLandingPage />} />
         <Route element={<Layout />}>
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/account" element={<AccountPage />} />
-          <Route path="/activity" element={<ActivityPage />} />
-          <Route path="/credit" element={<CreditPage />} />
-          <Route path="/agents" element={<Agents />} />
-          <Route path="/manage" element={<ManagePage />} />
-          <Route path="/calendar" element={<CalendarPage />} />
-          <Route path="/help" element={<HelpCenterPage />} />
-          <Route path="/settings" element={<SettingsPage />} />
-          <Route path="/policy-agent" element={<PolicyPage />} />
-          <Route path="/taxation-agent" element={<TaxationPage />} />
-          <Route path="/advisor-dashboard" element={<AdvisorDashboard />} />
-          <Route path="/investor-onboarding" element={<InvestorOnboarding />} />
-          <Route path="/investor-recommendations" element={<InvestorRecommendations />} />
+          {/* Investor Routes */}
+          <Route path="/dashboard" element={<ProtectedRoute requiredRole="investor"><Dashboard /></ProtectedRoute>} />
+          <Route path="/account" element={<ProtectedRoute requiredRole="investor"><AccountPage /></ProtectedRoute>} />
+          <Route path="/activity" element={<ProtectedRoute requiredRole="investor"><ActivityPage /></ProtectedRoute>} />
+          <Route path="/credit" element={<ProtectedRoute requiredRole="investor"><CreditPage /></ProtectedRoute>} />
+          <Route path="/agents" element={<ProtectedRoute requiredRole="investor"><Agents /></ProtectedRoute>} />
+          <Route path="/manage" element={<ProtectedRoute requiredRole="investor"><ManagePage /></ProtectedRoute>} />
+          <Route path="/calendar" element={<ProtectedRoute requiredRole="investor"><CalendarPage /></ProtectedRoute>} />
+          <Route path="/policy-agent" element={<ProtectedRoute requiredRole="investor"><PolicyPage /></ProtectedRoute>} />
+          <Route path="/taxation-agent" element={<ProtectedRoute requiredRole="investor"><TaxationPage /></ProtectedRoute>} />
+          <Route path="/investor-onboarding" element={<ProtectedRoute requiredRole="investor"><InvestorOnboarding /></ProtectedRoute>} />
+          <Route path="/investor-recommendations" element={<ProtectedRoute requiredRole="investor"><InvestorRecommendations /></ProtectedRoute>} />
+
+          {/* Advisor Routes */}
+          <Route path="/advisor-dashboard" element={<ProtectedRoute requiredRole="advisor"><AdvisorDashboard /></ProtectedRoute>} />
+
+          {/* Shared Routes - No role requirement */}
+          <Route path="/help" element={<ProtectedRoute><HelpCenterPage /></ProtectedRoute>} />
+          <Route path="/settings" element={<ProtectedRoute><SettingsPage /></ProtectedRoute>} />
         </Route>
       </Routes>
     </BrowserRouter>

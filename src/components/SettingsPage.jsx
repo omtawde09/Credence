@@ -5,7 +5,7 @@ import { Search, Bell, User, Lock, Bell as BellIcon, CreditCard, Globe, Moon, Lo
 import { useNavigate } from 'react-router-dom';
 
 const SettingsPage = () => {
-    const { user, logout } = useAuthStore();
+    const { user, userRole, setUserRole, logout } = useAuthStore();
     const navigate = useNavigate();
     const [notifications, setNotifications] = useState(true);
     const [darkMode, setDarkMode] = useState(false);
@@ -15,23 +15,33 @@ const SettingsPage = () => {
         navigate('/');
     };
 
+    const handleRoleSwitch = (newRole) => {
+        setUserRole(newRole);
+        // Navigate to appropriate dashboard
+        if (newRole === 'investor') {
+            navigate('/dashboard');
+        } else if (newRole === 'advisor') {
+            navigate('/advisor-dashboard');
+        }
+    };
+
     const settingSections = [
         {
             title: 'Account',
             icon: User,
             items: [
                 { label: 'Edit Profile', action: () => navigate('/account') },
-                { label: 'Change Email', action: () => {} },
-                { label: 'Verify Identity', action: () => {} },
+                { label: 'Change Email', action: () => { } },
+                { label: 'Verify Identity', action: () => { } },
             ]
         },
         {
             title: 'Security',
             icon: Lock,
             items: [
-                { label: 'Change Password', action: () => {} },
-                { label: 'Two-Factor Authentication', action: () => {} },
-                { label: 'Login History', action: () => {} },
+                { label: 'Change Password', action: () => { } },
+                { label: 'Two-Factor Authentication', action: () => { } },
+                { label: 'Login History', action: () => { } },
             ]
         },
         {
@@ -39,8 +49,8 @@ const SettingsPage = () => {
             icon: CreditCard,
             items: [
                 { label: 'Manage Cards', action: () => navigate('/credit') },
-                { label: 'Bank Accounts', action: () => {} },
-                { label: 'UPI Settings', action: () => {} },
+                { label: 'Bank Accounts', action: () => { } },
+                { label: 'UPI Settings', action: () => { } },
             ]
         },
     ];
@@ -83,6 +93,50 @@ const SettingsPage = () => {
                     </div>
 
                     <div className="space-y-6">
+                        {/* Current Role Display & Switcher */}
+                        <div className="bg-white border border-slate-200 rounded-[32px] p-6 shadow-lg">
+                            <h3 className="font-bold mb-4">Account Role</h3>
+                            <div className="space-y-4">
+                                <div className="p-4 bg-blue-50 border border-blue-200 rounded-xl">
+                                    <div className="flex items-center gap-3 mb-2">
+                                        <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
+                                            <User size={16} className="text-white" />
+                                        </div>
+                                        <div>
+                                            <p className="text-xs text-slate-500 uppercase font-bold tracking-wider">Current Role</p>
+                                            <p className="text-sm font-bold text-slate-800 capitalize">{userRole || 'Not Set'}</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="border-t pt-4">
+                                    <p className="text-xs text-slate-500 mb-3 font-medium">Switch to different role</p>
+                                    <div className="flex gap-2">
+                                        <button
+                                            onClick={() => handleRoleSwitch('investor')}
+                                            disabled={userRole === 'investor'}
+                                            className={`flex-1 px-4 py-2 rounded-xl font-bold text-xs transition-all ${userRole === 'investor'
+                                                    ? 'bg-blue-600 text-white cursor-not-allowed'
+                                                    : 'bg-slate-100 text-slate-600 hover:bg-blue-100 hover:text-blue-600'
+                                                }`}
+                                        >
+                                            Investor
+                                        </button>
+                                        <button
+                                            onClick={() => handleRoleSwitch('advisor')}
+                                            disabled={userRole === 'advisor'}
+                                            className={`flex-1 px-4 py-2 rounded-xl font-bold text-xs transition-all ${userRole === 'advisor'
+                                                    ? 'bg-violet-600 text-white cursor-not-allowed'
+                                                    : 'bg-slate-100 text-slate-600 hover:bg-violet-100 hover:text-violet-600'
+                                                }`}
+                                        >
+                                            Advisor
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div className="bg-white border border-slate-200 rounded-[32px] p-6 shadow-lg">
                             <h3 className="font-bold mb-4">Preferences</h3>
                             <div className="space-y-4">
