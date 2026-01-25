@@ -128,7 +128,7 @@ export function ForecastChart() {
           Solvency increased by 12% <TrendingUp className="h-4 w-4 text-teal-600" />
         </div>
         <div className="text-slate-500 text-[10px] leading-none">
-          ML engine simulating 10k scenarios for {activeTab} period.
+          Probabilistic analysis based on historical data for {activeTab} period.
         </div>
       </CardFooter>
     </Card>
