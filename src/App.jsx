@@ -20,8 +20,8 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/" element={<CredenceLandingPage />} />
         <Route element={<Layout />}>
-          <Route path="/" element={<CredenceLandingPage />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/account" element={<AccountPage />} />
           <Route path="/activity" element={<ActivityPage />} />
