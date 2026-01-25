@@ -5,6 +5,7 @@ import CreditPage from "./components/CreditPage";
 import Agents from "./components/Agents";
 import PolicyPage from "./components/PolicyPage";
 import TaxationPage from "./components/TaxationPage";
+import AdvisorDashboard from "./components/AdvisorDashboard";
 import AccountPage from "./components/AccountPage";
 import ActivityPage from "./components/ActivityPage";
 import CalendarPage from "./components/CalendarPage";
@@ -30,6 +31,7 @@ function App() {
           <Route path="/settings" element={<SettingsPage />} />
           <Route path="/policy-agent" element={<PolicyPage />} />
           <Route path="/taxation-agent" element={<TaxationPage />} />
+          <Route path="/advisor-dashboard" element={<AdvisorDashboard />} />
         </Route>
       </Routes>
     </BrowserRouter>

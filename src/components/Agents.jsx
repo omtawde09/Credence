@@ -1,7 +1,7 @@
 import React from 'react';
 import useAuthStore from '../store/useAuthStore';
 import Sidebar from './Sidebar';
-import { Search, Bell, Shield, TrendingUp, CloudRain } from 'lucide-react';
+import { Search, Bell, Shield, TrendingUp, CloudRain, Users } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 const Agents = () => {
@@ -136,6 +136,38 @@ const Agents = () => {
                                     Auto-transferring ₹5,000 to safety net.
                                 </div>
                             </div>
+                        </div>
+                    </div>
+
+                    {/* CARD 4: ADVISOR DASHBOARD (Intelligent Journey Management) */}
+                    <div
+                        onClick={() => navigate('/advisor-dashboard')}
+                        className="bg-gradient-to-br from-purple-900 to-indigo-900 text-white rounded-[32px] p-8 aspect-square flex flex-col justify-between shadow-2xl shadow-purple-900/20 relative overflow-hidden group hover:-translate-y-1 transition-transform duration-300 cursor-pointer"
+                    >
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500/10 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none" />
+
+                        <div className="flex justify-between items-start">
+                            <div>
+                                <h3 className="text-xl font-bold mb-1">Advisor Dashboard</h3>
+                                <p className="text-[10px] text-purple-300 uppercase tracking-widest font-bold">Journey Intelligence</p>
+                            </div>
+                            <div className="bg-white/10 p-2 rounded-full backdrop-blur-md">
+                                <Users className="text-purple-300" size={20} />
+                            </div>
+                        </div>
+
+                        <div className="space-y-4">
+                            <div className="flex items-end gap-2">
+                                <span className="text-4xl font-black tracking-tighter">85</span>
+                                <span className="text-purple-300 text-sm font-bold mb-1.5">Clients</span>
+                            </div>
+                            <div className="flex gap-2">
+                                <span className="text-[10px] font-bold px-2 py-1 bg-amber-500/20 text-amber-300 rounded-full">2 Alerts</span>
+                                <span className="text-[10px] font-bold px-2 py-1 bg-emerald-500/20 text-emerald-300 rounded-full">12 Reviews Due</span>
+                            </div>
+                            <p className="text-xs text-white/60 leading-relaxed">
+                                Intelligent matching, risk detection, and client journey management.
+                            </p>
                         </div>
                     </div>
 

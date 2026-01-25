@@ -1,0 +1,157 @@
+ROLE:
+You are a senior product engineer adding intelligence and business logic
+to an already-built FinTech web application.
+
+IMPORTANT:
+The UI is already finalized and should NOT be redesigned, restructured,
+or visually altered in any way.
+
+CONTEXT:
+This is a hackathon demo for
+"Intelligent Platform for Advisor & Investor Journey Management".
+
+The application already includes:
+- Investor onboarding
+- Investment recommendation screen
+- Advisor dashboard
+
+Your task is to add meaningful product features and “wow” capabilities
+that demonstrate intelligence, trust, and end-to-end journey management.
+
+PRIORITY:
+Feature depth and clarity > complexity.
+Mock data and simulated logic are acceptable.
+
+--------------------------------------------------
+GLOBAL CONSTRAINTS (DO NOT VIOLATE)
+--------------------------------------------------
+- Do NOT change layout, colors, typography, or spacing
+- Do NOT introduce new visual components unless strictly necessary
+- Reuse existing UI patterns and sections
+- Prefer text-first, explanation-driven features
+- Keep everything professional and regulatory in tone
+
+--------------------------------------------------
+FEATURE 1: EXPLAINABLE INVESTMENT RECOMMENDATION (CRITICAL)
+--------------------------------------------------
+GOAL:
+Make every investment recommendation transparent and defensible.
+
+REQUIREMENTS:
+For each recommended investment plan, generate a clear explanation covering:
+- Investor goals
+- Time horizon
+- Risk tolerance
+- Investment preferences
+- Suitability reasoning
+
+ADD:
+- A collapsible “What could go wrong?” section
+- Best-case and worst-case outcome explanation (textual)
+
+RULES:
+- No marketing language
+- Plain, professional wording
+- Feels like a financial advisory note
+
+--------------------------------------------------
+FEATURE 2: ADVISOR–INVESTOR COMPATIBILITY SCORE
+--------------------------------------------------
+GOAL:
+Demonstrate intelligent matching between investors and advisors.
+
+FEATURE:
+Generate a mock compatibility score (percentage) based on:
+- Alignment between investor goals and advisor expertise
+- Risk philosophy match
+- Experience with similar investor profiles
+
+DISPLAY:
+- Calm, non-gamified presentation
+- Short explanation of contributing factors
+
+--------------------------------------------------
+FEATURE 3: LIFE-EVENT TRIGGERED RE-PLANNING
+--------------------------------------------------
+GOAL:
+Show continuous journey management beyond initial onboarding.
+
+FEATURE:
+Support investor life events such as:
+- Marriage
+- Job change
+- New child
+- Home purchase
+
+BEHAVIOR:
+- When a life event occurs:
+  - Notify that the financial plan requires review
+  - Highlight which assumptions may be impacted
+  - Suggest next steps (review, rebalance, advisor meeting)
+
+--------------------------------------------------
+FEATURE 4: RISK MISMATCH DETECTION (ADVISOR SIDE)
+--------------------------------------------------
+GOAL:
+Help advisors proactively manage suitability risk.
+
+FEATURE:
+Detect when a client’s current portfolio risk deviates
+from their stated risk profile.
+
+BEHAVIOR:
+- Flag client with “Risk Mismatch” alert
+- Provide short explanation:
+  - Current risk vs recommended risk
+  - Suggested corrective action
+
+LOGIC:
+- Simple, mock thresholds are sufficient
+
+--------------------------------------------------
+FEATURE 5: TRANSPARENCY & CONFLICT DISCLOSURE
+--------------------------------------------------
+GOAL:
+Build trust through explicit transparency.
+
+FEATURE:
+Display disclosures for:
+- Advisor compensation model (mock)
+- Fee impact explanation
+- Conflict-of-interest statement
+
+TONE:
+- Neutral
+- Regulatory-style
+- Non-promotional
+
+--------------------------------------------------
+FEATURE 6: ADVISOR COPILOT – CLIENT SUMMARY
+--------------------------------------------------
+GOAL:
+Improve advisor efficiency and readiness.
+
+FEATURE:
+Auto-generate a concise client summary including:
+- Goals
+- Risk profile
+- Preferences
+- Recent changes or alerts
+
+FORMAT:
+- Short paragraph
+- Text-only
+- Reused within advisor dashboard
+
+--------------------------------------------------
+FINAL INSTRUCTION
+--------------------------------------------------
+Focus on features that make the platform feel:
+- Intelligent
+- Trustworthy
+- Continuous (not one-time advice)
+- Enterprise-ready
+
+Avoid overengineering.
+Avoid visual embellishment.
+Simulated logic is acceptable if the reasoning is clear.
