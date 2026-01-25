@@ -12,6 +12,8 @@ import CalendarPage from "./components/CalendarPage";
 import ManagePage from "./components/ManagePage";
 import HelpCenterPage from "./components/HelpCenterPage";
 import SettingsPage from "./components/SettingsPage";
+import InvestorOnboarding from "./components/InvestorOnboarding";
+import InvestorRecommendations from "./components/InvestorRecommendations";
 import Layout from "./Layout";
 
 function App() {
@@ -32,6 +34,8 @@ function App() {
           <Route path="/policy-agent" element={<PolicyPage />} />
           <Route path="/taxation-agent" element={<TaxationPage />} />
           <Route path="/advisor-dashboard" element={<AdvisorDashboard />} />
+          <Route path="/investor-onboarding" element={<InvestorOnboarding />} />
+          <Route path="/investor-recommendations" element={<InvestorRecommendations />} />
         </Route>
       </Routes>
     </BrowserRouter>

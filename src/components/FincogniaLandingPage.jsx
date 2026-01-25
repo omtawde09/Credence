@@ -1,145 +1,224 @@
-import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { Users, Target, Shield, TrendingUp, UserCheck, AlertTriangle, FileText } from 'lucide-react';
 
 const CredenceLandingPage = () => {
   const navigate = useNavigate();
-  const [index, setIndex] = useState(0);
-  const words = ["anticipates", "protects", "secures", "optimizes"];
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setIndex((prev) => (prev + 1) % words.length);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, []);
+  const features = [
+    {
+      icon: Target,
+      title: 'Goal-Based Onboarding',
+      description: 'Conversational journey to capture investor goals, risk tolerance, and time horizon using real scenarios.'
+    },
+    {
+      icon: Shield,
+      title: 'Explainable Recommendations',
+      description: 'Transparent investment suggestions with clear reasoning, assumptions, and "what could go wrong" explanations.'
+    },
+    {
+      icon: UserCheck,
+      title: 'Advisor-Investor Matching',
+      description: 'Compatibility scoring based on risk philosophy, expertise alignment, and experience.'
+    },
+    {
+      icon: AlertTriangle,
+      title: 'Risk Mismatch Detection',
+      description: 'Continuous monitoring comparing stated vs actual portfolio risk with suggested rebalancing.'
+    },
+    {
+      icon: TrendingUp,
+      title: 'Life-Event Re-Planning',
+      description: 'Automatic detection of life changes triggering portfolio review and assumption updates.'
+    },
+    {
+      icon: FileText,
+      title: 'Transparency & Disclosure',
+      description: 'Full fee disclosure, conflict-of-interest declarations, and SEBI-compliant regulatory statements.'
+    }
+  ];
 
   return (
-    <main className="relative min-h-screen w-full flex flex-col items-center pt-32">
-      {/* Background Glows */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] bg-slate-100/20 rounded-full blur-[120px] -z-10" />
-
-      {/* HERO SECTION 1: Finance that... */}
-      <div className="max-w-7xl mx-auto text-center relative z-20 mb-12 px-6">
-        <span className="inline-block px-4 py-1.5 mb-6 text-[11px] font-bold tracking-widest uppercase bg-slate-100 text-slate-700 rounded-full border border-slate-200">
-          Agentic Finance for Gig-Earners
-        </span>
-
-        <h1 className="text-6xl md:text-8xl font-extrabold tracking-tight leading-[0.9] mb-8">
-          Finance that <br />
-          <div className="relative inline-block h-[1.1em] overflow-hidden align-bottom">
-            {words.map((word, i) => (
-              <span
-                key={word}
-                className={`absolute left-0 w-full text-gray-300 italic font-light transition-all duration-700 ease-in-out ${i === index
-                  ? "translate-y-0 opacity-100"
-                  : i < index
-                    ? "-translate-y-full opacity-0"
-                    : "translate-y-full opacity-0"
-                  }`}
-                style={{ whiteSpace: "nowrap" }}
-              >
-                {word}.
-              </span>
-            ))}
-            {/* Invisible spacer to maintain height */}
-            <span className="opacity-0 italic font-light">anticipates.</span>
+    <main className="min-h-screen bg-slate-50">
+      <nav className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-xl border-b border-slate-200 z-50">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <div className="bg-gradient-to-br from-blue-600 to-indigo-600 p-1.5 rounded-lg">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </div>
+            <span className="text-xl font-black tracking-tighter text-slate-800">CREDENCE</span>
           </div>
-        </h1>
-
-        <p className="max-w-2xl mx-auto text-lg md:text-xl text-slate-600 leading-relaxed">
-          Credence is an AI financial co-pilot that forecasts cashflow storms
-          and{" "}
-          <span className="text-slate-800 font-semibold">
-            autonomously acts
-          </span>{" "}
-          to prevent credit damage.
-        </p>
-      </div>
-
-      {/* HERO SECTION 2: Agentic Capital + 3D */}
-      <div className="relative flex-grow w-full flex flex-col items-center justify-center">
-        {/* TEXT CONTENT */}
-        <div className="relative z-30 text-center pointer-events-none px-6 mb-8 mt-12">
-          <h1 className="text-6xl md:text-8xl font-black tracking-tighter leading-[0.85] mb-6">
-            Agentic <br />
-            <span className="text-slate-400 italic font-light">Capital</span>.
-          </h1>
-          <p className="max-w-md mx-auto text-sm md:text-base text-slate-600 font-medium">
-            The first AI co-pilot that doesn't just show you charts, but{" "}
-            <span className="text-slate-800">autonomously secures</span> your
-            solvency.
-          </p>
-
-          <div className="mt-8 flex gap-3 justify-center pointer-events-auto">
+          <div className="flex items-center gap-4">
+            <button
+              onClick={() => navigate('/investor-onboarding')}
+              className="text-sm font-medium text-slate-600 hover:text-slate-800 transition-colors"
+            >
+              Investor Journey
+            </button>
+            <button
+              onClick={() => navigate('/advisor-dashboard')}
+              className="text-sm font-medium text-slate-600 hover:text-slate-800 transition-colors"
+            >
+              Advisor Portal
+            </button>
             <button
               onClick={() => navigate('/dashboard')}
-              className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-8 py-4 rounded-2xl font-bold text-sm shadow-2xl active:scale-95 transition-all hover:bg-blue-700"
+              className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-5 py-2.5 rounded-xl font-semibold text-sm shadow-lg hover:shadow-xl transition-all"
             >
-              Launch Live Demo
+              Launch Demo
             </button>
           </div>
         </div>
+      </nav>
 
-        {/* 3D MODEL CONTAINER - Disabled due to WebGL compatibility */}
-        <div className="absolute inset-0 z-10 w-full h-full flex items-center justify-center pointer-events-none">
-          <div className="w-full h-[90vh] pointer-events-auto flex items-center justify-center">
-            <div className="text-9xl text-amber-500 animate-pulse">₿</div>
+      <section className="pt-32 pb-20 px-6">
+        <div className="max-w-5xl mx-auto text-center">
+          <span className="inline-block px-4 py-1.5 mb-6 text-xs font-bold tracking-widest uppercase bg-blue-100 text-blue-700 rounded-full">
+            Hackathon Demo
+          </span>
+          
+          <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-slate-800 mb-6 leading-tight">
+            Intelligent Platform for<br />
+            <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+              Advisor & Investor
+            </span><br />
+            Journey Management
+          </h1>
+          
+          <p className="max-w-2xl mx-auto text-lg text-slate-600 mb-10 leading-relaxed">
+            A complete platform for managing financial advisors at scale while providing 
+            personalized, explainable investment guidance to retail investors. 
+            Built on trust, transparency, and suitability.
+          </p>
+
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <button
+              onClick={() => navigate('/investor-onboarding')}
+              className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-8 py-4 rounded-2xl font-bold text-base shadow-xl hover:shadow-2xl transition-all flex items-center justify-center gap-2"
+            >
+              <Target className="w-5 h-5" />
+              Start Investor Journey
+            </button>
+            <button
+              onClick={() => navigate('/advisor-dashboard')}
+              className="bg-white text-slate-700 px-8 py-4 rounded-2xl font-bold text-base border-2 border-slate-200 hover:border-blue-300 hover:bg-blue-50 transition-all flex items-center justify-center gap-2"
+            >
+              <Users className="w-5 h-5" />
+              Open Advisor Portal
+            </button>
           </div>
         </div>
-      </div>
+      </section>
 
-      <section className="max-w-7xl mx-auto px-6 pb-32">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="md:col-span-2 bg-white border border-slate-200 rounded-[32px] p-10 flex flex-col justify-between hover:shadow-xl hover:shadow-blue-900/5 transition-all">
-            <div className="max-w-md">
-              <div className="w-12 h-12 bg-slate-100 rounded-xl flex items-center justify-center text-2xl mb-6">
-                ⛅
-              </div>
-              <h3 className="text-3xl font-bold mb-4">Money Weather™</h3>
-              <p className="text-slate-600 leading-relaxed">
-                Our proprietary ML model simulates 10,000+ cashflow scenarios to
-                predict your "Financial Storms." It detects liquidity gaps
-                before your bank does.
-              </p>
-            </div>
-            <div className="mt-10 h-32 w-full bg-slate-100/30 rounded-2xl border border-dashed border-slate-200 flex items-center justify-center text-[10px] uppercase tracking-widest text-slate-500">
-              [ Probabilistic Forecast Visual ]
-            </div>
+      <section className="py-20 px-6 bg-white border-y border-slate-200">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-bold text-slate-800 mb-4">Problem Statement</h2>
+            <p className="max-w-3xl mx-auto text-lg text-slate-600">
+              Design an interactive FinTech platform to manage a large network of financial advisors 
+              and provide personalized investment guidance to retail investors.
+            </p>
           </div>
 
-          <div className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-[32px] p-10 flex flex-col justify-between">
-            <h3 className="text-2xl font-bold leading-tight">
-              Autonomous Agentic Actions
-            </h3>
-            <p className="opacity-90 text-sm mt-4">
-              With your consent, Credence locks safety buffers and alerts
-              you when the risk of an EMI bounce exceeds 85%.
-            </p>
-            <div className="mt-8 pt-6 border-t border-slate-50/20 flex items-center gap-4">
-              <div className="w-2 h-2 rounded-full bg-teal-400 animate-pulse" />
-              <span className="text-[10px] font-mono opacity-80">
-                MONITORING LIVE STREAMS
-              </span>
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="bg-gradient-to-br from-slate-800 to-indigo-900 rounded-3xl p-8 text-white">
+              <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center mb-6">
+                <Users className="w-6 h-6" />
+              </div>
+              <h3 className="text-xl font-bold mb-3">Advisor Management</h3>
+              <p className="text-slate-300 text-sm leading-relaxed">
+                Efficiently organize and manage hundreds of financial advisors and portfolio managers 
+                with client overviews, alerts, and quick summaries.
+              </p>
+            </div>
+
+            <div className="bg-gradient-to-br from-slate-800 to-indigo-900 rounded-3xl p-8 text-white">
+              <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center mb-6">
+                <Target className="w-6 h-6" />
+              </div>
+              <h3 className="text-xl font-bold mb-3">Investor Journey</h3>
+              <p className="text-slate-300 text-sm leading-relaxed">
+                Capture investor goals, risk appetite, and preferences through a conversational, 
+                human-centered experience—not a long form.
+              </p>
+            </div>
+
+            <div className="bg-gradient-to-br from-slate-800 to-indigo-900 rounded-3xl p-8 text-white">
+              <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center mb-6">
+                <Shield className="w-6 h-6" />
+              </div>
+              <h3 className="text-xl font-bold mb-3">Trust & Transparency</h3>
+              <p className="text-slate-300 text-sm leading-relaxed">
+                Present recommendations in a clear, defensible manner with full disclosure 
+                of fees, conflicts, and suitability notes.
+              </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* BOTTOM METRICS */}
-      <div className="w-full max-w-6xl px-10 pb-12 flex justify-between items-center z-20 pointer-events-none opacity-40">
-        <div className="flex flex-col">
-          <span className="text-[10px] font-bold text-amber-700 uppercase tracking-widest">
-            System Status
-          </span>
-          <span className="text-xl font-mono font-bold italic">ENCRYPTED</span>
+      <section className="py-20 px-6">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-bold text-slate-800 mb-4">Key Features</h2>
+            <p className="text-slate-600">Six intelligent capabilities that power the platform</p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {features.map((feature, idx) => {
+              const Icon = feature.icon;
+              return (
+                <div key={idx} className="bg-white rounded-2xl p-6 border border-slate-200 hover:border-blue-300 hover:shadow-lg transition-all">
+                  <div className="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center mb-4">
+                    <Icon className="w-5 h-5 text-blue-600" />
+                  </div>
+                  <h3 className="font-bold text-slate-800 mb-2">{feature.title}</h3>
+                  <p className="text-sm text-slate-600 leading-relaxed">{feature.description}</p>
+                </div>
+              );
+            })}
+          </div>
         </div>
-        <div className="flex flex-col text-right">
-          <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">
-            Uptime
-          </span>
-          <span className="text-xl font-mono font-bold">99.9%</span>
+      </section>
+
+      <section className="py-20 px-6 bg-gradient-to-br from-slate-800 to-indigo-900 text-white">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-3xl font-bold mb-6">Ready to Experience the Demo?</h2>
+          <p className="text-slate-300 mb-10 max-w-2xl mx-auto">
+            Explore both the investor journey (goal capture → recommendations) and the 
+            advisor experience (client management → intelligent alerts).
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <button
+              onClick={() => navigate('/investor-onboarding')}
+              className="bg-white text-slate-800 px-8 py-4 rounded-2xl font-bold shadow-xl hover:shadow-2xl transition-all"
+            >
+              Start as Investor
+            </button>
+            <button
+              onClick={() => navigate('/advisor-dashboard')}
+              className="bg-white/10 text-white px-8 py-4 rounded-2xl font-bold border border-white/20 hover:bg-white/20 transition-all"
+            >
+              Open as Advisor
+            </button>
+          </div>
         </div>
-      </div>
+      </section>
+
+      <footer className="py-8 px-6 bg-white border-t border-slate-200">
+        <div className="max-w-6xl mx-auto flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <div className="bg-gradient-to-br from-blue-600 to-indigo-600 p-1 rounded-lg">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </div>
+            <span className="font-bold text-slate-800">CREDENCE</span>
+          </div>
+          <p className="text-sm text-slate-500">Hackathon Demo — Intelligent Advisor & Investor Platform</p>
+        </div>
+      </footer>
     </main>
   );
 };

@@ -85,17 +85,15 @@ src/
 - Google OAuth Client ID is configured in AuthModal.jsx
 
 ## Routes
-- `/` - Landing page
+### Core Hackathon Features
+- `/` - Landing page explaining the platform for judges
+- `/investor-onboarding` - Interactive 5-step investor journey (goals, priority, time horizon, risk scenarios, preferences)
+- `/investor-recommendations` - Personalized investment recommendations with explainability
+- `/advisor-dashboard` - Advisor portal with client management and intelligent alerts (all 6 features)
 - `/dashboard` - Main financial dashboard
-- `/agents` - AI agents overview
-- `/advisor-dashboard` - Intelligent journey management (all 6 features)
-- `/policy-agent` - Insurance policy agent
-- `/taxation-agent` - Tax filing assistant
-- `/credit` - Credit card management
+
+### Supporting Pages
 - `/account` - User profile
-- `/activity` - Transaction history
-- `/calendar` - Financial calendar
-- `/manage` - Budget and goals
 - `/help` - Help center
 - `/settings` - App settings
 

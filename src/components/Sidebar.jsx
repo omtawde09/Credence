@@ -4,14 +4,14 @@ import useSidebarStore from '../store/useSidebarStore';
 import {
     Home,
     User,
-    Activity,
-    CreditCard,
-    Receipt,
+    Users,
+    Target,
+    Shield,
     Settings,
-    Calendar,
     HelpCircle,
     LogOut,
-    ChevronRight
+    ChevronRight,
+    Briefcase
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
@@ -22,12 +22,13 @@ const Sidebar = () => {
 
     const menuItems = [
         { name: 'Home', icon: Home, path: '/dashboard' },
-        { name: 'Account', icon: User, path: '/account' },
-        { name: 'Activity', icon: Activity, path: '/activity' },
-        { name: 'Cards', icon: CreditCard, path: '/credit' },
-        { name: 'Agents', icon: Receipt, path: '/agents' },
-        { name: 'Manage', icon: Settings, path: '/manage' },
-        { name: 'Calendar', icon: Calendar, path: '/calendar' },
+        { name: 'Get Started', icon: Target, path: '/investor-onboarding', highlight: true },
+        { name: 'My Account', icon: User, path: '/account' },
+    ];
+
+    const advisorItems = [
+        { name: 'Advisor Portal', icon: Briefcase, path: '/advisor-dashboard' },
+        { name: 'Client Management', icon: Users, path: '/advisor-dashboard' },
     ];
 
     const bottomItems = [
@@ -40,7 +41,6 @@ const Sidebar = () => {
         navigate('/');
     };
 
-    // Helper to handle navigation and active tab
     const handleNav = (item) => {
         setActiveTab(item.name);
         if (item.path) {
@@ -50,7 +50,6 @@ const Sidebar = () => {
 
     return (
         <aside className="w-64 h-screen fixed left-0 top-0 bg-white border-r border-slate-200 flex flex-col p-6 z-40 overflow-y-auto hidden md:flex">
-            {/* 1. Logo */}
             <div className="flex items-center gap-2 mb-10 cursor-pointer" onClick={() => navigate('/')}>
                 <div className="bg-gradient-to-br from-blue-600 to-indigo-600 p-1.5 rounded-lg">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -60,9 +59,37 @@ const Sidebar = () => {
                 <span className="text-xl font-black tracking-tighter text-slate-800">CREDENCE</span>
             </div>
 
-            {/* 2. Main Navigation */}
-            <div className="space-y-1 mb-8">
+            <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-3 px-2">Investor</p>
+            <div className="space-y-1 mb-6">
                 {menuItems.map((item) => {
+                    const Icon = item.icon;
+                    const isActive = activeTab === item.name;
+                    return (
+                        <button
+                            key={item.name}
+                            onClick={() => handleNav(item)}
+                            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${isActive
+                                ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-500/20'
+                                : item.highlight 
+                                    ? 'text-blue-600 bg-blue-50 hover:bg-blue-100 border border-blue-200'
+                                    : 'text-slate-500 hover:bg-slate-100 hover:text-slate-800'
+                                }`}
+                        >
+                            <Icon size={18} strokeWidth={isActive ? 2.5 : 2} />
+                            <span className={`text-[13px] font-bold ${isActive ? 'tracking-wide' : ''}`}>
+                                {item.name}
+                            </span>
+                            {item.highlight && !isActive && (
+                                <span className="ml-auto text-[9px] bg-blue-600 text-white px-1.5 py-0.5 rounded-full font-bold">NEW</span>
+                            )}
+                        </button>
+                    );
+                })}
+            </div>
+
+            <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-3 px-2">Advisor</p>
+            <div className="space-y-1 mb-8">
+                {advisorItems.map((item) => {
                     const Icon = item.icon;
                     const isActive = activeTab === item.name;
                     return (
@@ -83,7 +110,6 @@ const Sidebar = () => {
                 })}
             </div>
 
-            {/* 3. Bottom Navigation */}
             <div className="space-y-1 mb-auto">
                 {bottomItems.map((item) => {
                     const Icon = item.icon;
@@ -104,7 +130,6 @@ const Sidebar = () => {
                 })}
             </div>
 
-            {/* User Profile */}
             <div className="flex items-center gap-3 p-3 rounded-2xl border border-slate-200 bg-slate-50 cursor-pointer hover:border-blue-300 hover:bg-blue-50/50 transition-colors" onClick={handleLogout}>
                 <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-indigo-500 flex items-center justify-center text-white text-xs font-bold">
                     {user?.email?.[0].toUpperCase() || 'U'}

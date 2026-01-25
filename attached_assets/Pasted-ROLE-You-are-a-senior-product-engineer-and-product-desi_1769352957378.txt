@@ -1,0 +1,131 @@
+ROLE:
+You are a senior product engineer and product designer building a FinTech platform
+for a hackathon.
+
+You deeply understand wealth management, financial advisors, retail investors,
+and regulated financial products.
+
+PROBLEM STATEMENT:
+"Design an interactive FinTech platform to manage a large network of financial
+advisors and provide personalized investment guidance to retail investors."
+
+The platform must:
+- Efficiently organize and manage hundreds of financial advisors and portfolio managers
+- Capture investor goals, risk appetite, and preferences
+- Recommend suitable investment plans and advisory options
+- Present recommendations in a clear, transparent, and trustworthy manner
+- Support informed decision-making across the entire advisor–investor journey
+
+OVERALL GOAL:
+Build a complete demo web application that clearly solves the above problem end-to-end.
+
+The app should demonstrate:
+- Advisor management at scale
+- Investor journey management (not just onboarding)
+- Personalized, explainable investment guidance
+- Trust, transparency, and suitability
+
+This is a demo application for judges.
+Clarity, reasoning, and UX matter more than backend complexity.
+
+--------------------------------------------------
+DESIGN & UX PRINCIPLES
+--------------------------------------------------
+- Professional FinTech product (Zerodha-style calm and minimal)
+- Light background, clean typography
+- Content-first, not flashy
+- Trustworthy, regulated tone
+- No crypto-style dashboards
+- No excessive visuals or gimmicks
+
+--------------------------------------------------
+APP STRUCTURE (REQUIRED)
+--------------------------------------------------
+Build the app with the following core sections:
+
+1. Investor Experience
+2. Advisor Experience
+3. Recommendation & Trust Layer
+
+--------------------------------------------------
+INVESTOR EXPERIENCE (MANDATORY)
+--------------------------------------------------
+Design an interactive investor journey that:
+
+- Captures investor goals (retirement, wealth creation, home, education)
+- Assesses risk appetite using scenarios, not jargon
+- Understands time horizon and preferences
+- Feels conversational and human, not like a long form
+
+The investor journey should clearly show how the platform understands the user
+before making any recommendation.
+
+--------------------------------------------------
+RECOMMENDATION & TRUST LAYER (CRITICAL)
+--------------------------------------------------
+Generate personalized investment recommendations that are:
+
+- Goal-based
+- Risk-aligned
+- Preference-aware
+
+For every recommendation:
+- Clearly explain WHY it was suggested
+- Show assumptions used
+- Show best-case and worst-case outcomes (qualitative or mock data)
+- Include disclaimers and suitability notes
+
+Add trust features such as:
+- Advisor–investor compatibility
+- Fee and conflict-of-interest disclosures
+- “What could go wrong?” explanations
+
+This layer should make the platform feel transparent and defensible.
+
+--------------------------------------------------
+ADVISOR EXPERIENCE (MANDATORY)
+--------------------------------------------------
+Design an advisor-facing experience that demonstrates scalability:
+
+- Advisor profile and expertise
+- Ability to manage multiple clients
+- Overview of active clients and assets (mock)
+- Alerts for:
+  - Risk mismatches
+  - Reviews required after life events
+- Quick client summaries for advisor preparation
+
+The advisor side should feel like internal financial software:
+functional, calm, and serious.
+
+--------------------------------------------------
+JOURNEY MANAGEMENT (KEY DIFFERENTIATOR)
+--------------------------------------------------
+Show that this platform manages the FULL journey, not one-time advice.
+
+Include features such as:
+- Life-event triggered re-planning
+- Ongoing suitability monitoring
+- Review prompts for advisors and investors
+
+--------------------------------------------------
+CONSTRAINTS
+--------------------------------------------------
+- Mock data is acceptable everywhere
+- No real trading or payments
+- No real market integrations
+- Focus on reasoning, UX, and product clarity
+- Do not overengineer
+
+--------------------------------------------------
+FINAL EXPECTATION
+--------------------------------------------------
+The final application should make it obvious to a judge that:
+- The problem statement has been fully understood
+- Both advisors and investors are served
+- Recommendations are personalized AND explainable
+- Trust and transparency are first-class concerns
+- The platform can scale beyond a single user
+
+If a feature does not directly support the problem statement,
+do not include it.
