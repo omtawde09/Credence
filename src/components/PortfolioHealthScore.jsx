@@ -1,17 +1,9 @@
-import React from 'react';
-import { Activity, Check, AlertCircle } from 'lucide-react';
+import usePortfolioStore from '../store/usePortfolioStore';
 
 const PortfolioHealthScore = () => {
-    // Mock Data
-    const healthData = {
-        score: 78,
-        status: "Good",
-        metrics: [
-            { name: "Diversification", score: 85, status: "Excellent" },
-            { name: "Risk Alignment", score: 60, status: "Fair" },
-            { name: "Goal Fit", score: 90, status: "Excellent" }
-        ]
-    };
+    const { healthData } = usePortfolioStore();
+
+    if (!healthData) return null;
 
     const getScoreColor = (score) => {
         if (score >= 80) return 'text-green-500';

@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { TrendingUp, TrendingDown, RefreshCcw, Info } from 'lucide-react';
+import usePortfolioStore from '../store/usePortfolioStore';
 
 const WhatIfSimulator = () => {
     const [scenario, setScenario] = useState(0); // 0 = baseline
 
-    // Mock Base Data (must match Portfolio Manager main data roughly)
-    const baseValue = 12400000; // 1.24 Cr
+    const { portfolioData } = usePortfolioStore();
+    // Use rawValue from store, fallback if missing
+    const baseValue = portfolioData?.rawValue || 12400000;
     const baseDate = "Dec 2032";
 
     const scenarios = [
@@ -51,8 +53,8 @@ const WhatIfSimulator = () => {
                             key={s.value}
                             onClick={() => setScenario(s.value)}
                             className={`py-2 px-1 rounded-lg text-xs font-bold transition-all ${scenario === s.value
-                                    ? 'bg-white dark:bg-slate-600 text-slate-800 dark:text-white shadow-sm'
-                                    : 'text-slate-500 dark:text-slate-400 hover:text-slate-700'
+                                ? 'bg-white dark:bg-slate-600 text-slate-800 dark:text-white shadow-sm'
+                                : 'text-slate-500 dark:text-slate-400 hover:text-slate-700'
                                 }`}
                         >
                             {s.value > 0 ? '+' : ''}{s.value}%

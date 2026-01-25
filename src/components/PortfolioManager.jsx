@@ -5,61 +5,14 @@ import { Target, AlertTriangle, CheckCircle, ArrowRight, Shield } from 'lucide-r
 
 import PortfolioHealthScore from './PortfolioHealthScore';
 import WhatIfSimulator from './WhatIfSimulator';
+import usePortfolioStore from '../store/usePortfolioStore';
 
 const PortfolioManager = () => {
     const { user } = useAuthStore();
 
-    // Mock Data for Portfolio Manager
-    const portfolioData = {
-        totalValue: "₹1.24 Cr",
-        allocation: { equity: 65, debt: 25, cash: 10 },
-        riskLevel: "Moderate-Aggressive",
-        advisor: "Rajesh Kumar",
-        activeGoal: {
-            name: "Early Retirement",
-            progress: 42,
-            target: "₹3 Cr",
-            current: "₹1.24 Cr",
-            timeRemaining: "8 years",
-            status: "On Track"
-        },
-        riskMismatch: {
-            detected: true,
-            investorProfile: "Moderate",
-            currentPortfolio: "Aggressive",
-            message: "Your current portfolio risk (Aggressive) is higher than your profile (Moderate). Consider rebalancing to reduce volatility."
-        },
-        insights: [
-            {
-                id: 1,
-                title: "High Equity Exposure",
-                description: "Your equity allocation is 65%, which is slightly above your target of 60%. This increases potential returns but also short-term risk.",
-                type: "warning"
-            },
-            {
-                id: 2,
-                title: "Cash Drag",
-                description: "You have 10% in cash. Consider deploying 5% into short-term debt funds to beat inflation while maintaining liquidity.",
-                type: "info"
-            }
-        ],
-        rebalancing: [
-            {
-                id: 1,
-                action: "Reduce Small Cap Equity",
-                amount: "5%",
-                reason: "To align with your 'Moderate' risk profile.",
-                impact: "Lowers expected volatility by ~1.2%."
-            },
-            {
-                id: 2,
-                action: "Increase Debt Allocation",
-                amount: "5%",
-                reason: "Adds stability and consistent income.",
-                impact: "Improves portfolio stability score."
-            }
-        ]
-    };
+    const { portfolioData, isLoading } = usePortfolioStore();
+
+    if (isLoading) return <div className="text-center p-10 text-slate-500">Loading portfolio data...</div>;
 
     return (
         <div className="min-h-screen text-slate-800">
@@ -74,11 +27,11 @@ const PortfolioManager = () => {
                     </div>
                     <div className="flex items-center gap-3">
                         <div className="text-right hidden sm:block">
-                            <p className="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-widest">Primary Advisor</p>
-                            <p className="text-sm font-bold text-slate-800 dark:text-white">{portfolioData.advisor}</p>
+                            <p className="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-widest">Portfolio Manager</p>
+                            <p className="text-sm font-bold text-slate-800 dark:text-white">{portfolioData.manager}</p>
                         </div>
-                        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center text-white font-bold shadow-lg">
-                            {portfolioData.advisor.split(' ').map(n => n[0]).join('')}
+                        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-emerald-600 to-teal-700 flex items-center justify-center text-white font-bold shadow-lg">
+                            {portfolioData.manager.split(' ').map(n => n[0]).join('')}
                         </div>
                     </div>
                 </header>
@@ -135,8 +88,8 @@ const PortfolioManager = () => {
 
                     {/* NEW ROW: Health & Simulator (Interactive Tools) */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <PortfolioHealthScore />
-                        <WhatIfSimulator />
+                        {portfolioData.rawValue > 0 && <PortfolioHealthScore />}
+                        {portfolioData.rawValue > 0 && <WhatIfSimulator />}
                     </div>
 
                     {/* Middle Row: Goals & Analysis */}

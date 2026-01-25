@@ -1,6 +1,6 @@
 import React from 'react';
 
-const SuperMoneyCard = ({ name = "ARJUN SHARMA" }) => {
+const SuperMoneyCard = ({ name = "CARD HOLDER" }) => {
     return (
         <div className="flex items-center justify-center min-h-screen bg-transparent p-6">
             <div

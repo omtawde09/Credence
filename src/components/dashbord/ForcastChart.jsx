@@ -1,6 +1,7 @@
 "use client"
 
 import React, { useState } from "react"
+import useDashboardStore from "../../store/useDashboardStore"
 import { TrendingUp } from "lucide-react"
 import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts"
 
@@ -18,29 +19,7 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart"
 
-// Mock Data for different periods
-const data7D = [
-  { day: "Mon", amount: 12500 },
-  { day: "Tue", amount: 18000 },
-  { day: "Wed", amount: 15200 },
-  { day: "Thu", amount: 21000 },
-  { day: "Fri", amount: 19000 },
-  { day: "Sat", amount: 32000 },
-  { day: "Sun", amount: 28000 },
-]
-
-const data30D = [
-  { day: "Week 1", amount: 45000 },
-  { day: "Week 2", amount: 52000 },
-  { day: "Week 3", amount: 48000 },
-  { day: "Week 4", amount: 61000 },
-]
-
-const data90D = [
-  { day: "Oct", amount: 180000 },
-  { day: "Nov", amount: 210000 },
-  { day: "Dec", amount: 195000 },
-]
+// Data moved to useDashboardStore
 
 const chartConfig = {
   amount: {
@@ -51,11 +30,13 @@ const chartConfig = {
 
 export function ForecastChart() {
   const [activeTab, setActiveTab] = useState("7D")
+  const { dashboardData } = useDashboardStore()
 
   const getData = () => {
-    if (activeTab === "7D") return data7D
-    if (activeTab === "30D") return data30D
-    return data90D
+    if (!dashboardData?.chartData) return [];
+    if (activeTab === "7D") return dashboardData.chartData["7D"] || []
+    if (activeTab === "30D") return dashboardData.chartData["30D"] || []
+    return dashboardData.chartData["90D"] || []
   }
 
   return (

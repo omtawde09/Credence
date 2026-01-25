@@ -1,5 +1,6 @@
 import React from 'react';
 import useAuthStore from '../store/useAuthStore';
+import useDashboardStore from '../store/useDashboardStore';
 import { ForecastChart } from './dashbord/ForcastChart';
 import Sidebar from './Sidebar';
 import { Search, Bell } from 'lucide-react';
@@ -8,6 +9,7 @@ import SuperMoneyCard from './SuperMoneyCard';
 
 const Dashboard = () => {
     const { user } = useAuthStore();
+    const { dashboardData } = useDashboardStore();
 
     return (
         <div className="min-h-screen text-slate-800 dark:text-slate-100">
@@ -60,12 +62,12 @@ const Dashboard = () => {
                         <div className="flex gap-8 border-t md:border-t-0 md:border-l border-white/10 pt-6 md:pt-0 md:pl-10 w-full md:w-auto justify-between md:justify-start">
                             <div className="flex flex-col">
                                 <span className="text-[10px] uppercase tracking-widest opacity-70 mb-1">Cashflow</span>
-                                <span className="text-3xl font-mono font-light">₹1,24,000</span>
+                                <span className="text-3xl font-mono font-light">₹{dashboardData.cashflow.toLocaleString('en-IN')}</span>
                             </div>
                             <div className="w-[1px] h-12 bg-white/10 hidden md:block" />
                             <div className="flex flex-col">
                                 <span className="text-[10px] uppercase tracking-widest opacity-70 mb-1">Savings</span>
-                                <span className="text-3xl font-mono font-light text-teal-300">₹12,400</span>
+                                <span className="text-3xl font-mono font-light text-teal-300">₹{dashboardData.savings.toLocaleString('en-IN')}</span>
                             </div>
                         </div>
                     </div>
@@ -84,7 +86,7 @@ const Dashboard = () => {
                             <div className="absolute inset-0 flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
                                 {/* Auto-scale the 500px card to fit parent width/height provided */}
                                 <div className="transform scale-[0.55] lg:scale-[0.65] xl:scale-[0.7] origin-center">
-                                    <SuperMoneyCard name={user?.displayName || "ARJUN SHARMA"} />
+                                    <SuperMoneyCard name={user?.displayName || user?.email?.split('@')[0]?.toUpperCase() || "CARD HOLDER"} />
                                 </div>
                             </div>
                         </Link>
@@ -99,16 +101,21 @@ const Dashboard = () => {
                             <button className="text-[10px] font-bold uppercase tracking-widest text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white transition-colors">Filter</button>
                         </div>
 
-                        {/* Table Placeholder */}
                         <div className="space-y-4">
-                            {[1, 2, 3].map((i) => (
-                                <div key={i} className="flex items-center justify-between p-4 bg-slate-100/30 dark:bg-slate-700/30 rounded-2xl border border-dashed border-slate-200 dark:border-slate-700">
+                            {dashboardData.recentTransactions.map((tx) => (
+                                <div key={tx.id} className="flex items-center justify-between p-4 bg-slate-100/30 dark:bg-slate-700/30 rounded-2xl border border-dashed border-slate-200 dark:border-slate-700">
                                     <div className="flex items-center gap-4">
-                                        <div className="w-10 h-10 bg-white dark:bg-slate-600 rounded-full flex items-center justify-center text-slate-400 dark:text-slate-200">#</div>
-                                        <div className="w-32 h-4 bg-slate-200/50 dark:bg-slate-600/50 rounded-full animate-pulse" />
+                                        <div className="w-10 h-10 bg-white dark:bg-slate-600 rounded-full flex items-center justify-center text-slate-400 dark:text-slate-200 text-xs font-bold">
+                                            {tx.type === 'credit' ? 'CR' : 'DR'}
+                                        </div>
+                                        <div>
+                                            <p className="text-sm font-bold text-slate-800 dark:text-white">{tx.name}</p>
+                                            <p className="text-[10px] text-slate-400">{tx.date}</p>
+                                        </div>
                                     </div>
-                                    <div className="w-24 h-4 bg-slate-200/50 dark:bg-slate-600/50 rounded-full animate-pulse hidden md:block" />
-                                    <div className="w-16 h-4 bg-slate-200/50 dark:bg-slate-600/50 rounded-full animate-pulse" />
+                                    <div className={`text-sm font-bold ${tx.type === 'credit' ? 'text-green-600' : 'text-slate-800 dark:text-slate-200'}`}>
+                                        {tx.amount}
+                                    </div>
                                 </div>
                             ))}
                         </div>
