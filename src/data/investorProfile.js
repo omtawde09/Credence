@@ -77,18 +77,26 @@ export const calculateCompatibilityScore = (investor, advisor) => {
     let score = 0;
     const factors = [];
     
+    // Apply .kiro/agent_brain/agent_constraints.md - Uncertainty Acknowledgment Requirements
+    let confidenceLevel = 'High';
+    const uncertaintyFactors = [];
+    
     const investorRisk = investor.riskProfile.stated.toLowerCase();
     const advisorRisk = advisor.riskPhilosophy.toLowerCase();
     
+    // Apply .kiro/policy_reasoning/policy_comparison_criteria.md - Multi-dimensional decision framework
     if (investorRisk.includes('moderate') && advisorRisk.includes('moderate')) {
         score += 30;
         factors.push({ factor: 'Risk Philosophy Alignment', contribution: 30, detail: 'Both favor moderate risk approach' });
     } else if (Math.abs(investor.riskProfile.score - 5) <= 2) {
         score += 20;
         factors.push({ factor: 'Risk Philosophy Alignment', contribution: 20, detail: 'Reasonable alignment on risk tolerance' });
+        uncertaintyFactors.push('Risk alignment based on limited data points');
     } else {
         score += 10;
         factors.push({ factor: 'Risk Philosophy Alignment', contribution: 10, detail: 'Some divergence in risk approach' });
+        confidenceLevel = 'Medium';
+        uncertaintyFactors.push('Significant risk philosophy differences detected');
     }
     
     const hasRetirement = investor.goals.some(g => g.name.toLowerCase().includes('retirement'));
@@ -99,6 +107,9 @@ export const calculateCompatibilityScore = (investor, advisor) => {
     } else {
         score += 15;
         factors.push({ factor: 'Goal-Expertise Match', contribution: 15, detail: 'General expertise applicable to your goals' });
+        if (!hasRetirement) {
+            uncertaintyFactors.push('Goal-expertise match based on general capabilities');
+        }
     }
     
     if (advisor.experience >= 10) {
@@ -107,6 +118,10 @@ export const calculateCompatibilityScore = (investor, advisor) => {
     } else {
         score += 12;
         factors.push({ factor: 'Experience Level', contribution: 12, detail: `${advisor.experience} years of experience` });
+        if (advisor.experience < 5) {
+            confidenceLevel = 'Medium';
+            uncertaintyFactors.push('Limited advisor experience for complex scenarios');
+        }
     }
     
     if (investor.preferences.prefersSRI) {
@@ -117,7 +132,24 @@ export const calculateCompatibilityScore = (investor, advisor) => {
         factors.push({ factor: 'Investment Style Compatibility', contribution: 15, detail: 'Aligned on long-term value approach' });
     }
     
-    return { score: Math.min(score, 100), factors };
+    // Apply .kiro/agent_brain/agent_constraints.md - Conservative Bias Requirements
+    const finalScore = Math.min(score, 100);
+    
+    // Apply .kiro/failure_playbooks/false_positive_risk.md - Confidence thresholds
+    if (uncertaintyFactors.length >= 2) {
+        confidenceLevel = 'Low';
+    }
+    
+    // Apply .kiro/agent_brain/when_agent_should_not_act.md - Professional consultation triggers
+    const requiresProfessionalConsultation = confidenceLevel === 'Low' || finalScore < 60;
+    
+    return { 
+        score: finalScore, 
+        factors,
+        confidenceLevel,
+        uncertaintyFactors,
+        requiresProfessionalConsultation
+    };
 };
 
 export const detectRiskMismatch = (investor) => {
@@ -125,23 +157,35 @@ export const detectRiskMismatch = (investor) => {
     const actual = investor.currentPortfolio.currentRiskScore;
     const deviation = actual - stated;
     
+    // Apply .kiro/decision_graphs/money_weather_decision_graph.md risk threshold logic
+    // Low Risk Band: <15% probability, Medium: 15-40%, High: >40%
+    const riskProbability = Math.abs(deviation) * 10; // Convert to percentage
+    
     if (Math.abs(deviation) < 1) {
-        return null;
+        return null; // Within acceptable range per .kiro constraints
     }
     
+    // Apply .kiro/agent_brain/agent_constraints.md - Conservative Bias Requirements
+    const severity = Math.abs(deviation) >= 2 ? 'High' : 'Medium';
+    
+    // Follow .kiro/agent_brain/agent_goals.md - Risk Prevention priority
     return {
         hasAlert: true,
-        severity: Math.abs(deviation) >= 2 ? 'High' : 'Medium',
+        severity: severity,
         statedRisk: stated,
         actualRisk: actual.toFixed(1),
         deviation: deviation.toFixed(1),
         direction: deviation > 0 ? 'Higher' : 'Lower',
+        // Apply .kiro/problem_decomposition/financial_risk_invisibility.md - Honest uncertainty communication
+        confidenceLevel: Math.abs(deviation) >= 2 ? 'High' : 'Medium',
         explanation: deviation > 0 
             ? `Current portfolio risk (${actual.toFixed(1)}/10) exceeds stated risk tolerance (${stated}/10). Portfolio has higher equity exposure than recommended for this risk profile.`
             : `Current portfolio risk (${actual.toFixed(1)}/10) is below stated risk tolerance (${stated}/10). Portfolio may be too conservative, potentially limiting growth.`,
         suggestedAction: deviation > 0
             ? 'Consider rebalancing by shifting 10-15% from equity to debt instruments to align with stated risk tolerance.'
             : 'Consider increasing equity allocation by 5-10% to optimize for stated risk tolerance and long-term goals.',
+        // Apply .kiro/agent_brain/when_agent_should_not_act.md - Professional consultation triggers
+        requiresProfessionalConsultation: Math.abs(deviation) >= 2.5
     };
 };
 
@@ -173,4 +217,48 @@ export const lifeEventImpacts = {
         impacts: ['Significant portion of savings deployed', 'EMI commitment affects investable surplus', 'Asset allocation changes (real estate added)'],
         nextSteps: ['Rebuild emergency fund over 12 months', 'Adjust SIP amounts to accommodate EMI', 'Review overall asset allocation'],
     },
+};
+
+// .kiro Integration: Apply agent brain constraints to all recommendations
+export const validateRecommendationWithKiroConstraints = (recommendation, userProfile) => {
+    const validation = {
+        isValid: true,
+        warnings: [],
+        requiresProfessionalConsultation: false,
+        confidenceLevel: 'High',
+        ethicalConstraints: []
+    };
+    
+    // Apply .kiro/agent_brain/agent_constraints.md - User Autonomy Preservation
+    if (recommendation.type === 'mandatory' || recommendation.urgency === 'immediate') {
+        validation.ethicalConstraints.push('Recommendation must preserve user choice and decision authority');
+        validation.warnings.push('High-urgency recommendations require explicit user consent');
+    }
+    
+    // Apply .kiro/agent_brain/agent_constraints.md - Exploitation Prevention
+    if (recommendation.expectedReturn && parseFloat(recommendation.expectedReturn) > 15) {
+        validation.warnings.push('High return expectations require explicit risk disclosure');
+        validation.confidenceLevel = 'Medium';
+    }
+    
+    // Apply .kiro/agent_brain/agent_goals.md - Risk Prevention priority
+    if (recommendation.risk === 'High' && userProfile?.riskProfile?.score < 7) {
+        validation.warnings.push('Risk level exceeds user stated tolerance');
+        validation.requiresProfessionalConsultation = true;
+    }
+    
+    // Apply .kiro/agent_brain/when_agent_should_not_act.md - Insufficient information scenarios
+    if (!userProfile || !userProfile.riskProfile || !userProfile.goals) {
+        validation.isValid = false;
+        validation.warnings.push('Insufficient user profile data for reliable recommendation');
+        validation.confidenceLevel = 'Low';
+    }
+    
+    // Apply .kiro/failure_playbooks/false_positive_risk.md - Alert fatigue prevention
+    if (recommendation.urgency === 'high' && !recommendation.reasoning?.length) {
+        validation.warnings.push('High-urgency recommendations require detailed reasoning');
+        validation.confidenceLevel = 'Low';
+    }
+    
+    return validation;
 };

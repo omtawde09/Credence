@@ -1,8 +1,8 @@
 {
   "enabled": true,
   "name": "Problem Statement Integrity Checker",
-  "description": "Enforces single-problem clarity and USP integrity when Problem Statement files are edited by checking core problem focus, target users, and USP compliance",
-  "version": "1",
+  "description": "Enforces single-core-problem clarity, target user correctness, and trust-first USP integrity for the advisor–investor journey management problem",
+  "version": "2",
   "when": {
     "type": "fileEdited",
     "patterns": [
@@ -13,6 +13,6 @@
   },
   "then": {
     "type": "askAgent",
-    "prompt": "Task: Enforce single-problem clarity and USP integrity.\nInputs:\n- The edited Problem Statement file content.\n- Refer to these Kiro artifacts as ground truth:\n  - .kiro/problem_decomposition/core_problem.md (if missing, create it)\n  - .kiro/policy_reasoning/product_intent.md (if missing, create it)\nChecks:\n1) Exactly ONE core problem is stated (not multiple domains/features).\n2) Target users explicitly include youth + Tier-3/4 (or non-metro first-time investors).\n3) USP remains: agentic system that researches → explains → requires explicit approval → executes (no autonomy).\n4) No \"guaranteed returns\" / \"autonomous trading\" language.\nOutput:\nA) Update/Create: .kiro/problem_decomposition/ps_integrity.md\n   - Status: PASS/FAIL\n   - If FAIL: quote the exact offending sentences and provide minimal rewrite.\nB) Append a single-line entry to: .kiro/decision_logs/ps_integrity.log\n   - timestamp | PASS/FAIL | 1-line reason\nDo not add marketing language. Be strict."
+    "prompt": "Task: Enforce strict problem-statement integrity.\n\nInputs:\n- The edited Problem Statement file content.\n- Treat the following Kiro artifacts as ground truth (create if missing):\n  - .kiro/problem_decomposition/core_problem.md\n  - .kiro/policy_reasoning/product_intent.md\n\nChecks (ALL must pass):\n1) Exactly ONE core problem is defined:\n   - Managing the end-to-end journey between retail investors and financial advisors\n   - Including onboarding, suitability, recommendation, transparency, and ongoing review\n   - No secondary or parallel problem domains allowed\n\n2) Target users are explicitly stated as:\n   - Retail investors (including first-time or underserved investors)\n   - Financial advisors / portfolio managers\n   - No unrelated user groups (e.g., traders, institutions-only platforms)\n\n3) USP is preserved:\n   - Intelligent / agent-assisted system that:\n     understands → recommends → explains → supports informed decision-making\n   - Recommendations must be explainable and user-approved\n   - NO fully autonomous financial decision-making\n\n4) Trust & compliance constraints:\n   - No guaranteed returns language\n   - No autonomous trading or self-executing agents\n   - Clear disclaimers and suitability framing\n\nOutput Requirements:\nA) Update or create: .kiro/problem_decomposition/ps_integrity.md\n   - Status: PASS or FAIL\n   - If FAIL:\n     - Quote exact offending sentences\n     - Provide a minimal, compliant rewrite\n\nB) Append exactly one line to: .kiro/decision_logs/ps_integrity.log\n   - Format: timestamp | PASS/FAIL | short reason\n\nRules:\n- Be strict and literal\n- Do not introduce marketing language\n- Do not infer intent beyond the text\n"
   }
 }

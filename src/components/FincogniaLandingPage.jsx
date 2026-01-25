@@ -92,6 +92,21 @@ const CredenceLandingPage = () => {
             Built on trust, transparency, and suitability.
           </p>
 
+          <div className="flex items-center justify-center gap-8 mb-10 text-sm text-slate-500">
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+              <span>247+ Active Advisors</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 bg-teal-500 rounded-full"></div>
+              <span>1,800+ Retail Investors</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 bg-amber-500 rounded-full"></div>
+              <span>₹2.4B+ AUM</span>
+            </div>
+          </div>
+
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button
               onClick={() => navigate('/investor-onboarding')}

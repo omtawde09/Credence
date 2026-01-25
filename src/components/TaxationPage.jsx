@@ -49,28 +49,25 @@ const TaxationPage = () => {
     // WARNING: In production, move API Key to environment variables
     const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
 
-    // 1. ITR Form Auto-fill (Gemini)
+    // 1. ITR Form Auto-fill (Mock Data for Demo)
     const handleAutoFill = async () => {
         setIsAutoFilling(true);
         try {
-            const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
-            const prompt = `Generate realistic synthetic data for an Indian ITR filing for a salaried individual.
-            Context: User Email: ${user?.email || 'unknown'}
-            Return ONLY a raw JSON object (no markdown) with keys:
-            - pan: Valid PAN (ABCDE1234F)
-            - aadhaar: "xxxx-xxxx-xxxx"
-            - assessmentYear: "2025-26"
-            - grossIncome: Realistic annual income in INR (e.g. 1500000)
-            - deductions80C: Up to 150000
-            - deductions80D: Up to 50000
-            - tdsDeducted: Realistic TDS amount`;
-
-            const result = await model.generateContent(prompt);
-            const response = await result.response;
-            const text = response.text();
-            const cleanText = text.replace(/```json/g, '').replace(/```/g, '').trim();
-            const data = JSON.parse(cleanText);
-            setItrData(data);
+            // Simulate API delay
+            await new Promise(resolve => setTimeout(resolve, 1500));
+            
+            // Generate realistic mock data
+            const mockData = {
+                pan: 'ABCDE1234F',
+                aadhaar: 'XXXX-XXXX-1234',
+                assessmentYear: '2025-26',
+                grossIncome: '1500000',
+                deductions80C: '150000',
+                deductions80D: '25000',
+                tdsDeducted: '45000'
+            };
+            
+            setItrData(mockData);
         } catch (error) {
             console.error("Auto-fill error:", error);
             alert("Agent failed to auto-fill. Please try again.");
@@ -125,7 +122,7 @@ const TaxationPage = () => {
         setItrData(prev => ({ ...prev, [name]: value }));
     };
 
-    // 3. Tax Chatbot (Gemini)
+    // 3. Tax Chatbot (Mock responses for Demo)
     const handleChatSubmit = async (e) => {
         e.preventDefault();
         if (!chatInput.trim()) return;
@@ -136,14 +133,21 @@ const TaxationPage = () => {
         setIsChatThinking(true);
 
         try {
-            const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
-            const prompt = `Act as an expert Indian Chartered Accountant. Answer the user's tax question concisely and accurately.
-            IMPORTANT: Do NOT use markdown formatting (no bold **, no italics *). Do NOT use bullet points or em dashes (—). Write in plain text paragraphs only. Speak naturally like a human advisor.
-            Question: ${userMsg}`;
-
-            const result = await model.generateContent(prompt);
-            const response = await result.response;
-            const aiMsg = response.text();
+            // Simulate API delay
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            // Generate contextual responses based on keywords
+            let aiMsg = "I understand your tax question. ";
+            
+            if (userMsg.toLowerCase().includes('deduction')) {
+                aiMsg += "For tax deductions, you can claim up to ₹1.5 lakh under Section 80C for investments like PPF, ELSS, and life insurance premiums. Section 80D allows deductions for health insurance premiums up to ₹25,000 for self and family, and additional ₹25,000 for parents.";
+            } else if (userMsg.toLowerCase().includes('itr') || userMsg.toLowerCase().includes('filing')) {
+                aiMsg += "ITR filing is mandatory if your income exceeds ₹2.5 lakh. You should file ITR-1 (Sahaj) if you're a salaried individual with income from salary and other sources up to ₹50 lakh. The due date for FY 2024-25 is July 31, 2025.";
+            } else if (userMsg.toLowerCase().includes('tax') && userMsg.toLowerCase().includes('save')) {
+                aiMsg += "To save taxes legally, consider investing in ELSS mutual funds, PPF, NSC, or tax-saving FDs under Section 80C. Also, claim HRA if you're paying rent, and ensure you have adequate health insurance for Section 80D benefits.";
+            } else {
+                aiMsg += "Based on current tax laws, I recommend consulting the latest Income Tax Act provisions. For specific situations, it's always best to consult with a qualified chartered accountant who can provide personalized advice based on your complete financial picture.";
+            }
 
             setChatHistory(prev => [...prev, { role: 'model', text: aiMsg }]);
         } catch (error) {
@@ -157,20 +161,29 @@ const TaxationPage = () => {
         chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }, [chatHistory]);
 
-    // 4. Tax Update Summary (Gemini)
+    // 4. Tax Update Summary (Mock for Demo)
     const handleUpdateClick = async (update) => {
         setSelectedUpdate(update);
         setUpdateSummary('');
         setIsGeneratingSummary(true);
 
         try {
-            const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
-            const prompt = `Provide a short, easy-to-understand summary of this Indian tax update: "${update.title} - ${update.desc}". Explain how it impacts a common taxpayer.
-            IMPORTANT: Do NOT use markdown. Do NOT use asterisks (*) or em dashes (—). Keep it plain text and conversational.`;
-
-            const result = await model.generateContent(prompt);
-            const response = await result.response;
-            const summary = response.text();
+            // Simulate API delay
+            await new Promise(resolve => setTimeout(resolve, 800));
+            
+            // Generate contextual summaries based on update type
+            let summary = "";
+            
+            if (update.title.includes('New Tax Regime')) {
+                summary = "The new tax regime offers lower tax rates but removes most deductions and exemptions. For FY 2024-25, it becomes the default option, meaning taxpayers need to actively choose the old regime if they want to claim deductions like 80C, HRA, etc. This change primarily benefits those with fewer deductions.";
+            } else if (update.title.includes('LTCG')) {
+                summary = "Long Term Capital Gains tax rates have been revised for equity investments. The new rates apply to gains exceeding ₹1 lakh in a financial year. This affects investors in stocks and equity mutual funds held for more than one year. Consider reviewing your investment strategy and timing of exits.";
+            } else if (update.title.includes('Standard Deduction')) {
+                summary = "The standard deduction for salaried employees has been increased to ₹75,000 from ₹50,000. This reduces your taxable income automatically without requiring any investment or documentation. All salaried individuals benefit from this change, resulting in tax savings of approximately ₹6,000-7,500 depending on your tax bracket.";
+            } else {
+                summary = "This tax update affects various aspects of income tax calculation and compliance. It's recommended to review how this change impacts your specific tax situation and consult with a tax advisor for personalized guidance.";
+            }
+            
             setUpdateSummary(summary);
         } catch (error) {
             setUpdateSummary("Could not fetch details at this moment.");

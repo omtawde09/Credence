@@ -42,6 +42,11 @@ const RiskMismatchAlert = ({ investor }) => {
                     </h3>
                     <p className={`text-xs ${mismatch.severity === 'High' ? 'text-red-600' : 'text-amber-600'}`}>
                         {mismatch.severity} Priority Alert
+                        {mismatch.confidenceLevel && (
+                            <span className="ml-2 text-slate-500">
+                                (Confidence: {mismatch.confidenceLevel})
+                            </span>
+                        )}
                     </p>
                 </div>
             </div>
@@ -94,7 +99,15 @@ const RiskMismatchAlert = ({ investor }) => {
 
             <div className="bg-[#E6EFEA] rounded-xl p-4 border border-[#CFE3D8]">
                 <p className="text-xs font-bold uppercase tracking-widest text-[#1E3A2F] mb-2">Suggested Action</p>
-                <p className="text-sm text-[#1E3A2F] leading-relaxed">{mismatch.suggestedAction}</p>
+                <p className="text-sm text-[#1E3A2F] leading-relaxed mb-3">{mismatch.suggestedAction}</p>
+                {mismatch.requiresProfessionalConsultation && (
+                    <div className="flex items-center gap-2 p-2 bg-blue-50 rounded-lg border border-blue-200">
+                        <AlertTriangle size={14} className="text-blue-600" />
+                        <p className="text-xs text-blue-700">
+                            <strong>Professional consultation recommended</strong> for significant risk misalignment.
+                        </p>
+                    </div>
+                )}
             </div>
 
             <button className="w-full mt-4 py-3 bg-[#1E3A2F] text-white text-xs font-bold uppercase tracking-widest rounded-xl hover:bg-[#2A4D3F] transition-colors">
