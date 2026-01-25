@@ -26,6 +26,7 @@ const Sidebar = () => {
         { name: 'Home', icon: Home, path: '/dashboard' },
         { name: 'Get Started', icon: Target, path: '/investor-onboarding', highlight: true },
         { name: 'My Account', icon: User, path: '/account' },
+        { name: 'Advisors', icon: Users, path: '/advisors' },
         { name: 'Calendar', icon: Calendar, path: '/calendar' },
         { name: 'Agents', icon: Bot, path: '/agents' },
     ];
@@ -53,7 +54,7 @@ const Sidebar = () => {
     };
 
     return (
-        <aside className="w-64 h-screen fixed left-0 top-0 bg-white border-r border-slate-200 flex flex-col p-6 z-40 overflow-y-auto hidden md:flex">
+        <aside className="w-64 h-screen fixed left-0 top-0 bg-white/40 backdrop-blur-2xl border-r border-white/50 flex flex-col p-6 z-40 overflow-y-auto hidden md:flex shadow-2xl">
             <div className="flex items-center gap-2 mb-10 cursor-pointer" onClick={() => navigate('/')}>
                 <div className="bg-slate-800 p-1.5 rounded-lg">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -76,10 +77,10 @@ const Sidebar = () => {
                                     key={item.name}
                                     onClick={() => handleNav(item)}
                                     className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${isActive
-                                        ? 'bg-slate-800 text-white shadow-lg shadow-blue-500/20'
+                                        ? 'bg-slate-800/90 text-white shadow-lg shadow-blue-500/20 backdrop-blur-sm'
                                         : item.highlight
-                                            ? 'text-blue-600 bg-blue-50 hover:bg-blue-100 border border-blue-200'
-                                            : 'text-slate-500 hover:bg-slate-100 hover:text-slate-800'
+                                            ? 'text-blue-600 bg-blue-50/50 hover:bg-blue-100/50 border border-blue-200/50'
+                                            : 'text-slate-600 hover:bg-white/40 hover:text-slate-900'
                                         }`}
                                 >
                                     <Icon size={18} strokeWidth={isActive ? 2.5 : 2} />

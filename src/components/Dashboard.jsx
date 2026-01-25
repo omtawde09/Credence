@@ -10,7 +10,7 @@ const Dashboard = () => {
     const { user } = useAuthStore();
 
     return (
-        <div className="min-h-screen bg-slate-50 text-slate-800">
+        <div className="min-h-screen text-slate-800">
             <Sidebar />
 
             {/* Main Content Wrapper - Offset by Sidebar width */}
@@ -99,7 +99,7 @@ const Dashboard = () => {
                     </div>
 
                     {/* ROW 3: RECENT TRANSACTION PLACEHOLDER */}
-                    <div className="md:col-span-3 bg-white border border-slate-200 rounded-[32px] p-8 min-h-[300px] shadow-lg">
+                    <div className="md:col-span-3 glass-panel rounded-[32px] p-8 min-h-[300px]">
                         <div className="flex justify-between items-center mb-8">
                             <h3 className="text-xl font-bold text-slate-800">Recent Transactions</h3>
                             <button className="text-[10px] font-bold uppercase tracking-widest text-slate-500 hover:text-slate-800 transition-colors">Filter</button>

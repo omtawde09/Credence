@@ -51,8 +51,8 @@ const CredenceLandingPage = () => {
     <>
       <AuthModal />
       <RoleSelectionModal />
-      <main className="min-h-screen bg-slate-50">
-        <nav className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-xl border-b border-slate-200 z-50">
+      <main className="min-h-screen">
+        <nav className="fixed top-0 left-0 right-0 bg-white/40 backdrop-blur-2xl border-b border-white/50 z-50 shadow-sm">
           <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
             <div className="flex items-center gap-2">
               <div className="bg-slate-800 p-1.5 rounded-lg">
@@ -63,18 +63,38 @@ const CredenceLandingPage = () => {
               <span className="text-xl font-black tracking-tighter text-slate-800">CREDENCE</span>
             </div>
             <div className="flex items-center gap-4">
-              <button
-                onClick={openLogin}
-                className="text-sm font-medium text-slate-600 hover:text-slate-800 transition-colors"
-              >
-                Login
-              </button>
-              <button
-                onClick={openLogin}
-                className="bg-slate-800 text-white px-5 py-2.5 rounded-xl font-semibold text-sm shadow-lg hover:shadow-xl transition-all"
-              >
-                Sign Up
-              </button>
+              {user ? (
+                <button
+                  onClick={() => {
+                    if (user.role === 'advisor') {
+                      navigate('/advisor-dashboard');
+                    } else if (user.role === 'investor') {
+                      navigate('/dashboard');
+                    } else {
+                      // Fallback if role is not set yet
+                      navigate('/dashboard');
+                    }
+                  }}
+                  className="bg-slate-800 text-white px-5 py-2.5 rounded-xl font-semibold text-sm shadow-lg hover:shadow-xl transition-all"
+                >
+                  Dashboard
+                </button>
+              ) : (
+                <>
+                  <button
+                    onClick={openLogin}
+                    className="text-sm font-medium text-slate-600 hover:text-slate-800 transition-colors"
+                  >
+                    Login
+                  </button>
+                  <button
+                    onClick={openLogin}
+                    className="bg-slate-800 text-white px-5 py-2.5 rounded-xl font-semibold text-sm shadow-lg hover:shadow-xl transition-all"
+                  >
+                    Sign Up
+                  </button>
+                </>
+              )}
             </div>
           </div>
         </nav>
@@ -122,7 +142,7 @@ const CredenceLandingPage = () => {
           </div>
         </section>
 
-        <section className="py-20 px-6 bg-white border-y border-slate-200">
+        <section className="py-20 px-6 border-y border-white/20">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
               <h2 className="text-3xl font-black tracking-tight text-slate-800 mb-4">Problem Statement</h2>
@@ -133,7 +153,7 @@ const CredenceLandingPage = () => {
             </div>
 
             <div className="grid md:grid-cols-3 gap-8">
-              <div className="bg-slate-800 rounded-3xl p-8 text-white">
+              <div className="glass-panel-dark rounded-3xl p-8 text-white">
                 <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center mb-6">
                   <Users className="w-6 h-6" />
                 </div>
@@ -144,7 +164,7 @@ const CredenceLandingPage = () => {
                 </p>
               </div>
 
-              <div className="bg-slate-800 rounded-3xl p-8 text-white">
+              <div className="glass-panel-dark rounded-3xl p-8 text-white">
                 <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center mb-6">
                   <Target className="w-6 h-6" />
                 </div>
@@ -155,7 +175,7 @@ const CredenceLandingPage = () => {
                 </p>
               </div>
 
-              <div className="bg-slate-800 rounded-3xl p-8 text-white">
+              <div className="glass-panel-dark rounded-3xl p-8 text-white">
                 <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center mb-6">
                   <Shield className="w-6 h-6" />
                 </div>
@@ -180,7 +200,7 @@ const CredenceLandingPage = () => {
               {features.map((feature, idx) => {
                 const Icon = feature.icon;
                 return (
-                  <div key={idx} className="bg-white rounded-2xl p-6 border border-slate-200 hover:border-blue-300 hover:shadow-lg transition-all">
+                  <div key={idx} className="glass-panel rounded-2xl p-6 transition-all hover:scale-105 duration-300">
                     <div className="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center mb-4">
                       <Icon className="w-5 h-5 text-blue-600" />
                     </div>
@@ -229,7 +249,7 @@ const CredenceLandingPage = () => {
           </div>
         </section>
 
-        <footer className="py-8 px-6 bg-white border-t border-slate-200">
+        <footer className="py-8 px-6 border-t border-white/20 bg-white/20 backdrop-blur-lg">
           <div className="max-w-6xl mx-auto flex items-center justify-between">
             <div className="flex items-center gap-2">
               <div className="bg-slate-800 p-1 rounded-lg">
