@@ -14,6 +14,7 @@ import HelpCenterPage from "./components/HelpCenterPage";
 import SettingsPage from "./components/SettingsPage";
 import InvestorOnboarding from "./components/InvestorOnboarding";
 import InvestorRecommendations from "./components/InvestorRecommendations";
+import AdvisorsPage from "./components/AdvisorsPage";
 import Layout from "./Layout";
 import ProtectedRoute from "./components/ProtectedRoute";
 
@@ -35,6 +36,7 @@ function App() {
           <Route path="/taxation-agent" element={<ProtectedRoute requiredRole="investor"><TaxationPage /></ProtectedRoute>} />
           <Route path="/investor-onboarding" element={<ProtectedRoute requiredRole="investor"><InvestorOnboarding /></ProtectedRoute>} />
           <Route path="/investor-recommendations" element={<ProtectedRoute requiredRole="investor"><InvestorRecommendations /></ProtectedRoute>} />
+          <Route path="/advisors" element={<ProtectedRoute requiredRole="investor"><AdvisorsPage /></ProtectedRoute>} />
 
           {/* Advisor Routes */}
           <Route path="/advisor-dashboard" element={<ProtectedRoute requiredRole="advisor"><AdvisorDashboard /></ProtectedRoute>} />

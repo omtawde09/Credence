@@ -41,7 +41,7 @@ const AuthModal = () => {
       />
 
       {/* Modal Card */}
-      <div className="relative w-full max-w-[420px] bg-slate-100/30 border border-slate-200 rounded-[32px] shadow-2xl overflow-hidden p-8 transition-all scale-100 animate-in fade-in zoom-in duration-300">
+      <div className="relative w-full max-w-[420px] bg-white/40 backdrop-blur-2xl border border-white/60 rounded-[32px] shadow-2xl overflow-hidden p-8 transition-all scale-100 animate-in fade-in zoom-in duration-300 ring-1 ring-white/50">
         <button onClick={closeModals} className="absolute top-6 right-6 text-slate-500 hover:text-slate-800">
           ✕
         </button>
@@ -87,7 +87,7 @@ const AuthModal = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className="w-full bg-white border border-slate-200 px-5 py-3.5 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-800/10 transition-all"
+            className="w-full bg-white/50 border border-white/40 px-5 py-3.5 rounded-xl text-sm placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:bg-white/80 transition-all font-medium"
           />
 
           {/* PASSWORD INPUT WITH EYE BUTTON */}
@@ -98,7 +98,7 @@ const AuthModal = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="w-full bg-white border border-slate-200 px-5 py-3.5 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-800/10 transition-all"
+              className="w-full bg-white/50 border border-white/40 px-5 py-3.5 rounded-xl text-sm placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:bg-white/80 transition-all font-medium"
             />
             <button
               type="button"
