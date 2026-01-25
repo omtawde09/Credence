@@ -100,6 +100,13 @@ src/
 - `/settings` - App settings
 
 ## Recent Changes
+- 2026-01-25: Redesigned UI color scheme
+  - Replaced green/orange palette with modern blue/indigo/teal
+  - Primary buttons use blue-to-indigo gradient
+  - Hero cards use slate-to-indigo gradient
+  - Accents and highlights use teal
+  - Charts use teal line color
+- 2026-01-25: Removed subscription/cashback features
 - 2026-01-25: Added 6 intelligent features for hackathon demo
   - Explainable Investment Recommendations
   - Advisor-Investor Compatibility Score
