@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Outlet } from "react-router-dom";
-import NavBar from "./components/NavBar";
+
 import AuthModal from "./components/AuthModal";
 import RoleSelectionModal from "./components/RoleSelectionModal";
 import useAuthStore from "./store/useAuthStore";
@@ -14,9 +14,9 @@ export default function Layout() {
   }, [initializeAuth]);
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-800 font-sans">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-900/50 text-slate-800 dark:text-slate-100 font-sans transition-colors duration-300">
 
-      <NavBar />
+
       <AuthModal />
       <RoleSelectionModal />
       <Outlet />

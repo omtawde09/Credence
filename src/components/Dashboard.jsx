@@ -10,7 +10,7 @@ const Dashboard = () => {
     const { user } = useAuthStore();
 
     return (
-        <div className="min-h-screen text-slate-800">
+        <div className="min-h-screen text-slate-800 dark:text-slate-100">
             <Sidebar />
 
             {/* Main Content Wrapper - Offset by Sidebar width */}
@@ -26,11 +26,11 @@ const Dashboard = () => {
                             <input
                                 type="text"
                                 placeholder="Search"
-                                className="pl-10 pr-4 py-2 rounded-xl border border-slate-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 w-64"
+                                className="pl-10 pr-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 w-64 dark:text-white dark:placeholder-slate-400"
                             />
                         </div>
 
-                        <button className="p-2 rounded-xl border border-slate-200 bg-white text-slate-500 hover:text-blue-600">
+                        <button className="p-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
                             <Bell size={18} />
                         </button>
 
@@ -89,32 +89,26 @@ const Dashboard = () => {
                             </div>
                         </Link>
 
-                        {/* Placeholder: Savings Plan */}
-                        <div className="bg-white border border-slate-200 rounded-[32px] p-4 h-[180px] flex flex-col justify-center items-center text-center shadow-lg hover:shadow-xl transition-all">
-                            <div className="w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center text-xl mb-2">
-                                🌱
-                            </div>
-                            <span className="text-[10px] font-bold uppercase tracking-widest text-slate-500">Savings Plan Placeholder</span>
-                        </div>
+
                     </div>
 
                     {/* ROW 3: RECENT TRANSACTION PLACEHOLDER */}
                     <div className="md:col-span-3 glass-panel rounded-[32px] p-8 min-h-[300px]">
                         <div className="flex justify-between items-center mb-8">
-                            <h3 className="text-xl font-bold text-slate-800">Recent Transactions</h3>
-                            <button className="text-[10px] font-bold uppercase tracking-widest text-slate-500 hover:text-slate-800 transition-colors">Filter</button>
+                            <h3 className="text-xl font-bold text-slate-800 dark:text-white">Recent Transactions</h3>
+                            <button className="text-[10px] font-bold uppercase tracking-widest text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white transition-colors">Filter</button>
                         </div>
 
                         {/* Table Placeholder */}
                         <div className="space-y-4">
                             {[1, 2, 3].map((i) => (
-                                <div key={i} className="flex items-center justify-between p-4 bg-slate-100/30 rounded-2xl border border-dashed border-slate-200">
+                                <div key={i} className="flex items-center justify-between p-4 bg-slate-100/30 dark:bg-slate-700/30 rounded-2xl border border-dashed border-slate-200 dark:border-slate-700">
                                     <div className="flex items-center gap-4">
-                                        <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-slate-400">#</div>
-                                        <div className="w-32 h-4 bg-slate-200/50 rounded-full animate-pulse" />
+                                        <div className="w-10 h-10 bg-white dark:bg-slate-600 rounded-full flex items-center justify-center text-slate-400 dark:text-slate-200">#</div>
+                                        <div className="w-32 h-4 bg-slate-200/50 dark:bg-slate-600/50 rounded-full animate-pulse" />
                                     </div>
-                                    <div className="w-24 h-4 bg-slate-200/50 rounded-full animate-pulse hidden md:block" />
-                                    <div className="w-16 h-4 bg-slate-200/50 rounded-full animate-pulse" />
+                                    <div className="w-24 h-4 bg-slate-200/50 dark:bg-slate-600/50 rounded-full animate-pulse hidden md:block" />
+                                    <div className="w-16 h-4 bg-slate-200/50 dark:bg-slate-600/50 rounded-full animate-pulse" />
                                 </div>
                             ))}
                         </div>

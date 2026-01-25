@@ -14,7 +14,15 @@ const ClientSummary = ({ investor, advisor }) => {
     // Initialize Gemini AI
     const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
 
-    const staticSummary = generateClientSummary(inv, adv);
+    const [summaryContent, setSummaryContent] = useState('Loading summary...');
+
+    useEffect(() => {
+        const loadSummary = async () => {
+            const summary = await generateClientSummary(inv, adv);
+            setSummaryContent(summary);
+        };
+        loadSummary();
+    }, [inv, adv]);
     const mismatch = detectRiskMismatch(inv);
     const pendingEvents = inv.lifeEvents.filter(e => e.pending);
 
@@ -47,7 +55,7 @@ Generate a professional, concise summary (2-3 sentences) for advisor preparation
             const result = await model.generateContent(prompt);
             const response = await result.response;
             const text = response.text();
-            
+
             setAiSummary(text.trim());
             setUseAI(true);
         } catch (error) {
@@ -59,7 +67,7 @@ Generate a professional, concise summary (2-3 sentences) for advisor preparation
         }
     };
 
-    const currentSummary = useAI && aiSummary ? aiSummary : staticSummary;
+    const currentSummary = useAI && aiSummary ? aiSummary : summaryContent;
 
     const handleCopy = () => {
         navigator.clipboard.writeText(currentSummary);
@@ -86,7 +94,7 @@ Generate a professional, concise summary (2-3 sentences) for advisor preparation
                     <h3 className="text-sm font-bold uppercase tracking-widest text-gray-500">Advisor Copilot Summary</h3>
                 </div>
                 <div className="flex items-center gap-2">
-                    <button 
+                    <button
                         onClick={handleRegenerate}
                         className="flex items-center gap-1 px-3 py-2 rounded-lg border border-[#CFE3D8] hover:bg-[#E6EFEA] transition-colors text-xs font-bold"
                         title={useAI ? "Regenerate AI Summary" : "Generate AI Summary"}
@@ -98,7 +106,7 @@ Generate a professional, concise summary (2-3 sentences) for advisor preparation
                         )}
                         {useAI ? 'AI' : 'AI+'}
                     </button>
-                    <button 
+                    <button
                         onClick={handleCopy}
                         className="p-2 rounded-lg border border-[#CFE3D8] hover:bg-[#E6EFEA] transition-colors"
                         title="Copy to clipboard"

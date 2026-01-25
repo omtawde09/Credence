@@ -31,8 +31,7 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
-  background: radial-gradient(circle at 50% 0%, #eef2ff 0%, #e0e7ff 50%, #f1f5f9 100%);
-  background-attachment: fixed;
+  /* Removed hardcoded gradient to allow bg-background to work */
 }
 
 #root {
@@ -112,7 +111,7 @@ body {
 
 /* Glassmorphism Utilities */
 .glass-panel {
-  @apply bg-white/40 backdrop-blur-xl border border-white/50 shadow-xl;
+  @apply bg-white/40 dark:bg-slate-900/40 backdrop-blur-xl border border-white/50 dark:border-white/10 shadow-xl;
 }
 
 .glass-panel-dark {

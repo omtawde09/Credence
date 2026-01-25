@@ -1,5 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import CredenceLandingPage from "./components/CredenceLandingPage";
+import { useEffect } from "react";
+import useThemeStore from "./store/useThemeStore";
 import Dashboard from "./components/Dashboard";
 import CreditPage from "./components/CreditPage";
 import Agents from "./components/Agents";
@@ -15,10 +17,17 @@ import SettingsPage from "./components/SettingsPage";
 import InvestorOnboarding from "./components/InvestorOnboarding";
 import InvestorRecommendations from "./components/InvestorRecommendations";
 import AdvisorsPage from "./components/AdvisorsPage";
+import PortfolioManager from "./components/PortfolioManager";
 import Layout from "./Layout";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
+  const { initializeTheme } = useThemeStore();
+
+  useEffect(() => {
+    initializeTheme();
+  }, [initializeTheme]);
+
   return (
     <BrowserRouter>
       <Routes>
@@ -37,6 +46,7 @@ function App() {
           <Route path="/investor-onboarding" element={<ProtectedRoute requiredRole="investor"><InvestorOnboarding /></ProtectedRoute>} />
           <Route path="/investor-recommendations" element={<ProtectedRoute requiredRole="investor"><InvestorRecommendations /></ProtectedRoute>} />
           <Route path="/advisors" element={<ProtectedRoute requiredRole="investor"><AdvisorsPage /></ProtectedRoute>} />
+          <Route path="/portfolio-manager" element={<ProtectedRoute requiredRole="investor"><PortfolioManager /></ProtectedRoute>} />
 
           {/* Advisor Routes */}
           <Route path="/advisor-dashboard" element={<ProtectedRoute requiredRole="advisor"><AdvisorDashboard /></ProtectedRoute>} />
