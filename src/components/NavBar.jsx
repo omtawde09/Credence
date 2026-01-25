@@ -7,7 +7,9 @@ const NavBar = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  if (location.pathname === '/dashboard' || location.pathname === '/agents' || location.pathname === '/policy-agent' || location.pathname === '/taxation-agent') return null;
+  // Hide NavBar on all pages that have the sidebar
+  const pagesWithSidebar = ['/dashboard', '/agents', '/policy-agent', '/taxation-agent', '/account', '/activity', '/calendar', '/manage', '/help', '/settings', '/credit', '/advisor-dashboard', '/investor-onboarding', '/investor-recommendations'];
+  if (pagesWithSidebar.includes(location.pathname)) return null;
 
   return (
     <nav className="fixed top-6 left-1/2 -translate-x-1/2 w-[90%] max-w-5xl h-14 bg-white/70 backdrop-blur-xl border border-slate-200/50 rounded-full flex items-center justify-between px-8 z-50 shadow-lg shadow-slate-900/5">
