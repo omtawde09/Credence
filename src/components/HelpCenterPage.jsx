@@ -7,7 +7,7 @@ const HelpCenterPage = () => {
         { q: 'How do I connect my bank account?', a: 'Go to Settings > Connected Accounts and click Add Account to securely link your bank.' },
         { q: 'Is my data secure?', a: 'Yes, we use bank-level encryption and never store your login credentials.' },
         { q: 'How does the AI agent work?', a: 'Our AI monitors your cashflow patterns and automatically optimizes your savings and payments.' },
-        { q: 'Can I cancel anytime?', a: 'Yes, you can cancel your subscription at any time from the Settings page.' },
+        { q: 'How do I update my profile?', a: 'Go to Account settings to update your personal information and preferences.' },
     ];
 
     const resources = [

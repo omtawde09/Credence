@@ -104,20 +104,7 @@ const Sidebar = () => {
                 })}
             </div>
 
-            {/* 4. Promo Card */}
-            <div className="mt-8 mb-6 p-5 rounded-[24px] bg-gradient-to-br from-orange-600 to-orange-500 text-orange-50 shadow-xl relative overflow-hidden group">
-                <div className="relative z-10">
-                    <h3 className="font-bold text-sm mb-1 leading-tight">Unlimited Cashback</h3>
-                    <p className="text-[10px] opacity-90 mb-3 font-medium">Instant 7% back on all your spend to your account.</p>
-                    <button className="bg-orange-50 text-orange-900 px-3 py-1.5 rounded-lg text-[9px] font-black uppercase tracking-widest hover:scale-105 transition-transform">
-                        Upgrade Now
-                    </button>
-                </div>
-                {/* Decorative Grid */}
-                <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:8px_8px]" />
-            </div>
-
-            {/* 5. User Profile */}
+            {/* User Profile */}
             <div className="flex items-center gap-3 p-3 rounded-2xl border border-orange-200 bg-orange-50/30 cursor-pointer hover:border-orange-300 transition-colors" onClick={handleLogout}>
                 <div className="w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center text-green-800 text-xs font-bold">
                     {user?.email?.[0].toUpperCase() || 'U'}

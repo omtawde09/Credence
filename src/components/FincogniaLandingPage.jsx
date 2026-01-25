@@ -112,8 +112,8 @@ const CredenceLandingPage = () => {
               Autonomous Agentic Actions
             </h3>
             <p className="opacity-90 text-sm mt-4">
-              With your consent, Credence locks safety buffers and pauses
-              subscriptions when the risk of an EMI bounce exceeds 85%.
+              With your consent, Credence locks safety buffers and alerts
+              you when the risk of an EMI bounce exceeds 85%.
             </p>
             <div className="mt-8 pt-6 border-t border-green-50/20 flex items-center gap-4">
               <div className="w-2 h-2 rounded-full bg-orange-400 animate-pulse" />
