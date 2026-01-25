@@ -22,17 +22,17 @@ const Sidebar = () => {
 
     const menuItems = [
         { name: 'Home', icon: Home, path: '/dashboard' },
-        { name: 'Account', icon: User, path: '/dashboard' },
-        { name: 'Activity', icon: Activity, path: '/dashboard' },
+        { name: 'Account', icon: User, path: '/account' },
+        { name: 'Activity', icon: Activity, path: '/activity' },
         { name: 'Cards', icon: CreditCard, path: '/credit' },
         { name: 'Agents', icon: Receipt, path: '/agents' },
-        { name: 'Manage', icon: Settings, path: '/dashboard' },
-        { name: 'Calendar', icon: Calendar, path: '/dashboard' },
+        { name: 'Manage', icon: Settings, path: '/manage' },
+        { name: 'Calendar', icon: Calendar, path: '/calendar' },
     ];
 
     const bottomItems = [
-        { name: 'Help Center', icon: HelpCircle },
-        { name: 'Settings', icon: Settings },
+        { name: 'Help Center', icon: HelpCircle, path: '/help' },
+        { name: 'Settings', icon: Settings, path: '/settings' },
     ];
 
     const handleLogout = async () => {
@@ -91,7 +91,7 @@ const Sidebar = () => {
                     return (
                         <button
                             key={item.name}
-                            onClick={() => setActiveTab(item.name)}
+                            onClick={() => handleNav(item)}
                             className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${isActive
                                 ? 'bg-green-800 text-green-50'
                                 : 'text-slate-500 hover:bg-orange-50/50 hover:text-green-800'
