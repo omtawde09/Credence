@@ -37,3 +37,8 @@ externalPort = 80
 deploymentTarget = "static"
 build = ["npm", "run", "build"]
 publicDir = "dist"
+
+[userenv]
+
+[userenv.shared]
+VITE_GOOGLE_CLIENT_ID = "462466002308-iofjaaed4ce9kvr133ig8j3kacitdc31.apps.googleusercontent.com"
