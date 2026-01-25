@@ -40,7 +40,7 @@ const ManagePage = () => {
                                 <Wallet size={24} className="text-slate-800" />
                                 <h3 className="font-bold">Budget Tracker</h3>
                             </div>
-                            <button className="p-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:bg-blue-700">
+                            <button className="p-2 rounded-xl bg-slate-800 text-white hover:bg-blue-700">
                                 <Plus size={16} />
                             </button>
                         </div>
@@ -65,7 +65,7 @@ const ManagePage = () => {
                                 <Target size={24} className="text-slate-800" />
                                 <h3 className="font-bold">Savings Goals</h3>
                             </div>
-                            <button className="p-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:bg-blue-700">
+                            <button className="p-2 rounded-xl bg-slate-800 text-white hover:bg-blue-700">
                                 <Plus size={16} />
                             </button>
                         </div>
@@ -87,7 +87,7 @@ const ManagePage = () => {
                         </div>
                     </div>
 
-                    <div className="md:col-span-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-[32px] p-8 shadow-lg">
+                    <div className="md:col-span-2 bg-slate-800 text-white rounded-[32px] p-8 shadow-lg">
                         <div className="flex items-center gap-4 mb-4">
                             <PiggyBank size={32} />
                             <div>

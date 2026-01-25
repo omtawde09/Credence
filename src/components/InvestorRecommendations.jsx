@@ -127,7 +127,7 @@ const InvestorRecommendations = () => {
                         <p className="text-slate-500 mb-4">Please complete the onboarding first</p>
                         <button
                             onClick={() => navigate('/investor-onboarding')}
-                            className="px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl font-semibold"
+                            className="px-6 py-3 bg-slate-800 text-white rounded-xl font-semibold"
                         >
                             Start Onboarding
                         </button>
@@ -156,7 +156,7 @@ const InvestorRecommendations = () => {
                         </div>
                     </div>
 
-                    <div className="bg-gradient-to-br from-slate-800 to-indigo-900 rounded-3xl p-6 mb-8 text-white">
+                    <div className="bg-slate-800 rounded-3xl p-6 mb-8 text-white">
                         <h2 className="text-lg font-semibold mb-4">Your Profile Summary</h2>
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                             <div className="bg-white/10 rounded-xl p-4">
@@ -241,7 +241,7 @@ const InvestorRecommendations = () => {
                                                         </div>
                                                         <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
                                                             <div
-                                                                className="h-full bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full"
+                                                                className="h-full bg-slate-700 rounded-full"
                                                                 style={{ width: `${percent}%` }}
                                                             />
                                                         </div>
@@ -373,7 +373,7 @@ const InvestorRecommendations = () => {
                         </button>
                         <button
                             onClick={() => navigate('/advisor-dashboard')}
-                            className="px-8 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all"
+                            className="px-8 py-3 bg-slate-800 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all"
                         >
                             Connect with an Advisor
                         </button>

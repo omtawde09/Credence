@@ -34,7 +34,7 @@ const AuthModal = () => {
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
       {/* Backdrop */}
       <div
-        className="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600/20 backdrop-blur-xl transition-opacity"
+        className="absolute inset-0 bg-slate-800/20 backdrop-blur-xl transition-opacity"
         onClick={closeModals}
       />
 
@@ -116,7 +116,7 @@ const AuthModal = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-4 rounded-2xl font-bold text-sm shadow-lg shadow-blue-900/20 hover:shadow-blue-900/30 transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-slate-800 text-white py-4 rounded-2xl font-bold text-sm shadow-lg shadow-blue-900/20 hover:shadow-blue-900/30 transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? "Processing..." : (isLoginOpen ? "Login to Dashboard" : "Create Free Account")}
           </button>

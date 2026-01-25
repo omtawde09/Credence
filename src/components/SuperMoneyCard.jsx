@@ -6,7 +6,7 @@ const SuperMoneyCard = ({ name = "ARJUN SHARMA" }) => {
             <div
                 className="relative w-[500px] h-[300px] rounded-[32px] p-8 flex flex-col justify-between overflow-hidden shadow-2xl transition-transform hover:scale-105 duration-300 cursor-pointer"
                 style={{
-                    background: 'linear-gradient(105deg, #e91e63 10%, #673ab7 90%)'
+                    background: '#334155'
                 }}
             >
                 {/* Background Decorative Text */}
@@ -23,7 +23,7 @@ const SuperMoneyCard = ({ name = "ARJUN SHARMA" }) => {
 
                     <div className="flex items-center gap-4">
                         {/* Simulating the EMV Chip */}
-                        <div className="w-14 h-10 bg-gradient-to-br from-yellow-200 to-yellow-600 rounded-md shadow-inner" />
+                        <div className="w-14 h-10 bg-amber-400 rounded-md shadow-inner" />
 
                         {/* Contactless Icon (SVG) */}
                         <svg

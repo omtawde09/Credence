@@ -78,7 +78,7 @@ const RiskMismatchAlert = ({ investor }) => {
                         className={`absolute h-full w-1 ${mismatch.direction === 'Higher' ? 'bg-red-500' : 'bg-blue-500'}`} 
                         style={{ left: `${(parseFloat(mismatch.actualRisk) / 10) * 100}%` }} 
                     />
-                    <div className="w-full h-full bg-gradient-to-r from-blue-200 via-amber-200 to-red-200 opacity-50" />
+                    <div className="w-full h-full bg-slate-200 opacity-50" />
                 </div>
                 <div className="flex justify-between text-[10px] text-gray-400 mt-1">
                     <span>Conservative</span>

@@ -33,7 +33,7 @@ const ActivityPage = () => {
                 </header>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-                    <div className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-2xl p-6">
+                    <div className="bg-slate-800 text-white rounded-2xl p-6">
                         <div className="flex items-center gap-2 mb-2">
                             <TrendingUp size={16} />
                             <span className="text-xs uppercase tracking-wide opacity-80">Total Income</span>

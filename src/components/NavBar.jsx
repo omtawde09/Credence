@@ -33,7 +33,7 @@ const NavBar = () => {
               <div className="text-[10px] font-bold text-slate-800">{user.email?.split('@')[0]}</div>
             </div>
 
-            <button onClick={() => navigate('/dashboard')} className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-5 py-2 rounded-full text-[10px] font-bold uppercase tracking-widest shadow-xl shadow-blue-500/25 active:scale-95 transition-all">Dashboard</button>
+            <button onClick={() => navigate('/dashboard')} className="bg-slate-800 text-white px-5 py-2 rounded-full text-[10px] font-bold uppercase tracking-widest shadow-xl shadow-blue-500/25 active:scale-95 transition-all">Dashboard</button>
 
             <button
               onClick={async () => {
@@ -47,14 +47,14 @@ const NavBar = () => {
           </>
         ) : (
           <>
-            <button onClick={openLogin} className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-5 py-2 rounded-full text-[10px] font-bold uppercase tracking-widest shadow-xl shadow-blue-500/25 active:scale-95 transition-all">Login</button>
-            <button onClick={openSignUp} className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-5 py-2 rounded-full text-[10px] font-bold uppercase tracking-widest shadow-xl shadow-blue-500/25 active:scale-95 transition-all">Sign Up</button>
+            <button onClick={openLogin} className="bg-slate-800 text-white px-5 py-2 rounded-full text-[10px] font-bold uppercase tracking-widest shadow-xl shadow-blue-500/25 active:scale-95 transition-all">Login</button>
+            <button onClick={openSignUp} className="bg-slate-800 text-white px-5 py-2 rounded-full text-[10px] font-bold uppercase tracking-widest shadow-xl shadow-blue-500/25 active:scale-95 transition-all">Sign Up</button>
           </>
         )}
       </div>
 
       {!user && (
-        <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-full flex items-center justify-center text-white text-[10px] cursor-pointer shadow-lg shadow-blue-500/25">
+        <div className="w-8 h-8 bg-slate-800 rounded-full flex items-center justify-center text-white text-[10px] cursor-pointer shadow-lg shadow-blue-500/25">
           ↗
         </div>
       )}

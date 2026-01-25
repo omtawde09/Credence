@@ -26,7 +26,7 @@ const AccountPage = () => {
                 <main className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div className="md:col-span-2 bg-white border border-slate-200 rounded-[32px] p-8 shadow-lg">
                         <div className="flex items-center gap-6 mb-8">
-                            <div className="w-20 h-20 rounded-full bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center text-white text-2xl font-bold">
+                            <div className="w-20 h-20 rounded-full bg-slate-800 flex items-center justify-center text-white text-2xl font-bold">
                                 {user?.name?.[0]?.toUpperCase() || user?.email?.[0]?.toUpperCase() || 'U'}
                             </div>
                             <div>
@@ -75,7 +75,7 @@ const AccountPage = () => {
                                 <span className="text-sm font-medium">Last Login</span>
                                 <span className="text-xs text-slate-500">Today, 10:30 AM</span>
                             </div>
-                            <button className="w-full py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl font-bold text-sm hover:bg-blue-700 transition-colors">
+                            <button className="w-full py-3 bg-slate-800 text-white rounded-xl font-bold text-sm hover:bg-blue-700 transition-colors">
                                 Change Password
                             </button>
                         </div>

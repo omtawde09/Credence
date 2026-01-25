@@ -51,7 +51,7 @@ const Sidebar = () => {
     return (
         <aside className="w-64 h-screen fixed left-0 top-0 bg-white border-r border-slate-200 flex flex-col p-6 z-40 overflow-y-auto hidden md:flex">
             <div className="flex items-center gap-2 mb-10 cursor-pointer" onClick={() => navigate('/')}>
-                <div className="bg-gradient-to-br from-blue-600 to-indigo-600 p-1.5 rounded-lg">
+                <div className="bg-slate-800 p-1.5 rounded-lg">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
@@ -69,7 +69,7 @@ const Sidebar = () => {
                             key={item.name}
                             onClick={() => handleNav(item)}
                             className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${isActive
-                                ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-500/20'
+                                ? 'bg-slate-800 text-white shadow-lg shadow-blue-500/20'
                                 : item.highlight 
                                     ? 'text-blue-600 bg-blue-50 hover:bg-blue-100 border border-blue-200'
                                     : 'text-slate-500 hover:bg-slate-100 hover:text-slate-800'
@@ -97,7 +97,7 @@ const Sidebar = () => {
                             key={item.name}
                             onClick={() => handleNav(item)}
                             className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${isActive
-                                ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-500/20'
+                                ? 'bg-slate-800 text-white shadow-lg shadow-blue-500/20'
                                 : 'text-slate-500 hover:bg-slate-100 hover:text-slate-800'
                                 }`}
                         >
@@ -119,7 +119,7 @@ const Sidebar = () => {
                             key={item.name}
                             onClick={() => handleNav(item)}
                             className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${isActive
-                                ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white'
+                                ? 'bg-slate-800 text-white'
                                 : 'text-slate-500 hover:bg-slate-100 hover:text-slate-800'
                                 }`}
                         >
@@ -131,7 +131,7 @@ const Sidebar = () => {
             </div>
 
             <div className="flex items-center gap-3 p-3 rounded-2xl border border-slate-200 bg-slate-50 cursor-pointer hover:border-blue-300 hover:bg-blue-50/50 transition-colors" onClick={handleLogout}>
-                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-indigo-500 flex items-center justify-center text-white text-xs font-bold">
+                <div className="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center text-white text-xs font-bold">
                     {user?.email?.[0].toUpperCase() || 'U'}
                 </div>
                 <div className="flex-1 min-w-0">

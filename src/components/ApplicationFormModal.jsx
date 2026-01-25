@@ -138,7 +138,7 @@ const ApplicationFormModal = ({ isOpen, onClose, policy, user }) => {
                     <button
                         onClick={handleAutoFill}
                         disabled={isAutoFilling}
-                        className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-xl text-xs font-bold uppercase tracking-wide shadow-lg hover:shadow-xl transition-all hover:scale-105 shrink-0"
+                        className="flex items-center gap-2 px-4 py-2 bg-teal-600 text-white rounded-xl text-xs font-bold uppercase tracking-wide shadow-lg hover:shadow-xl transition-all hover:scale-105 shrink-0"
                     >
                         {isAutoFilling ? (
                             <>

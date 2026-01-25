@@ -142,7 +142,7 @@ const Agents = () => {
                     {/* CARD 4: ADVISOR DASHBOARD (Intelligent Journey Management) */}
                     <div
                         onClick={() => navigate('/advisor-dashboard')}
-                        className="bg-gradient-to-br from-purple-900 to-indigo-900 text-white rounded-[32px] p-8 aspect-square flex flex-col justify-between shadow-2xl shadow-purple-900/20 relative overflow-hidden group hover:-translate-y-1 transition-transform duration-300 cursor-pointer"
+                        className="bg-slate-800 text-white rounded-[32px] p-8 aspect-square flex flex-col justify-between shadow-xl relative overflow-hidden group hover:-translate-y-1 transition-transform duration-300 cursor-pointer"
                     >
                         <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500/10 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none" />
 

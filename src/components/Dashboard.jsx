@@ -34,7 +34,7 @@ const Dashboard = () => {
                             <Bell size={18} />
                         </button>
 
-                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-indigo-500 flex items-center justify-center text-white text-xs font-bold ring-2 ring-white">
+                        <div className="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center text-white text-xs font-bold ring-2 ring-white">
                             {user?.email?.[0].toUpperCase() || 'U'}
                         </div>
                     </div>
@@ -44,7 +44,7 @@ const Dashboard = () => {
                 <main className="grid grid-cols-1 md:grid-cols-3 gap-6">
 
                     {/* ROW 1: LIVE STATUS CARD */}
-                    <div className="md:col-span-3 bg-gradient-to-br from-slate-800 via-slate-900 to-indigo-900 text-white rounded-[32px] p-10 flex flex-col md:flex-row justify-between items-center min-h-[220px] shadow-2xl shadow-slate-900/30">
+                    <div className="md:col-span-3 bg-slate-800 text-white rounded-[32px] p-10 flex flex-col md:flex-row justify-between items-center min-h-[220px] shadow-xl">
                         <div className="flex-1 w-full md:w-auto mb-6 md:mb-0">
                             <div className="inline-block px-3 py-1 bg-teal-500/20 text-teal-300 text-[10px] font-bold uppercase tracking-widest rounded-lg mb-4 animate-pulse">
                                 Live Status

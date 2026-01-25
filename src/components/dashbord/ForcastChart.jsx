@@ -73,7 +73,7 @@ export function ForecastChart() {
               key={tab}
               onClick={() => setActiveTab(tab)}
               className={`px-3 py-1 text-[9px] font-bold rounded-lg transition-all ${activeTab === tab
-                ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md"
+                ? "bg-slate-800 text-white shadow-md"
                 : "text-slate-500 hover:text-slate-800"
                 }`}
             >
@@ -107,7 +107,7 @@ export function ForecastChart() {
             <ChartTooltip
               cursor={{ stroke: '#0d9488', strokeWidth: 1 }}
               content={<ChartTooltipContent
-                className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white border-none rounded-xl"
+                className="bg-slate-800 text-white border-none rounded-xl"
                 formatter={(value) => `₹${value.toLocaleString('en-IN')}`}
               />}
             />

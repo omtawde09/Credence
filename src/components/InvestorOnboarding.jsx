@@ -377,7 +377,7 @@ const InvestorOnboarding = () => {
                                 <div
                                     key={i}
                                     className={`flex-1 h-2 rounded-full transition-colors ${
-                                        i + 1 <= step ? 'bg-gradient-to-r from-blue-600 to-indigo-600' : 'bg-slate-200'
+                                        i + 1 <= step ? 'bg-slate-800' : 'bg-slate-200'
                                     }`}
                                 />
                             ))}
@@ -409,7 +409,7 @@ const InvestorOnboarding = () => {
                                 disabled={!canProceed()}
                                 className={`flex items-center gap-2 px-8 py-3 rounded-xl font-semibold transition-all ${
                                     canProceed()
-                                        ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg hover:shadow-xl'
+                                        ? 'bg-slate-800 text-white shadow-lg hover:shadow-xl'
                                         : 'bg-slate-200 text-slate-400 cursor-not-allowed'
                                 }`}
                             >
@@ -419,7 +419,7 @@ const InvestorOnboarding = () => {
                         ) : (
                             <button
                                 onClick={handleComplete}
-                                className="flex items-center gap-2 px-8 py-3 rounded-xl font-semibold bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg hover:shadow-xl transition-all"
+                                className="flex items-center gap-2 px-8 py-3 rounded-xl font-semibold bg-slate-800 text-white shadow-lg hover:shadow-xl transition-all"
                             >
                                 See My Recommendations
                                 <ChevronRight className="w-5 h-5" />

@@ -42,7 +42,7 @@ const CredenceLandingPage = () => {
       <nav className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-xl border-b border-slate-200 z-50">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="bg-gradient-to-br from-blue-600 to-indigo-600 p-1.5 rounded-lg">
+            <div className="bg-slate-800 p-1.5 rounded-lg">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
@@ -64,7 +64,7 @@ const CredenceLandingPage = () => {
             </button>
             <button
               onClick={() => navigate('/dashboard')}
-              className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-5 py-2.5 rounded-xl font-semibold text-sm shadow-lg hover:shadow-xl transition-all"
+              className="bg-slate-800 text-white px-5 py-2.5 rounded-xl font-semibold text-sm shadow-lg hover:shadow-xl transition-all"
             >
               Launch Demo
             </button>
@@ -80,7 +80,7 @@ const CredenceLandingPage = () => {
           
           <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-slate-800 mb-6 leading-tight">
             Intelligent Platform for<br />
-            <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+            <span className="text-blue-600">
               Advisor & Investor
             </span><br />
             Journey Management
@@ -95,7 +95,7 @@ const CredenceLandingPage = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button
               onClick={() => navigate('/investor-onboarding')}
-              className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-8 py-4 rounded-2xl font-bold text-base shadow-xl hover:shadow-2xl transition-all flex items-center justify-center gap-2"
+              className="bg-slate-800 text-white px-8 py-4 rounded-2xl font-bold text-base shadow-xl hover:shadow-2xl transition-all flex items-center justify-center gap-2"
             >
               <Target className="w-5 h-5" />
               Start Investor Journey
@@ -122,7 +122,7 @@ const CredenceLandingPage = () => {
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-gradient-to-br from-slate-800 to-indigo-900 rounded-3xl p-8 text-white">
+            <div className="bg-slate-800 rounded-3xl p-8 text-white">
               <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center mb-6">
                 <Users className="w-6 h-6" />
               </div>
@@ -133,7 +133,7 @@ const CredenceLandingPage = () => {
               </p>
             </div>
 
-            <div className="bg-gradient-to-br from-slate-800 to-indigo-900 rounded-3xl p-8 text-white">
+            <div className="bg-slate-800 rounded-3xl p-8 text-white">
               <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center mb-6">
                 <Target className="w-6 h-6" />
               </div>
@@ -144,7 +144,7 @@ const CredenceLandingPage = () => {
               </p>
             </div>
 
-            <div className="bg-gradient-to-br from-slate-800 to-indigo-900 rounded-3xl p-8 text-white">
+            <div className="bg-slate-800 rounded-3xl p-8 text-white">
               <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center mb-6">
                 <Shield className="w-6 h-6" />
               </div>
@@ -182,7 +182,7 @@ const CredenceLandingPage = () => {
         </div>
       </section>
 
-      <section className="py-20 px-6 bg-gradient-to-br from-slate-800 to-indigo-900 text-white">
+      <section className="py-20 px-6 bg-slate-800 text-white">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl font-bold mb-6">Ready to Experience the Demo?</h2>
           <p className="text-slate-300 mb-10 max-w-2xl mx-auto">
@@ -209,7 +209,7 @@ const CredenceLandingPage = () => {
       <footer className="py-8 px-6 bg-white border-t border-slate-200">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="bg-gradient-to-br from-blue-600 to-indigo-600 p-1 rounded-lg">
+            <div className="bg-slate-800 p-1 rounded-lg">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>

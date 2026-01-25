@@ -62,7 +62,7 @@ const HelpCenterPage = () => {
                         </div>
                     </div>
 
-                    <div className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-[32px] p-8 shadow-lg flex flex-col justify-center">
+                    <div className="bg-slate-800 text-white rounded-[32px] p-8 shadow-lg flex flex-col justify-center">
                         <MessageCircle size={48} className="mb-4" />
                         <h3 className="text-xl font-bold mb-2">Need more help?</h3>
                         <p className="text-slate-300 text-sm mb-6">Our support team is available 24/7 to assist you with any questions.</p>

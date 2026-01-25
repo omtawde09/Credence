@@ -54,7 +54,7 @@ const AdvisorDashboard = () => {
                             <Bell size={18} />
                             <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center">2</span>
                         </button>
-                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-indigo-500 flex items-center justify-center text-white text-xs font-bold ring-2 ring-white">
+                        <div className="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center text-white text-xs font-bold ring-2 ring-white">
                             {user?.email?.[0].toUpperCase() || 'A'}
                         </div>
                     </div>
@@ -73,7 +73,7 @@ const AdvisorDashboard = () => {
                                         key={client.id}
                                         onClick={() => setSelectedClient(client.id === mockInvestorProfile.id ? mockInvestorProfile : client)}
                                         className={`w-full p-3 rounded-xl flex items-center justify-between transition-colors ${selectedClient.id === client.id 
-                                            ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg' 
+                                            ? 'bg-slate-800 text-white shadow-lg' 
                                             : 'bg-slate-50 hover:bg-slate-100'}`}
                                     >
                                         <div className="flex items-center gap-3">
@@ -105,7 +105,7 @@ const AdvisorDashboard = () => {
                                     key={tab}
                                     onClick={() => setActiveTab(tab)}
                                     className={`px-4 py-2 rounded-xl text-sm font-bold uppercase tracking-widest transition-colors ${activeTab === tab 
-                                        ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg' 
+                                        ? 'bg-slate-800 text-white shadow-lg' 
                                         : 'bg-white text-slate-500 border border-slate-200 hover:bg-slate-50'}`}
                                 >
                                     {tab}

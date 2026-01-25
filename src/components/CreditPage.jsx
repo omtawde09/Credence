@@ -111,8 +111,8 @@ const CreditPage = () => {
 
     const getCreditScoreBg = (score) => {
         // Keeping simple solid backgrounds
-        if (score >= 750) return "bg-gradient-to-r from-blue-600 to-indigo-600";
-        return "bg-gradient-to-r from-blue-600 to-indigo-600"; // Consistently usage of primary brand color for main card
+        if (score >= 750) return "bg-slate-800";
+        return "bg-slate-800"; // Consistently usage of primary brand color for main card
     };
 
     const getTotalCreditUtilization = () => {
@@ -251,7 +251,7 @@ const CreditPage = () => {
     const Dashboard = () => (
         <div className="space-y-6">
             {/* Credit Score Overview */}
-            <div className="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-[32px] shadow-lg border border-slate-200 overflow-hidden text-white transition-all duration-300">
+            <div className="bg-slate-800 rounded-[32px] shadow-lg border border-slate-200 overflow-hidden text-white transition-all duration-300">
                 <div className="p-8">
                     <div className="flex items-center justify-between">
                         <div>
@@ -747,7 +747,7 @@ const CreditPage = () => {
                     <button
                         onClick={() => setActiveTab("dashboard")}
                         className={`px-6 py-2 rounded-xl text-sm font-bold transition-all duration-300 ${activeTab === "dashboard"
-                            ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md"
+                            ? "bg-slate-800 text-white shadow-md"
                             : "text-slate-800/60 hover:text-slate-800"
                             }`}
                     >
@@ -756,7 +756,7 @@ const CreditPage = () => {
                     <button
                         onClick={() => setActiveTab("accounts")}
                         className={`px-6 py-2 rounded-xl text-sm font-bold transition-all duration-300 ${activeTab === "accounts"
-                            ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md"
+                            ? "bg-slate-800 text-white shadow-md"
                             : "text-slate-800/60 hover:text-slate-800"
                             }`}
                     >
