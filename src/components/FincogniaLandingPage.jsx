@@ -78,9 +78,9 @@ const CredenceLandingPage = () => {
             Hackathon Demo
           </span>
           
-          <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-slate-800 mb-6 leading-tight">
+          <h1 className="text-5xl md:text-7xl font-black tracking-tighter text-slate-800 mb-6 leading-tight italic">
             Intelligent Platform for<br />
-            <span className="text-blue-600">
+            <span className="text-blue-600 not-italic">
               Advisor & Investor
             </span><br />
             Journey Management
@@ -114,7 +114,7 @@ const CredenceLandingPage = () => {
       <section className="py-20 px-6 bg-white border-y border-slate-200">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-slate-800 mb-4">Problem Statement</h2>
+            <h2 className="text-3xl font-black tracking-tight text-slate-800 mb-4">Problem Statement</h2>
             <p className="max-w-3xl mx-auto text-lg text-slate-600">
               Design an interactive FinTech platform to manage a large network of financial advisors 
               and provide personalized investment guidance to retail investors.
