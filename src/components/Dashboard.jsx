@@ -121,17 +121,21 @@ const Dashboard = () => {
                                     </div>
                                 </div>
                             </Link>
-                            
-                            <Link to="/advisor-dashboard" className="block p-4 bg-teal-50 rounded-2xl border border-teal-200 hover:bg-teal-100 transition-colors">
-                                <div className="flex items-center gap-3">
-                                    <div className="w-8 h-8 bg-teal-600 rounded-full flex items-center justify-center text-white text-sm">👥</div>
-                                    <div>
-                                        <div className="font-semibold text-teal-900">Advisor Dashboard</div>
-                                        <div className="text-xs text-teal-700">View client summaries</div>
+
+
+
+                            {user?.role === 'advisor' && (
+                                <Link to="/advisor-dashboard" className="block p-4 bg-teal-50 rounded-2xl border border-teal-200 hover:bg-teal-100 transition-colors">
+                                    <div className="flex items-center gap-3">
+                                        <div className="w-8 h-8 bg-teal-600 rounded-full flex items-center justify-center text-white text-sm">👥</div>
+                                        <div>
+                                            <div className="font-semibold text-teal-900">Advisor Dashboard</div>
+                                            <div className="text-xs text-teal-700">View client summaries</div>
+                                        </div>
                                     </div>
-                                </div>
-                            </Link>
-                            
+                                </Link>
+                            )}
+
                             <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200">
                                 <div className="flex items-center gap-3">
                                     <div className="w-8 h-8 bg-slate-400 rounded-full flex items-center justify-center text-white text-sm">🤖</div>
@@ -145,8 +149,8 @@ const Dashboard = () => {
                     </div>
 
                 </main>
-            </div>
-        </div>
+            </div >
+        </div >
     );
 };
 

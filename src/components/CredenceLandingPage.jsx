@@ -7,7 +7,7 @@ import { useEffect } from "react";
 
 const CredenceLandingPage = () => {
   const navigate = useNavigate();
-  const { user, openLogin, initializeAuth } = useAuthStore();
+  const { user, openLogin, initializeAuth, setUserRole } = useAuthStore();
 
   useEffect(() => {
     const unsubscribe = initializeAuth();
@@ -236,6 +236,7 @@ const CredenceLandingPage = () => {
               <button
                 onClick={() => {
                   if (user) {
+                    setUserRole('advisor');
                     navigate('/advisor-dashboard');
                   } else {
                     openLogin();

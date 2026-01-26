@@ -34,6 +34,7 @@ const usePortfolioStore = create((set) => ({
     },
     isLoading: false,
     error: null,
+    unsubscribeRealtime: null,
 
     // Actions
     fetchPortfolioData: async () => {
@@ -161,6 +162,60 @@ const usePortfolioStore = create((set) => ({
         if (error) {
             console.error("SIP toggle failed", error);
             // Revert on error would go here
+        }
+        // Revert on error would go here
+    },
+
+    // Issue 5 Fix: Realtime Updates
+    setupRealtimeSubscription: () => {
+        const { fetchPortfolioData } = usePortfolioStore.getState();
+        const subscription = supabase
+            .channel('portfolio_updates')
+            .on('postgres_changes', { event: '*', schema: 'public', table: 'transactions' }, () => {
+                console.log("Realtime: Transactions changed, refreshing...");
+                fetchPortfolioData();
+            })
+            .on('postgres_changes', { event: '*', schema: 'public', table: 'sips' }, () => {
+                console.log("Realtime: SIPs changed, refreshing...");
+                fetchPortfolioData();
+            })
+            .on('postgres_changes', { event: '*', schema: 'public', table: 'portfolios' }, () => {
+                console.log("Realtime: Portfolio changed, refreshing...");
+                fetchPortfolioData();
+            })
+            .subscribe();
+
+        set({ unsubscribeRealtime: () => subscription.unsubscribe() });
+    },
+
+    // Issue 3 Fix: Edit Data
+    updatePortfolio: async (updates) => {
+        // Optimistic update
+        set(state => ({
+            portfolioData: {
+                ...state.portfolioData,
+                ...updates,
+                // If allocation is updated, merge it
+                allocation: updates.allocation ? { ...state.portfolioData.allocation, ...updates.allocation } : state.portfolioData.allocation
+            }
+        }));
+
+        const { data: { user } } = await supabase.auth.getUser();
+        if (!user) return;
+
+        // Map frontend structure back to DB structure if necessary
+        // For now assuming direct update for simplified scope or matching fields
+        const dbUpdates = {};
+        if (updates.rawValue) dbUpdates.total_value = updates.rawValue;
+        if (updates.allocation) {
+            dbUpdates.equity_allocation = updates.allocation.equity;
+            dbUpdates.debt_allocation = updates.allocation.debt;
+            dbUpdates.cash_allocation = updates.allocation.cash;
+        }
+
+        if (Object.keys(dbUpdates).length > 0) {
+            const { error } = await supabase.from('portfolios').update(dbUpdates).eq('user_id', user.id);
+            if (error) console.error("Portfolio update failed:", error);
         }
     }
 }));

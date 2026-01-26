@@ -18,6 +18,18 @@ const InvestorOnboarding = () => {
         }
     });
 
+    // Issue 2 Fix: Persistence
+    useEffect(() => {
+        const saved = localStorage.getItem('credence_onboarding_data');
+        if (saved) {
+            setFormData(JSON.parse(saved));
+        }
+    }, []);
+
+    useEffect(() => {
+        localStorage.setItem('credence_onboarding_data', JSON.stringify(formData));
+    }, [formData]);
+
     const totalSteps = 5;
 
     const goalOptions = [
@@ -136,11 +148,10 @@ const InvestorOnboarding = () => {
                                 <button
                                     key={goal.id}
                                     onClick={() => toggleGoal(goal.id)}
-                                    className={`p-5 rounded-2xl border-2 transition-all text-left flex items-start gap-4 ${
-                                        formData.goals.includes(goal.id)
+                                    className={`p-5 rounded-2xl border-2 transition-all text-left flex items-start gap-4 ${formData.goals.includes(goal.id)
                                             ? 'border-blue-500 bg-blue-50'
                                             : 'border-slate-200 hover:border-slate-300 bg-white'
-                                    }`}
+                                        }`}
                                 >
                                     <span className="text-3xl">{goal.icon}</span>
                                     <div className="flex-1">
@@ -172,11 +183,10 @@ const InvestorOnboarding = () => {
                                     <button
                                         key={goalId}
                                         onClick={() => setFormData(prev => ({ ...prev, primaryGoal: goalId }))}
-                                        className={`w-full p-5 rounded-2xl border-2 transition-all text-left flex items-center gap-4 ${
-                                            formData.primaryGoal === goalId
+                                        className={`w-full p-5 rounded-2xl border-2 transition-all text-left flex items-center gap-4 ${formData.primaryGoal === goalId
                                                 ? 'border-blue-500 bg-blue-50'
                                                 : 'border-slate-200 hover:border-slate-300 bg-white'
-                                        }`}
+                                            }`}
                                     >
                                         <span className="text-2xl">{goal.icon}</span>
                                         <span className="font-semibold text-slate-800 flex-1">{goal.label}</span>
@@ -202,11 +212,10 @@ const InvestorOnboarding = () => {
                                 <button
                                     key={option.id}
                                     onClick={() => setFormData(prev => ({ ...prev, timeHorizon: option.id }))}
-                                    className={`p-5 rounded-2xl border-2 transition-all text-left ${
-                                        formData.timeHorizon === option.id
+                                    className={`p-5 rounded-2xl border-2 transition-all text-left ${formData.timeHorizon === option.id
                                             ? 'border-blue-500 bg-blue-50'
                                             : 'border-slate-200 hover:border-slate-300 bg-white'
-                                    }`}
+                                        }`}
                                 >
                                     <div className="flex items-center justify-between mb-2">
                                         <div className="flex items-center gap-2">
@@ -239,21 +248,19 @@ const InvestorOnboarding = () => {
                                 <button
                                     key={scenario.id}
                                     onClick={() => setFormData(prev => ({ ...prev, riskScenario: scenario.id }))}
-                                    className={`w-full p-5 rounded-2xl border-2 transition-all text-left ${
-                                        formData.riskScenario === scenario.id
+                                    className={`w-full p-5 rounded-2xl border-2 transition-all text-left ${formData.riskScenario === scenario.id
                                             ? 'border-blue-500 bg-blue-50'
                                             : 'border-slate-200 hover:border-slate-300 bg-white'
-                                    }`}
+                                        }`}
                                 >
                                     <div className="flex items-start justify-between gap-4">
                                         <div className="flex-1">
                                             <div className="flex items-center gap-2 mb-2">
-                                                <Shield className={`w-5 h-5 ${
-                                                    scenario.id === 'conservative' ? 'text-blue-500' :
-                                                    scenario.id === 'moderate' ? 'text-teal-500' :
-                                                    scenario.id === 'growth' ? 'text-amber-500' :
-                                                    'text-red-500'
-                                                }`} />
+                                                <Shield className={`w-5 h-5 ${scenario.id === 'conservative' ? 'text-blue-500' :
+                                                        scenario.id === 'moderate' ? 'text-teal-500' :
+                                                            scenario.id === 'growth' ? 'text-amber-500' :
+                                                                'text-red-500'
+                                                    }`} />
                                                 <h3 className="font-semibold text-slate-800">{scenario.label}</h3>
                                             </div>
                                             <p className="text-slate-700 mb-2 italic">"{scenario.reaction}"</p>
@@ -276,7 +283,7 @@ const InvestorOnboarding = () => {
                             <h2 className="text-2xl font-bold text-slate-800 mb-2">Any investment preferences?</h2>
                             <p className="text-slate-500">Optional: Tell us if you want to exclude certain sectors or prefer sustainable investing.</p>
                         </div>
-                        
+
                         <div className="max-w-2xl mx-auto space-y-6">
                             <div className="bg-white p-6 rounded-2xl border border-slate-200">
                                 <h3 className="font-semibold text-slate-800 mb-4">Sectors you'd prefer to avoid:</h3>
@@ -285,12 +292,11 @@ const InvestorOnboarding = () => {
                                         <button
                                             key={sector.id}
                                             onClick={() => toggleSector(sector.id)}
-                                            className={`px-4 py-2 rounded-full border transition-all text-sm ${
-                                                (sector.id === 'none' && formData.preferences.excludedSectors.length === 0) ||
-                                                formData.preferences.excludedSectors.includes(sector.id)
+                                            className={`px-4 py-2 rounded-full border transition-all text-sm ${(sector.id === 'none' && formData.preferences.excludedSectors.length === 0) ||
+                                                    formData.preferences.excludedSectors.includes(sector.id)
                                                     ? 'border-blue-500 bg-blue-50 text-blue-700'
                                                     : 'border-slate-200 text-slate-600 hover:border-slate-300'
-                                            }`}
+                                                }`}
                                         >
                                             {sector.label}
                                         </button>
@@ -303,11 +309,10 @@ const InvestorOnboarding = () => {
                                     ...prev,
                                     preferences: { ...prev.preferences, prefersSRI: !prev.preferences.prefersSRI }
                                 }))}
-                                className={`w-full p-5 rounded-2xl border-2 transition-all text-left flex items-center gap-4 ${
-                                    formData.preferences.prefersSRI
+                                className={`w-full p-5 rounded-2xl border-2 transition-all text-left flex items-center gap-4 ${formData.preferences.prefersSRI
                                         ? 'border-teal-500 bg-teal-50'
                                         : 'border-slate-200 hover:border-slate-300 bg-white'
-                                }`}
+                                    }`}
                             >
                                 <Leaf className={`w-6 h-6 ${formData.preferences.prefersSRI ? 'text-teal-600' : 'text-slate-400'}`} />
                                 <div className="flex-1">
@@ -331,11 +336,10 @@ const InvestorOnboarding = () => {
                                                     ...prev,
                                                     preferences: { ...prev.preferences, liquidityNeeds: value }
                                                 }))}
-                                                className={`px-4 py-2 rounded-full border transition-all text-sm ${
-                                                    formData.preferences.liquidityNeeds === value
+                                                className={`px-4 py-2 rounded-full border transition-all text-sm ${formData.preferences.liquidityNeeds === value
                                                         ? 'border-blue-500 bg-blue-50 text-blue-700'
                                                         : 'border-slate-200 text-slate-600 hover:border-slate-300'
-                                                }`}
+                                                    }`}
                                             >
                                                 {option}
                                             </button>
@@ -355,12 +359,12 @@ const InvestorOnboarding = () => {
     return (
         <div className="min-h-screen bg-slate-50">
             <Sidebar />
-            
+
             <div className="md:ml-64 p-6 min-h-screen">
                 <div className="max-w-4xl mx-auto">
                     <div className="mb-8">
                         <div className="flex items-center gap-4 mb-6">
-                            <button 
+                            <button
                                 onClick={() => navigate('/dashboard')}
                                 className="w-10 h-10 rounded-full bg-white border border-slate-200 flex items-center justify-center hover:bg-slate-50 transition-colors"
                             >
@@ -376,9 +380,8 @@ const InvestorOnboarding = () => {
                             {Array.from({ length: totalSteps }, (_, i) => (
                                 <div
                                     key={i}
-                                    className={`flex-1 h-2 rounded-full transition-colors ${
-                                        i + 1 <= step ? 'bg-slate-800' : 'bg-slate-200'
-                                    }`}
+                                    className={`flex-1 h-2 rounded-full transition-colors ${i + 1 <= step ? 'bg-slate-800' : 'bg-slate-200'
+                                        }`}
                                 />
                             ))}
                         </div>
@@ -393,11 +396,10 @@ const InvestorOnboarding = () => {
                         <button
                             onClick={() => setStep(s => Math.max(1, s - 1))}
                             disabled={step === 1}
-                            className={`flex items-center gap-2 px-6 py-3 rounded-xl font-medium transition-colors ${
-                                step === 1
+                            className={`flex items-center gap-2 px-6 py-3 rounded-xl font-medium transition-colors ${step === 1
                                     ? 'text-slate-300 cursor-not-allowed'
                                     : 'text-slate-600 hover:bg-slate-100'
-                            }`}
+                                }`}
                         >
                             <ArrowLeft className="w-5 h-5" />
                             Back
@@ -407,11 +409,10 @@ const InvestorOnboarding = () => {
                             <button
                                 onClick={() => setStep(s => Math.min(totalSteps, s + 1))}
                                 disabled={!canProceed()}
-                                className={`flex items-center gap-2 px-8 py-3 rounded-xl font-semibold transition-all ${
-                                    canProceed()
+                                className={`flex items-center gap-2 px-8 py-3 rounded-xl font-semibold transition-all ${canProceed()
                                         ? 'bg-slate-800 text-white shadow-lg hover:shadow-xl'
                                         : 'bg-slate-200 text-slate-400 cursor-not-allowed'
-                                }`}
+                                    }`}
                             >
                                 Continue
                                 <ArrowRight className="w-5 h-5" />

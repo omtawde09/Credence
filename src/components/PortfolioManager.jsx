@@ -11,8 +11,33 @@ import usePortfolioStore from '../store/usePortfolioStore';
 
 const PortfolioManager = () => {
     const { user } = useAuthStore();
+    const { portfolioData, isLoading, updatePortfolio } = usePortfolioStore();
+    const [isEditing, setIsEditing] = React.useState(false);
+    const [editValues, setEditValues] = React.useState({ rawValue: 0, equity: 0, debt: 0, cash: 0 });
 
-    const { portfolioData, isLoading } = usePortfolioStore();
+    React.useEffect(() => {
+        if (portfolioData) {
+            setEditValues({
+                rawValue: portfolioData.rawValue,
+                equity: portfolioData.allocation.equity,
+                debt: portfolioData.allocation.debt,
+                cash: portfolioData.allocation.cash
+            });
+        }
+    }, [portfolioData]);
+
+    const handleSave = () => {
+        updatePortfolio({
+            rawValue: parseFloat(editValues.rawValue),
+            totalValue: `₹${(editValues.rawValue / 10000000).toFixed(2)} Cr`, // Optimistic formatting
+            allocation: {
+                equity: parseFloat(editValues.equity),
+                debt: parseFloat(editValues.debt),
+                cash: parseFloat(editValues.cash)
+            }
+        });
+        setIsEditing(false);
+    };
 
     // Quick Seed Tool
     const handleSeed = async () => {
@@ -33,7 +58,14 @@ const PortfolioManager = () => {
                         <h2 className="text-2xl font-bold dark:text-white">Portfolio Manager</h2>
                         <div className="flex gap-4 items-center mt-1">
                             <p className="text-sm text-slate-500 dark:text-slate-400">Holistic view of your financial health</p>
-                            {portfolioData.rawValue === 0 && (
+                            <button
+                                onClick={() => isEditing ? handleSave() : setIsEditing(true)}
+                                className={`text-[10px] px-3 py-1 rounded font-bold uppercase tracking-widest transition-colors ${isEditing ? 'bg-green-600 text-white hover:bg-green-700' : 'bg-blue-600 text-white hover:bg-blue-700'
+                                    }`}
+                            >
+                                {isEditing ? 'Save Changes' : 'Edit Data'}
+                            </button>
+                            {portfolioData.rawValue === 0 && !isEditing && (
                                 <button onClick={handleSeed} className="text-[10px] bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-500">
                                     Load Demo Data
                                 </button>
@@ -62,7 +94,16 @@ const PortfolioManager = () => {
                                 </div>
                                 <h3 className="text-sm font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400">Portfolio Value</h3>
                             </div>
-                            <p className="text-3xl font-black text-slate-800 dark:text-white tracking-tight">{portfolioData.totalValue}</p>
+                            {isEditing ? (
+                                <input
+                                    type="number"
+                                    value={editValues.rawValue}
+                                    onChange={(e) => setEditValues({ ...editValues, rawValue: e.target.value })}
+                                    className="text-2xl font-black text-slate-800 border-b-2 border-blue-500 focus:outline-none bg-transparent w-full"
+                                />
+                            ) : (
+                                <p className="text-3xl font-black text-slate-800 dark:text-white tracking-tight">{portfolioData.totalValue}</p>
+                            )}
                             <div className="mt-4 flex gap-2">
                                 <span className="text-xs font-bold px-2 py-1 bg-green-100 text-green-700 rounded-lg flex items-center gap-1">
                                     <Target size={12} /> +12.5%
@@ -73,16 +114,42 @@ const PortfolioManager = () => {
 
                         {/* Allocation */}
                         <div className="glass-panel p-6 rounded-[24px]">
-                            <h3 className="text-sm font-bold uppercase tracking-widest text-slate-500 mb-4">Allocation</h3>
-                            <div className="w-full h-4 rounded-full bg-slate-100 overflow-hidden flex mb-3">
-                                <div style={{ width: `${portfolioData.allocation.equity}%` }} className="h-full bg-blue-500" title="Equity" />
-                                <div style={{ width: `${portfolioData.allocation.debt}%` }} className="h-full bg-amber-400" title="Debt" />
-                                <div style={{ width: `${portfolioData.allocation.cash}%` }} className="h-full bg-slate-400" title="Cash" />
-                            </div>
+                            <h3 className="text-sm font-bold uppercase tracking-widest text-slate-500 mb-4">Allocation {isEditing && <span className="text-xs text-slate-400">(Equity / Debt / Cash)</span>}</h3>
+                            {isEditing ? (
+                                <div className="flex gap-2 mb-2">
+                                    <input
+                                        type="number"
+                                        value={editValues.equity}
+                                        onChange={(e) => setEditValues({ ...editValues, equity: e.target.value })}
+                                        className="w-1/3 p-2 border border-slate-200 rounded text-sm font-bold text-blue-600"
+                                        placeholder="Eq %"
+                                    />
+                                    <input
+                                        type="number"
+                                        value={editValues.debt}
+                                        onChange={(e) => setEditValues({ ...editValues, debt: e.target.value })}
+                                        className="w-1/3 p-2 border border-slate-200 rounded text-sm font-bold text-amber-500"
+                                        placeholder="Dbt %"
+                                    />
+                                    <input
+                                        type="number"
+                                        value={editValues.cash}
+                                        onChange={(e) => setEditValues({ ...editValues, cash: e.target.value })}
+                                        className="w-1/3 p-2 border border-slate-200 rounded text-sm font-bold text-slate-500"
+                                        placeholder="Csh %"
+                                    />
+                                </div>
+                            ) : (
+                                <div className="w-full h-4 rounded-full bg-slate-100 overflow-hidden flex mb-3">
+                                    <div style={{ width: `${portfolioData.allocation.equity}%` }} className="h-full bg-blue-500" title="Equity" />
+                                    <div style={{ width: `${portfolioData.allocation.debt}%` }} className="h-full bg-amber-400" title="Debt" />
+                                    <div style={{ width: `${portfolioData.allocation.cash}%` }} className="h-full bg-slate-400" title="Cash" />
+                                </div>
+                            )}
                             <div className="flex justify-between text-xs font-bold text-slate-600">
-                                <span className="flex items-center gap-1"><div className="w-2 h-2 rounded-full bg-blue-500" /> Equity {portfolioData.allocation.equity}%</span>
-                                <span className="flex items-center gap-1"><div className="w-2 h-2 rounded-full bg-amber-400" /> Debt {portfolioData.allocation.debt}%</span>
-                                <span className="flex items-center gap-1"><div className="w-2 h-2 rounded-full bg-slate-400" /> Cash {portfolioData.allocation.cash}%</span>
+                                <span className="flex items-center gap-1"><div className="w-2 h-2 rounded-full bg-blue-500" /> Equity {isEditing ? editValues.equity : portfolioData.allocation.equity}%</span>
+                                <span className="flex items-center gap-1"><div className="w-2 h-2 rounded-full bg-amber-400" /> Debt {isEditing ? editValues.debt : portfolioData.allocation.debt}%</span>
+                                <span className="flex items-center gap-1"><div className="w-2 h-2 rounded-full bg-slate-400" /> Cash {isEditing ? editValues.cash : portfolioData.allocation.cash}%</span>
                             </div>
                         </div>
 

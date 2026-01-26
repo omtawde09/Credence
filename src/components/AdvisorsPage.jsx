@@ -53,7 +53,7 @@ const AdvisorsPage = () => {
                         <div className="max-w-md">
                             <AdvisorCard
                                 advisor={currentAdvisor}
-                                onViewProfile={(advisor) => console.log('View profile', advisor)}
+                                onViewProfile={(advisor) => alert(`Profile for ${advisor.name} would open here.`)}
                             />
                         </div>
                     </div>
