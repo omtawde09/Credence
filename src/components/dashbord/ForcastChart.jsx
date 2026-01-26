@@ -33,8 +33,8 @@ export function ForecastChart() {
   const { dashboardData } = useDashboardStore()
 
   const getData = () => {
-    // Issue 10 Fix: Dummy Data Fallback
-    const fallbackData = [
+    // Issue 10 Fix: Distinct Dummy Data Fallback per Timeframe
+    const fallbackData7D = [
       { day: "Mon", amount: 120000 },
       { day: "Tue", amount: 135000 },
       { day: "Wed", amount: 128000 },
@@ -44,12 +44,32 @@ export function ForecastChart() {
       { day: "Sun", amount: 160000 },
     ];
 
-    if (!dashboardData?.chartData) return fallbackData;
+    const fallbackData30D = [
+      { day: "Week 1", amount: 125000 },
+      { day: "Week 2", amount: 140000 },
+      { day: "Week 3", amount: 138000 },
+      { day: "Week 4", amount: 180000 },
+    ];
+
+    const fallbackData90D = [
+      { day: "Month 1", amount: 120000 },
+      { day: "Month 2", amount: 160000 },
+      { day: "Month 3", amount: 210000 },
+    ];
+
+    if (!dashboardData?.chartData) {
+      if (activeTab === "7D") return fallbackData7D;
+      if (activeTab === "30D") return fallbackData30D;
+      return fallbackData90D;
+    }
+
     const data = activeTab === "7D" ? dashboardData.chartData["7D"] :
       activeTab === "30D" ? dashboardData.chartData["30D"] :
         dashboardData.chartData["90D"];
 
-    return (data && data.length > 0) ? data : fallbackData;
+    return (data && data.length > 0) ? data :
+      (activeTab === "7D" ? fallbackData7D :
+        activeTab === "30D" ? fallbackData30D : fallbackData90D);
   }
 
   return (

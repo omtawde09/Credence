@@ -28,7 +28,6 @@ const Sidebar = () => {
         { name: 'My Account', icon: User, path: '/account' },
         { name: 'Advisors', icon: Users, path: '/advisors' },
         { name: 'Portfolio Manager', icon: Briefcase, path: '/portfolio-manager' },
-        { name: 'Calendar', icon: Calendar, path: '/calendar' },
         { name: 'Agents', icon: Bot, path: '/agents' },
     ];
 
