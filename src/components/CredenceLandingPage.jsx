@@ -122,11 +122,14 @@ const CredenceLandingPage = () => {
             <div className="flex justify-center">
               <button
                 onClick={() => {
-                  if (user && user.role) {
+                  if (user) {
                     // Redirect to appropriate dashboard based on user role
                     if (user.role === 'advisor') {
                       navigate('/advisor-dashboard');
                     } else if (user.role === 'investor') {
+                      navigate('/investor-onboarding');
+                    } else {
+                      // Fallback: Default to Investor Onboarding if role unspecified
                       navigate('/investor-onboarding');
                     }
                   } else {

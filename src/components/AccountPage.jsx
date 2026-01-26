@@ -1,10 +1,17 @@
 import React from 'react';
 import Sidebar from './Sidebar';
 import useAuthStore from '../store/useAuthStore';
-import { Search, Bell, User, Mail, Phone, MapPin, Shield } from 'lucide-react';
+import { Search, Bell, User, Mail, Phone, MapPin, Shield, LogOut } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const AccountPage = () => {
-    const { user } = useAuthStore();
+    const { user, logout } = useAuthStore();
+    const navigate = useNavigate();
+
+    const handleLogout = async () => {
+        await logout();
+        navigate('/');
+    };
 
     return (
         <div className="min-h-screen bg-slate-50 text-slate-800">
@@ -77,6 +84,9 @@ const AccountPage = () => {
                             </div>
                             <button className="w-full py-3 bg-slate-800 text-white rounded-xl font-bold text-sm hover:bg-blue-700 transition-colors">
                                 Change Password
+                            </button>
+                            <button onClick={handleLogout} className="w-full py-3 mt-2 bg-red-50 text-red-600 border border-red-200 rounded-xl font-bold text-sm hover:bg-red-100 transition-colors flex items-center justify-center gap-2">
+                                <LogOut size={16} /> Sign Out
                             </button>
                         </div>
                     </div>
